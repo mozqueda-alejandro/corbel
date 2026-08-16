@@ -34,7 +34,7 @@ const { copy } = useClipboard();
 type Payment = {
   id: string
   date: string
-  status: "paid" | "failed" | "refunded"
+  status: "exported" | "drafting" | "completed"
   email: string
   amount: number
 };
@@ -42,25 +42,25 @@ type Payment = {
 const data = ref<Payment[]>([{
   id: "4600",
   date: "2024-03-11T15:30:00",
-  status: "paid",
+  status: "exported",
   email: "james.anderson@example.com",
   amount: 594
 }, {
   id: "4599",
   date: "2024-03-11T10:10:00",
-  status: "failed",
+  status: "drafting",
   email: "mia.white@example.com",
   amount: 276
 }, {
   id: "4583",
   date: "2024-03-08T09:45:00",
-  status: "refunded",
+  status: "completed",
   email: "harper.scott@example.com",
   amount: 345
 }, {
   id: "4581",
   date: "2024-03-07T20:25:00",
-  status: "paid",
+  status: "exported",
   email: "logan.baker@example.com",
   amount: 567
 }]);
@@ -100,9 +100,9 @@ const columns: TableColumn<Payment>[] = [{
   header: "Status",
   cell: ({ row }) => {
     const color = ({
-      paid: "success" as const,
-      failed: "error" as const,
-      refunded: "neutral" as const
+      exported: "success" as const,
+      drafting: "error" as const,
+      completed: "neutral" as const
     })[row.getValue("status") as string];
 
     return h(UBadge, { class: "capitalize", variant: "subtle", color }, () => row.getValue("status"));
@@ -201,7 +201,8 @@ function randomize() {
 </script>
 
 <template>
-  <UContainer>
+  <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
+    <h2>This is example text</h2>
     <div class="border border-muted rounded-md overflow-hidden">
       <div class="flex-1 divide-y divide-accented w-full">
         <div class="flex items-center gap-2 px-4 py-3.5 overflow-x-auto">
@@ -261,5 +262,5 @@ function randomize() {
         </div>
       </div>
     </div>
-  </UContainer>
+  </div>
 </template>
