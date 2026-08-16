@@ -1,0 +1,29 @@
+# Nuxt dev/build outputs
+/src/client/.output
+/src/client/.data
+/src/client/.nuxt
+/src/client/.nitro
+/src/client/.cache
+/src/client/dist
+
+# Node dependencies
+/node_modules
+
+# Logs
+/logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Project-specific ignores
+/design
+/docs
+/src/server
