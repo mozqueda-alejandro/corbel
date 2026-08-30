@@ -4,10 +4,15 @@ export default defineNuxtConfig({
     "@nuxt/ui"
   ],
   ssr: false,
+  srcDir: "app/",
   devtools: {
     enabled: true
   },
+  components: true,
   css: ["~/assets/css/main.css"],
+  imports: {
+    dirs: ["types"]
+  },
   runtimeConfig: {
     public: {
       // apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL

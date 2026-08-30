@@ -31,41 +31,23 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 const { copy } = useClipboard();
 
-type Payment = {
+type Session = {
   id: string
   date: string
   status: "exported" | "drafting" | "completed"
-  email: string
-  amount: number
+  overview: string
 };
 
-const data = ref<Payment[]>([{
-  id: "4600",
-  date: "2024-03-11T15:30:00",
-  status: "exported",
-  email: "james.anderson@example.com",
-  amount: 594
-}, {
-  id: "4599",
-  date: "2024-03-11T10:10:00",
-  status: "drafting",
-  email: "mia.white@example.com",
-  amount: 276
-}, {
-  id: "4583",
-  date: "2024-03-08T09:45:00",
-  status: "completed",
-  email: "harper.scott@example.com",
-  amount: 345
-}, {
-  id: "4581",
-  date: "2024-03-07T20:25:00",
-  status: "exported",
-  email: "logan.baker@example.com",
-  amount: 567
-}]);
+const data = ref<Session[]>([
+  {
+    id: "1",
+    date: "2026-08-16",
+    status: "exported",
+    overview: "Placas"
+  }
+]);
 
-const columns: TableColumn<Payment>[] = [{
+const columns: TableColumn<Session>[] = [{
   id: "select",
   header: ({ table }) => h(UCheckbox, {
     "modelValue": table.getIsSomePageRowsSelected() ? "indeterminate" : table.getIsAllPageRowsSelected(),
@@ -108,39 +90,18 @@ const columns: TableColumn<Payment>[] = [{
     return h(UBadge, { class: "capitalize", variant: "subtle", color }, () => row.getValue("status"));
   }
 }, {
-  accessorKey: "email",
+  accessorKey: "overview",
   header: ({ column }) => {
     const isSorted = column.getIsSorted();
 
     return h(UButton, {
       color: "neutral",
       variant: "ghost",
-      label: "Email",
+      label: "Overview",
       icon: isSorted ? (isSorted === "asc" ? "i-lucide-arrow-up-narrow-wide" : "i-lucide-arrow-down-wide-narrow") : "i-lucide-arrow-up-down",
       class: "-mx-2.5",
       onClick: () => column.toggleSorting(column.getIsSorted() === "asc")
     });
-  },
-  meta: {
-    class: {
-      td: "lowercase"
-    }
-  }
-}, {
-  accessorKey: "amount",
-  header: "Amount",
-  meta: {
-    class: {
-      th: "text-right",
-      td: "text-right font-medium"
-    }
-  },
-  cell: ({ row }) => {
-    const amount = Number.parseFloat(row.getValue("amount"));
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EUR"
-    }).format(amount);
   }
 }, {
   id: "actions",
@@ -195,53 +156,24 @@ const columns: TableColumn<Payment>[] = [{
 
 const table = useTemplateRef("table");
 
-function randomize() {
+function createNewSession() {
   data.value = [...data.value].sort(() => Math.random() - 0.5);
 }
 </script>
 
 <template>
   <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
-    <h2>This is example text</h2>
+    <h2>Sessions</h2>
+    <TaskList/>
     <div class="border border-muted rounded-md overflow-hidden">
       <div class="flex-1 divide-y divide-accented w-full">
         <div class="flex items-center gap-2 px-4 py-3.5 overflow-x-auto">
-          <UInput
-            :model-value="(table?.tableApi?.getColumn('email')?.getFilterValue() as string)"
-            class="max-w-sm min-w-[12ch]"
-            placeholder="Filter emails..."
-            @update:model-value="table?.tableApi?.getColumn('email')?.setFilterValue($event)"
-          />
-
           <UButton
             color="neutral"
-            label="Randomize"
-            @click="randomize"
+            label="New Session"
+            icon="i-lucide-plus"
+            @click="createNewSession"
           />
-
-          <UDropdownMenu
-            :items="table?.tableApi?.getAllColumns().filter(column => column.getCanHide()).map(column => ({
-              label: upperFirst(column.id),
-              type: 'checkbox' as const,
-              checked: column.getIsVisible(),
-              onUpdateChecked(checked: boolean) {
-                table?.tableApi?.getColumn(column.id)?.toggleVisibility(!!checked)
-              },
-              onSelect(e: Event) {
-                e.preventDefault()
-              }
-            }))"
-            :content="{ align: 'end' }"
-          >
-            <UButton
-              label="Columns"
-              color="neutral"
-              variant="outline"
-              trailing-icon="i-lucide-chevron-down"
-              class="ml-auto"
-              aria-label="Columns select dropdown"
-            />
-          </UDropdownMenu>
         </div>
 
         <UTable
