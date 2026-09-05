@@ -1,15 +1,28 @@
 <script setup lang="ts">
-import { h, resolveComponent } from "vue";
-import { upperFirst } from "scule";
-import type { TableColumn, FormSubmitEvent } from "@nuxt/ui";
-import { useClipboard } from "@vueuse/core";
-
 import * as z from "zod";
+import type {
+  FormSubmitEvent,
+  TableColumn
+} from "@nuxt/ui";
+import { h, resolveComponent } from "vue";
+import { useClipboard } from "@vueuse/core";
 
 const UButton = resolveComponent("UButton");
 const UCheckbox = resolveComponent("UCheckbox");
 const UBadge = resolveComponent("UBadge");
 const UDropdownMenu = resolveComponent("UDropdownMenu");
+
+const toast = useToast();
+const { copy } = useClipboard();
+
+type Session = {
+  id: string
+  date: string
+  status: "exported" | "drafting" | "completed"
+  overview: string
+};
+
+const isModalOpen = ref(false);
 
 const schema = z.object({
   email: z.email("Invalid email"),
@@ -23,20 +36,10 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 });
 
-const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   toast.add({ title: "Success", description: "The form has been submitted.", color: "success" });
   console.log(event.data);
 }
-
-const { copy } = useClipboard();
-
-type Session = {
-  id: string
-  date: string
-  status: "exported" | "drafting" | "completed"
-  overview: string
-};
 
 const data = ref<Session[]>([
   {
@@ -47,124 +50,139 @@ const data = ref<Session[]>([
   }
 ]);
 
-const columns: TableColumn<Session>[] = [{
-  id: "select",
-  header: ({ table }) => h(UCheckbox, {
-    "modelValue": table.getIsSomePageRowsSelected() ? "indeterminate" : table.getIsAllPageRowsSelected(),
-    "onUpdate:modelValue": (value: boolean | "indeterminate") => table.toggleAllPageRowsSelected(!!value),
-    "aria-label": "Select all"
-  }),
-  cell: ({ row }) => h(UCheckbox, {
-    "modelValue": row.getIsSelected(),
-    "onUpdate:modelValue": (value: boolean | "indeterminate") => row.toggleSelected(!!value),
-    "aria-label": "Select row"
-  }),
-  enableSorting: false,
-  enableHiding: false
-}, {
-  accessorKey: "id",
-  header: "#",
-  cell: ({ row }) => `#${row.getValue("id")}`
-}, {
-  accessorKey: "date",
-  header: "Date",
-  cell: ({ row }) => {
-    return new Date(row.getValue("date")).toLocaleString("en-US", {
-      day: "numeric",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    });
-  }
-}, {
-  accessorKey: "status",
-  header: "Status",
-  cell: ({ row }) => {
-    const color = ({
-      exported: "success" as const,
-      drafting: "error" as const,
-      completed: "neutral" as const
-    })[row.getValue("status") as string];
+function handleStudentSubmit() {
+  const eventDate = new Date(Date.now() + Math.random() * 31536000000);
+  const formattedDate = eventDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
 
-    return h(UBadge, { class: "capitalize", variant: "subtle", color }, () => row.getValue("status"));
-  }
-}, {
-  accessorKey: "overview",
-  header: ({ column }) => {
-    const isSorted = column.getIsSorted();
+  toast.add({
+    title: "Event added to calendar",
+    description: `This event is scheduled for ${formattedDate}.`,
+    icon: "i-lucide-calendar-days"
+  });
+}
 
-    return h(UButton, {
-      color: "neutral",
-      variant: "ghost",
-      label: "Overview",
-      icon: isSorted ? (isSorted === "asc" ? "i-lucide-arrow-up-narrow-wide" : "i-lucide-arrow-down-wide-narrow") : "i-lucide-arrow-up-down",
-      class: "-mx-2.5",
-      onClick: () => column.toggleSorting(column.getIsSorted() === "asc")
-    });
-  }
-}, {
-  id: "actions",
-  enableHiding: false,
-  meta: {
-    class: {
-      td: "text-right"
+const columns: TableColumn<Session>[] = [
+  {
+    id: "select",
+    header: ({ table }) => h(UCheckbox, {
+      "modelValue": table.getIsSomePageRowsSelected() ? "indeterminate" : table.getIsAllPageRowsSelected(),
+      "onUpdate:modelValue": (value: boolean | "indeterminate") => table.toggleAllPageRowsSelected(!!value),
+      "aria-label": "Select all"
+    }),
+    cell: ({ row }) => h(UCheckbox, {
+      "modelValue": row.getIsSelected(),
+      "onUpdate:modelValue": (value: boolean | "indeterminate") => row.toggleSelected(!!value),
+      "aria-label": "Select row"
+    }),
+    enableSorting: false,
+    enableHiding: false
+  }, {
+    accessorKey: "id",
+    header: "#",
+    cell: ({ row }) => `#${row.getValue("id")}`
+  }, {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => {
+      return new Date(row.getValue("date")).toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
     }
-  },
-  cell: ({ row }) => {
-    const items = [{
-      type: "label",
-      label: "Actions"
-    }, {
-      label: "Copy payment ID",
-      onSelect() {
-        copy(row.original.id);
+  }, {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const color = ({
+        exported: "success" as const,
+        drafting: "error" as const,
+        completed: "neutral" as const
+      })[row.getValue("status") as string];
 
-        toast.add({
-          title: "Payment ID copied to clipboard!",
-          color: "success",
-          icon: "i-lucide-circle-check"
-        });
-      }
-    }, {
-      label: row.getIsExpanded() ? "Collapse" : "Expand",
-      onSelect() {
-        row.toggleExpanded();
-      }
-    }, {
-      type: "separator"
-    }, {
-      label: "View customer"
-    }, {
-      label: "View payment details"
-    }];
+      return h(UBadge, { class: "capitalize", variant: "subtle", color }, () => row.getValue("status"));
+    }
+  }, {
+    accessorKey: "overview",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
 
-    return h(UDropdownMenu, {
-      "content": {
-        align: "end"
-      },
-      items,
-      "aria-label": "Actions dropdown"
-    }, () => h(UButton, {
-      "icon": "i-lucide-ellipsis-vertical",
-      "color": "neutral",
-      "variant": "ghost",
-      "aria-label": "Actions dropdown"
-    }));
+      return h(UButton, {
+        color: "neutral",
+        variant: "ghost",
+        label: "Overview",
+        icon: isSorted ? (isSorted === "asc" ? "i-lucide-arrow-up-narrow-wide" : "i-lucide-arrow-down-wide-narrow") : "i-lucide-arrow-up-down",
+        class: "-mx-2.5",
+        onClick: () => column.toggleSorting(column.getIsSorted() === "asc")
+      });
+    }
+  }, {
+    id: "actions",
+    enableHiding: false,
+    meta: {
+      class: {
+        td: "text-right"
+      }
+    },
+    cell: ({ row }) => {
+      const items = [{
+        type: "label",
+        label: "Actions"
+      }, {
+        label: "Copy payment ID",
+        onSelect() {
+          copy(row.original.id);
+
+          toast.add({
+            title: "Payment ID copied to clipboard!",
+            color: "success",
+            icon: "i-lucide-circle-check"
+          });
+        }
+      }, {
+        label: row.getIsExpanded() ? "Collapse" : "Expand",
+        onSelect() {
+          row.toggleExpanded();
+        }
+      }, {
+        type: "separator"
+      }, {
+        label: "View customer"
+      }, {
+        label: "View payment details"
+      }];
+
+      return h(UDropdownMenu, {
+        "content": {
+          align: "end"
+        },
+        items,
+        "aria-label": "Actions dropdown"
+      }, () => h(UButton, {
+        "icon": "i-lucide-ellipsis-vertical",
+        "color": "neutral",
+        "variant": "ghost",
+        "aria-label": "Actions dropdown"
+      }));
+    }
   }
-}];
+];
 
 const table = useTemplateRef("table");
-
-function createNewSession() {
-  data.value = [...data.value].sort(() => Math.random() - 0.5);
-}
 </script>
 
 <template>
   <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
     <h2>Sessions</h2>
-    <TaskList/>
+
+    <TaskList />
+
     <div class="border border-muted rounded-md overflow-hidden">
       <div class="flex-1 divide-y divide-accented w-full">
         <div class="flex items-center gap-2 px-4 py-3.5 overflow-x-auto">
@@ -172,7 +190,7 @@ function createNewSession() {
             color="neutral"
             label="New Session"
             icon="i-lucide-plus"
-            @click="createNewSession"
+            @click="isModalOpen = true"
           />
         </div>
 
@@ -194,5 +212,10 @@ function createNewSession() {
         </div>
       </div>
     </div>
+
+    <NewSessionModal
+      v-model:open="isModalOpen"
+      @submit="handleStudentSubmit"
+    />
   </div>
 </template>

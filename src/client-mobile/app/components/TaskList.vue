@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { db, type Task } from "../utils/db";
+import { type Task, db } from "../utils/db";
 
 type NewTask = Omit<Task, "id">;
 

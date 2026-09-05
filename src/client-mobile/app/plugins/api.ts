@@ -4,7 +4,7 @@
   return {
     provide: {
       api: (path: string, options?: Parameters<typeof $fetch>[1]) =>
-        $fetch(`${apiBaseUrl}${path}`, options),
-    },
-  }
-})
+        $fetch(`${apiBaseUrl}${path}`, options)
+    }
+  };
+});
