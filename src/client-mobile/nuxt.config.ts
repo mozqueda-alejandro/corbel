@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ssr: false,
   components: true,
   imports: {
-    dirs: ["types"]
+    dirs: ["types", "schemas", "schemas/**"]
   },
   devtools: {
     enabled: true

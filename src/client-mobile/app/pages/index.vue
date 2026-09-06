@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import * as z from "zod";
 import type {
   FormSubmitEvent,
   TableColumn
 } from "@nuxt/ui";
-import { h, resolveComponent } from "vue";
 import { useClipboard } from "@vueuse/core";
+import { h, resolveComponent } from "vue";
+import * as z from "zod";
 
 const UButton = resolveComponent("UButton");
 const UCheckbox = resolveComponent("UCheckbox");
@@ -180,8 +180,6 @@ const table = useTemplateRef("table");
 <template>
   <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
     <h2>Sessions</h2>
-
-    <TaskList />
 
     <div class="border border-muted rounded-md overflow-hidden">
       <div class="flex-1 divide-y divide-accented w-full">

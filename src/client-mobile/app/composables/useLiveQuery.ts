@@ -1,5 +1,5 @@
-import { type Subscription, liveQuery } from "dexie";
-import { type Ref, type WatchSource, onUnmounted, ref, watch } from "vue";
+import { liveQuery, type Subscription } from "dexie";
+import type { Ref, WatchSource } from "vue";
 
 interface UseLiveQueryResult<T> {
   data: Ref<T | undefined>

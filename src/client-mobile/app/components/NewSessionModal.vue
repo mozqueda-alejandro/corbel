@@ -1,34 +1,60 @@
 <script setup lang="ts">
+import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { z } from "zod";
 
-const studentFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.email("Invalid email address"),
-  isEnrolled: z.boolean(),
-  receivesNotifications: z.boolean()
+import { sessionCreateModalSchema } from "~/schemas/session.schema.ts";
+
+const isModalOpen = ref(true);
+
+// #region Form State
+const sessionFormRef = useTemplateRef("sessionFormRef");
+const sessionFormState = reactive<SessionCreateModal>({
+  name: "",
+  date: new Date(Date.now())
 });
 
-type StudentFormData = z.infer<typeof studentFormSchema>;
-
-const isModalOpen = ref(false);
-
-const formState = reactive<StudentFormData>({
-  firstName: "",
-  lastName: "",
-  email: "",
-  isEnrolled: false,
-  receivesNotifications: false
+const dateToday = today(getLocalTimeZone());
+const sessionFormInputDateRef = useTemplateRef("sessionFormInputDateRef");
+const sessionFormCalendarDate = computed({
+  get: () => {
+    const jsDate = sessionFormState.date;
+    return new CalendarDate(jsDate.getFullYear(), jsDate.getMonth() + 1, jsDate.getDate());
+  },
+  set: (newCalendarDate) => {
+    sessionFormState.date = newCalendarDate.toDate(getLocalTimeZone());
+  }
 });
+
+const isSessionFormNameDefault = ref(true);
+const sessionFormDefaultName = computed(() => {
+  if (!sessionFormState.date) return "Session";
+  return `Session (${sessionFormState.date.getFullYear()}-${String(sessionFormState.date.getMonth() + 1).padStart(2, "0")}-${String(sessionFormState.date.getDate()).padStart(2, "0")})`;
+});
+sessionFormState.name = sessionFormDefaultName.value;
+
+watch(sessionFormDefaultName, () => {
+  if (!isSessionFormNameDefault.value) return;
+
+  sessionFormState.name = sessionFormDefaultName.value;
+});
+watch(() => sessionFormState.name, (newName, oldName) => {
+  if (oldName === sessionFormDefaultName.value) {
+    isSessionFormNameDefault.value = false;
+  }
+  if (newName === sessionFormDefaultName.value) {
+    isSessionFormNameDefault.value = true;
+  }
+});
+// #endregion
 
 const emit = defineEmits<{
-  submit: [data: StudentFormData]
+  submit: [data: SessionCreateModal]
 }>();
 
-function handleSubmit(event: FormSubmitEvent<StudentFormData>) {
+function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
   emit("submit", event.data);
   isModalOpen.value = false;
+  console.log("submit", event);
 }
 </script>
 
@@ -36,75 +62,99 @@ function handleSubmit(event: FormSubmitEvent<StudentFormData>) {
   <UModal
     v-model:open="isModalOpen"
     title="New Session"
-    description="Enter the student's details below."
+    description="Enter the new session's details."
     :close="{
-      color: 'primary',
-      variant: 'outline',
+      color: 'neutral',
+      variant: 'soft',
       class: 'rounded-full',
       onClick: () => isModalOpen = false
     }"
   >
     <template #body>
       <UForm
-        :schema="studentFormSchema"
-        :state="formState"
+        ref="sessionFormRef"
+        :schema="sessionCreateModalSchema"
+        :state="sessionFormState"
+        :validate-on="[]"
         class="space-y-4"
-        @submit="handleSubmit"
+        @submit="onSubmit"
       >
         <UFormField
-          label="First Name"
-          name="firstName"
-        >
-          <UInput v-model="formState.firstName" />
-        </UFormField>
-
-        <UFormField
-          label="Last Name"
-          name="lastName"
-        >
-          <UInput v-model="formState.lastName" />
-        </UFormField>
-
-        <UFormField
-          label="Email"
-          name="email"
+          label="Name"
+          name="name"
         >
           <UInput
-            v-model="formState.email"
-            type="email"
-          />
+            v-model="sessionFormState.name"
+            class="w-full"
+            :ui="{ trailing: 'pe-1' }"
+          >
+            <template v-if="!isSessionFormNameDefault" #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                icon="i-lucide-undo-2"
+                aria-label="Revert session name to default"
+                @click="sessionFormState.name = sessionFormDefaultName"
+              />
+            </template>
+          </UInput>
         </UFormField>
 
-        <UFormField name="isEnrolled">
-          <UCheckbox
-            v-model="formState.isEnrolled"
-            label="Currently enrolled"
-          />
-        </UFormField>
+        <UFormField
+          label="Date"
+          name="date"
+        >
+          <UInputDate
+            ref="sessionFormInputDateRef"
+            v-model="sessionFormCalendarDate"
+            :min-value="dateToday.subtract({ years: 1 })"
+            :max-value="dateToday.add({ years: 1 })"
+            class="w-full"
+          >
+            <template #trailing>
+              <UPopover
+                :content="{
+                  align: 'center',
+                  side: 'bottom',
+                  sideOffset: 8
+                }"
+                :reference="sessionFormInputDateRef?.inputsRef[3]?.$el"
+              >
+                <UButton
+                  color="neutral"
+                  variant="link"
+                  size="sm"
+                  icon="i-lucide-calendar"
+                  aria-label="Select a date"
+                  class="px-0"
+                />
 
-        <UFormField name="receivesNotifications">
-          <UCheckbox
-            v-model="formState.receivesNotifications"
-            label="Receives notifications"
-          />
+                <template #content>
+                  <UCalendar
+                    v-model="sessionFormCalendarDate"
+                    class="p-2"
+                  />
+                </template>
+              </UPopover>
+            </template>
+          </UInputDate>
         </UFormField>
       </UForm>
     </template>
 
     <template #footer="{ close }">
-      <div class="flex justify-end gap-2">
-        <UButton
-          type="button"
-          color="neutral"
-          variant="ghost"
-          @click="close"
-        >
-          Cancel
-        </UButton>
-        <UButton @click="() => $refs.form?.submit?.()">
-          Submit
-        </UButton>
-      </div>
+      <UButton
+        type="button"
+        color="neutral"
+        variant="ghost"
+        @click="close"
+      >
+        Cancel
+      </UButton>
+      <UButton @click="sessionFormRef?.submit()">
+        Create
+      </UButton>
     </template>
   </UModal>
 </template>
