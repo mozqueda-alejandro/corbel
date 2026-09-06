@@ -22,23 +22,13 @@ type Session = {
   overview: string
 };
 
-const isModalOpen = ref(false);
+const isCreateModalOpen = ref(false);
 
-const schema = z.object({
-  email: z.email("Invalid email"),
-  password: z.string("Password is required").min(8, "Must be at least 8 characters")
-});
-
-type Schema = z.output<typeof schema>;
-
-const state = reactive<Partial<Schema>>({
-  email: undefined,
-  password: undefined
-});
-
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function handleSessionCreateSubmit(sessionCreateModalData: SessionCreateModal) {
   toast.add({ title: "Success", description: "The form has been submitted.", color: "success" });
-  console.log(event.data);
+  console.log(sessionCreateModalData);
+
+  isCreateModalOpen.value = false;
 }
 
 const data = ref<Session[]>([
@@ -50,20 +40,6 @@ const data = ref<Session[]>([
   }
 ]);
 
-function handleStudentSubmit() {
-  const eventDate = new Date(Date.now() + Math.random() * 31536000000);
-  const formattedDate = eventDate.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric"
-  });
-
-  toast.add({
-    title: "Event added to calendar",
-    description: `This event is scheduled for ${formattedDate}.`,
-    icon: "i-lucide-calendar-days"
-  });
-}
 
 const columns: TableColumn<Session>[] = [
   {
@@ -188,7 +164,7 @@ const table = useTemplateRef("table");
             color="neutral"
             label="New Session"
             icon="i-lucide-plus"
-            @click="isModalOpen = true"
+            @click="isCreateModalOpen = true"
           />
         </div>
 
@@ -211,9 +187,9 @@ const table = useTemplateRef("table");
       </div>
     </div>
 
-    <NewSessionModal
-      v-model:open="isModalOpen"
-      @submit="handleStudentSubmit"
+    <SessionCreateModal
+      v-model:open="isCreateModalOpen"
+      @submit="handleSessionCreateSubmit"
     />
   </div>
 </template>

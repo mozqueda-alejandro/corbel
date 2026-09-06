@@ -4,16 +4,15 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 
 import { sessionCreateModalSchema } from "~/schemas/session.schema.ts";
 
-const isModalOpen = ref(true);
+const isModalOpen = defineModel<boolean>("open", { required: true });
 
-// #region Form State
+//#region Form State
 const sessionFormRef = useTemplateRef("sessionFormRef");
 const sessionFormState = reactive<SessionCreateModal>({
   name: "",
   date: new Date(Date.now())
 });
 
-const dateToday = today(getLocalTimeZone());
 const sessionFormInputDateRef = useTemplateRef("sessionFormInputDateRef");
 const sessionFormCalendarDate = computed({
   get: () => {
@@ -30,8 +29,20 @@ const sessionFormDefaultName = computed(() => {
   if (!sessionFormState.date) return "Session";
   return `Session (${sessionFormState.date.getFullYear()}-${String(sessionFormState.date.getMonth() + 1).padStart(2, "0")}-${String(sessionFormState.date.getDate()).padStart(2, "0")})`;
 });
-sessionFormState.name = sessionFormDefaultName.value;
 
+function resetSessionForm() {
+  sessionFormState.date = new Date(Date.now());
+  sessionFormState.name = sessionFormDefaultName.value;
+  isSessionFormNameDefault.value = true;
+}
+
+sessionFormState.name = sessionFormDefaultName.value;
+resetSessionForm();
+
+watch(isModalOpen, (isNowOpen) => {
+  if (!isNowOpen) return;
+  resetSessionForm();
+});
 watch(sessionFormDefaultName, () => {
   if (!isSessionFormNameDefault.value) return;
 
@@ -45,7 +56,7 @@ watch(() => sessionFormState.name, (newName, oldName) => {
     isSessionFormNameDefault.value = true;
   }
 });
-// #endregion
+//#endregion
 
 const emit = defineEmits<{
   submit: [data: SessionCreateModal]
@@ -108,8 +119,6 @@ function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
           <UInputDate
             ref="sessionFormInputDateRef"
             v-model="sessionFormCalendarDate"
-            :min-value="dateToday.subtract({ years: 1 })"
-            :max-value="dateToday.add({ years: 1 })"
             class="w-full"
           >
             <template #trailing>
