@@ -5,12 +5,8 @@ export default defineNuxtConfig({
   ],
   ssr: false,
   components: true,
-  imports: {
-    dirs: ["types", "schemas", "schemas/**"]
-  },
-  devtools: {
-    enabled: true
-  },
+  imports: { dirs: ["types", "schemas", "schemas/**"] },
+  devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   runtimeConfig: {
     public: {
@@ -18,9 +14,7 @@ export default defineNuxtConfig({
     }
   },
   srcDir: "app/",
-  routeRules: {
-    "/": { prerender: true }
-  },
+  routeRules: { "/": { prerender: true } },
   compatibilityDate: "2025-01-15",
   eslint: {
     config: {

@@ -16,24 +16,15 @@ export default withNuxt({
     "@typescript-eslint/no-unused-vars": "warn",
     "no-console": "off",
     "no-unused-vars": "off",
-    "object-curly-newline": [
-      "error",
-      {
-        "ObjectExpression": {
-          "minProperties": 3,
-          "multiline": true,
-          "consistent": true
-        },
-        "ObjectPattern": "consistent",
-        "ImportDeclaration": "never",
-        "ExportDeclaration": "never"
-      }
-    ],
+    "object-curly-newline": ["error", {
+      ObjectExpression: { consistent: true },
+      ObjectPattern: { consistent: true },
+      ImportDeclaration: { consistent: true },
+      ExportDeclaration: { consistent: true }
+    }],
     "object-property-newline": [
       "error",
-      {
-        allowAllPropertiesOnSameLine: true
-      }
+      { allowAllPropertiesOnSameLine: true }
     ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

@@ -8,9 +8,7 @@ useHead({
   link: [
     { rel: "icon", href: "/favicon.ico" }
   ],
-  htmlAttrs: {
-    lang: "en"
-  }
+  htmlAttrs: { lang: "en" }
 });
 
 const title = "Corbel Tracker";
@@ -31,7 +29,7 @@ const route = useRoute();
 const items = computed<NavigationMenuItem[]>(() => [{
   label: "Sessions",
   to: "/",
-  active: route.path.endsWith("/")
+  active: route.path.endsWith("/") || route.path.startsWith("/sessions")
 }, {
   label: "Contacts",
   to: "/contacts",

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import type {
-  FormSubmitEvent,
-  TableColumn
-} from "@nuxt/ui";
+import type { TableColumn } from "@nuxt/ui";
 import { useClipboard } from "@vueuse/core";
 import { h, resolveComponent } from "vue";
-import * as z from "zod";
+
+const { sessionListRef, saveSession, deleteSession } = useSessionRepository();
 
 const UButton = resolveComponent("UButton");
 const UCheckbox = resolveComponent("UCheckbox");
@@ -23,23 +21,24 @@ type Session = {
 };
 
 const isCreateModalOpen = ref(false);
+const isDeleteSessionModalOpen = ref(false);
 
-async function handleSessionCreateSubmit(sessionCreateModalData: SessionCreateModal) {
-  toast.add({ title: "Success", description: "The form has been submitted.", color: "success" });
-  console.log(sessionCreateModalData);
-
-  isCreateModalOpen.value = false;
+function navigateToSession(session: Session) {
+  navigateTo(`/sessions/${session.id}`);
 }
 
-const data = ref<Session[]>([
-  {
-    id: "1",
-    date: "2026-08-16",
-    status: "exported",
-    overview: "Placas"
-  }
-]);
+async function handleSessionCreateSubmit(sessionCreateModalData: Session) {
+  await saveSession(sessionCreateModalData);
 
+  isCreateModalOpen.value = false;
+  navigateToSession(sessionCreateModalData);
+}
+
+const statusColorMap: Record<SessionStatusEnum, "success" | "error" | "neutral"> = {
+  [SessionStatusEnum.Exported]: "success",
+  [SessionStatusEnum.Drafting]: "error",
+  [SessionStatusEnum.Completed]: "neutral"
+};
 
 const columns: TableColumn<Session>[] = [
   {
@@ -57,32 +56,32 @@ const columns: TableColumn<Session>[] = [
     enableSorting: false,
     enableHiding: false
   }, {
-    accessorKey: "id",
-    header: "#",
-    cell: ({ row }) => `#${row.getValue("id")}`
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => row.getValue("name")
   }, {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      return new Date(row.getValue("date")).toLocaleString("en-US", {
-        day: "numeric",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      });
+      const date = new Date(row.getValue("date"));
+      const yy = String(date.getFullYear()).slice(-2);
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+
+      return `${mm}-${dd}-${yy}`;
     }
   }, {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const color = ({
-        exported: "success" as const,
-        drafting: "error" as const,
-        completed: "neutral" as const
-      })[row.getValue("status") as string];
+      const statusValue = row.getValue("status") as SessionStatusEnum;
+      const color = statusColorMap[statusValue] || "neutral";
 
-      return h(UBadge, { class: "capitalize", variant: "subtle", color }, () => row.getValue("status"));
+      return h(UBadge, {
+        class: "capitalize",
+        variant: "subtle",
+        color
+      }, () => statusValue);
     }
   }, {
     accessorKey: "overview",
@@ -101,43 +100,25 @@ const columns: TableColumn<Session>[] = [
   }, {
     id: "actions",
     enableHiding: false,
-    meta: {
-      class: {
-        td: "text-right"
-      }
-    },
+    meta: { class: { td: "text-right" } },
     cell: ({ row }) => {
       const items = [{
         type: "label",
         label: "Actions"
       }, {
-        label: "Copy payment ID",
+        label: "Edit",
         onSelect() {
-          copy(row.original.id);
-
-          toast.add({
-            title: "Payment ID copied to clipboard!",
-            color: "success",
-            icon: "i-lucide-circle-check"
-          });
+          navigateToSession(row.original);
         }
       }, {
-        label: row.getIsExpanded() ? "Collapse" : "Expand",
+        label: "Delete",
         onSelect() {
-          row.toggleExpanded();
+          deleteSession(row.original.id);
         }
-      }, {
-        type: "separator"
-      }, {
-        label: "View customer"
-      }, {
-        label: "View payment details"
-      }];
+      }, { type: "separator" }, { label: "Action #1" }, { label: "Action #2" }];
 
       return h(UDropdownMenu, {
-        "content": {
-          align: "end"
-        },
+        "content": { align: "end" },
         items,
         "aria-label": "Actions dropdown"
       }, () => h(UButton, {
@@ -170,7 +151,7 @@ const table = useTemplateRef("table");
 
         <UTable
           ref="table"
-          :data="data"
+          :data="sessionListRef"
           :columns="columns"
           sticky
           class="h-96"
@@ -191,5 +172,30 @@ const table = useTemplateRef("table");
       v-model:open="isCreateModalOpen"
       @submit="handleSessionCreateSubmit"
     />
+    <UModal title="Delete session">
+      <UButton
+        label="Open"
+        color="neutral"
+        variant="subtle"
+      />
+
+      <template #body>
+        Are you sure you want to delete session "session.name"?
+      </template>
+
+      <template #footer="{ close }">
+        <UButton
+          type="button"
+          color="neutral"
+          variant="ghost"
+          @click="close"
+        >
+          Cancel
+        </UButton>
+        <UButton @click="sessionFormRef?.submit()">
+          Create
+        </UButton>
+      </template>
+    </UModal>
   </div>
 </template>

@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
+import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
-import { sessionCreateModalSchema } from "~/schemas/session.schema.ts";
+import { getSessionDateBounds } from "~/schemas/utils.ts";
 
 const isModalOpen = defineModel<boolean>("open", { required: true });
 
-//#region Form State
+// #region Form State
 const sessionFormRef = useTemplateRef("sessionFormRef");
 const sessionFormState = reactive<SessionCreateModal>({
   name: "",
   date: new Date(Date.now())
 });
+
+const { minCalendarDate, maxCalendarDate } = getSessionDateBounds();
 
 const sessionFormInputDateRef = useTemplateRef("sessionFormInputDateRef");
 const sessionFormCalendarDate = computed({
@@ -20,52 +22,64 @@ const sessionFormCalendarDate = computed({
     return new CalendarDate(jsDate.getFullYear(), jsDate.getMonth() + 1, jsDate.getDate());
   },
   set: (newCalendarDate) => {
+    const resetNameToDefault = isSessionFormNameDefault.value;
     sessionFormState.date = newCalendarDate.toDate(getLocalTimeZone());
+
+    if (resetNameToDefault) resetSessionFormName();
   }
 });
 
-const isSessionFormNameDefault = ref(true);
-const sessionFormDefaultName = computed(() => {
-  if (!sessionFormState.date) return "Session";
-  return `Session (${sessionFormState.date.getFullYear()}-${String(sessionFormState.date.getMonth() + 1).padStart(2, "0")}-${String(sessionFormState.date.getDate()).padStart(2, "0")})`;
+const isSessionFormNameDefault = computed(() => {
+  return getFormattedSessionName(sessionFormState.date) === sessionFormState.name;
 });
 
-function resetSessionForm() {
-  sessionFormState.date = new Date(Date.now());
-  sessionFormState.name = sessionFormDefaultName.value;
-  isSessionFormNameDefault.value = true;
+function getFormattedSessionName(date: Date): string {
+  if (!sessionFormState.date) return "Session";
+  return `Session (${sessionFormState.date.getFullYear()}-${String(sessionFormState.date.getMonth() + 1).padStart(2, "0")}-${String(sessionFormState.date.getDate()).padStart(2, "0")})`;
 }
 
-sessionFormState.name = sessionFormDefaultName.value;
-resetSessionForm();
+function resetSessionFormName() {
+  sessionFormState.name = getFormattedSessionName(sessionFormState.date);
+}
+
+function reset() {
+  sessionFormState.date = new Date(Date.now());
+  resetSessionFormName();
+}
+
+reset();
 
 watch(isModalOpen, (isNowOpen) => {
   if (!isNowOpen) return;
-  resetSessionForm();
+  reset();
 });
-watch(sessionFormDefaultName, () => {
-  if (!isSessionFormNameDefault.value) return;
-
-  sessionFormState.name = sessionFormDefaultName.value;
-});
-watch(() => sessionFormState.name, (newName, oldName) => {
-  if (oldName === sessionFormDefaultName.value) {
-    isSessionFormNameDefault.value = false;
-  }
-  if (newName === sessionFormDefaultName.value) {
-    isSessionFormNameDefault.value = true;
+watch(sessionFormCalendarDate, (newDate, oldDate) => {
+  if (getFormattedSessionName(oldDate.toDate(getLocalTimeZone())) === sessionFormState.name) {
+    sessionFormState.name = getFormattedSessionName(newDate.toDate(getLocalTimeZone()));
   }
 });
-//#endregion
+// #endregion
 
 const emit = defineEmits<{
-  submit: [data: SessionCreateModal]
+  submit: [data: Session]
 }>();
 
 function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
-  emit("submit", event.data);
+  const newSession: Session = {
+    ...event.data,
+    id: crypto.randomUUID(),
+    status: SessionStatusEnum.Drafting,
+    overview: "Placas 2",
+    createdAt: new Date(Date.now()),
+    studentRoster: [],
+    studentAttendance: new Map()
+  };
+  emit("submit", newSession);
+  onClose();
+}
+
+function onClose() {
   isModalOpen.value = false;
-  console.log("submit", event);
 }
 </script>
 
@@ -74,12 +88,6 @@ function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
     v-model:open="isModalOpen"
     title="New Session"
     description="Enter the new session's details."
-    :close="{
-      color: 'neutral',
-      variant: 'soft',
-      class: 'rounded-full',
-      onClick: () => isModalOpen = false
-    }"
   >
     <template #body>
       <UForm
@@ -99,14 +107,17 @@ function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
             class="w-full"
             :ui="{ trailing: 'pe-1' }"
           >
-            <template v-if="!isSessionFormNameDefault" #trailing>
+            <template
+              v-if="!isSessionFormNameDefault"
+              #trailing
+            >
               <UButton
                 color="neutral"
                 variant="link"
                 size="sm"
                 icon="i-lucide-undo-2"
                 aria-label="Revert session name to default"
-                @click="sessionFormState.name = sessionFormDefaultName"
+                @click="resetSessionFormName"
               />
             </template>
           </UInput>
@@ -142,6 +153,8 @@ function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
                 <template #content>
                   <UCalendar
                     v-model="sessionFormCalendarDate"
+                    :min-value="minCalendarDate"
+                    :max-value="maxCalendarDate"
                     class="p-2"
                   />
                 </template>

@@ -1,3 +1,4 @@
+import { type CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
 import { z } from "zod";
 
 export function createBoundedStringSchema(min: number, max: number) {
@@ -8,4 +9,19 @@ export function createBoundedStringSchema(min: number, max: number) {
     .trim()
     .min(min, { error: "Must be at least " + min + " characters." })
     .max(max, { error: "Cannot exceed " + max + " characters." });
+}
+
+export function getSessionDateBounds() {
+  const localTimeZone = getLocalTimeZone();
+  const todayCalendarDate = today(localTimeZone);
+
+  const minCalendarDate: CalendarDate = todayCalendarDate.subtract({ years: 1 });
+  const maxCalendarDate: CalendarDate = todayCalendarDate.add({ years: 1 });
+
+  return {
+    minCalendarDate,
+    maxCalendarDate,
+    minDate: minCalendarDate.toDate(localTimeZone),
+    maxDate: maxCalendarDate.toDate(localTimeZone)
+  };
 }
