@@ -29,6 +29,17 @@ export default withNuxt({
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "sort-imports": "off",
+    "spaced-comment": ["error", "always", {
+      line: {
+        markers: ["#region", "#endregion"]
+      }
+    }],
+    // If you are using Nuxt's built-in stylistic plugin config:
+    "@stylistic/spaced-comment": ["error", "always", {
+      line: {
+        markers: ["#region", "#endregion"]
+      }
+    }],
     "import/order": "off",
     "vue/require-v-for-key": "error"
   }

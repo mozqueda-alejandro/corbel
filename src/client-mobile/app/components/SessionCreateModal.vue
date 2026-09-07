@@ -2,18 +2,16 @@
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
-import { getSessionDateBounds } from "~/schemas/utils.ts";
-
 const isModalOpen = defineModel<boolean>("open", { required: true });
 
 // #region Form State
+const { minCalendarDate, maxCalendarDate } = getSessionDateBounds();
+
 const sessionFormRef = useTemplateRef("sessionFormRef");
 const sessionFormState = reactive<SessionCreateModal>({
   name: "",
   date: new Date(Date.now())
 });
-
-const { minCalendarDate, maxCalendarDate } = getSessionDateBounds();
 
 const sessionFormInputDateRef = useTemplateRef("sessionFormInputDateRef");
 const sessionFormCalendarDate = computed({
@@ -64,7 +62,9 @@ const emit = defineEmits<{
   submit: [data: Session]
 }>();
 
-function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
+async function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
+  await new Promise(res => setTimeout(res, 1000));
+
   const newSession: Session = {
     ...event.data,
     id: crypto.randomUUID(),
@@ -136,8 +136,8 @@ function onClose() {
               <UPopover
                 :content="{
                   align: 'center',
-                  side: 'bottom',
-                  sideOffset: 8
+                  side: 'left',
+                  sideOffset: 108
                 }"
                 :reference="sessionFormInputDateRef?.inputsRef[3]?.$el"
               >
@@ -167,16 +167,17 @@ function onClose() {
 
     <template #footer="{ close }">
       <UButton
+        label="Cancel"
         type="button"
         color="neutral"
         variant="ghost"
         @click="close"
-      >
-        Cancel
-      </UButton>
-      <UButton @click="sessionFormRef?.submit()">
-        Create
-      </UButton>
+      />
+      <UButton
+        label="Create"
+        loading-auto
+        @click="sessionFormRef?.submit()"
+      />
     </template>
   </UModal>
 </template>

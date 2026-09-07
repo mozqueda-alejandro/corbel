@@ -3,8 +3,6 @@ import type { TableColumn } from "@nuxt/ui";
 import { useClipboard } from "@vueuse/core";
 import { h, resolveComponent } from "vue";
 
-const { sessionListRef, saveSession, deleteSession } = useSessionRepository();
-
 const UButton = resolveComponent("UButton");
 const UCheckbox = resolveComponent("UCheckbox");
 const UBadge = resolveComponent("UBadge");
@@ -12,6 +10,7 @@ const UDropdownMenu = resolveComponent("UDropdownMenu");
 
 const toast = useToast();
 const { copy } = useClipboard();
+const { sessionListRef, saveSession, deleteSession } = useSessionRepository();
 
 type Session = {
   id: string
@@ -20,8 +19,10 @@ type Session = {
   overview: string
 };
 
-const isCreateModalOpen = ref(false);
 const isDeleteSessionModalOpen = ref(false);
+
+//#region SessionCreateModal
+const isCreateModalOpen = ref(false);
 
 function navigateToSession(session: Session) {
   navigateTo(`/sessions/${session.id}`);
@@ -33,7 +34,9 @@ async function handleSessionCreateSubmit(sessionCreateModalData: Session) {
   isCreateModalOpen.value = false;
   navigateToSession(sessionCreateModalData);
 }
+//#endregion
 
+//#region Table UI
 const statusColorMap: Record<SessionStatusEnum, "success" | "error" | "neutral"> = {
   [SessionStatusEnum.Exported]: "success",
   [SessionStatusEnum.Drafting]: "error",
@@ -132,6 +135,7 @@ const columns: TableColumn<Session>[] = [
 ];
 
 const table = useTemplateRef("table");
+//#endregion
 </script>
 
 <template>
@@ -193,7 +197,7 @@ const table = useTemplateRef("table");
           Cancel
         </UButton>
         <UButton @click="sessionFormRef?.submit()">
-          Create
+          Delete
         </UButton>
       </template>
     </UModal>
