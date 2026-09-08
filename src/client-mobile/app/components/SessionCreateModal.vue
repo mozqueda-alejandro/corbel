@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 const isModalOpen = defineModel<boolean>("open", { required: true });
@@ -13,16 +12,11 @@ const sessionFormState = reactive<SessionCreateModal>({
   date: new Date(Date.now())
 });
 
-const sessionFormInputDateRef = useTemplateRef("sessionFormInputDateRef");
-const sessionFormCalendarDate = computed({
-  get: () => {
-    const jsDate = sessionFormState.date;
-    return new CalendarDate(jsDate.getFullYear(), jsDate.getMonth() + 1, jsDate.getDate());
-  },
-  set: (newCalendarDate) => {
+const sessionFormDate = computed<Date>({
+  get: () => sessionFormState.date,
+  set: (newDate) => {
     const resetNameToDefault = isSessionFormNameDefault.value;
-    sessionFormState.date = newCalendarDate.toDate(getLocalTimeZone());
-
+    sessionFormState.date = newDate;
     if (resetNameToDefault) resetSessionFormName();
   }
 });
@@ -51,9 +45,9 @@ watch(isModalOpen, (isNowOpen) => {
   if (!isNowOpen) return;
   reset();
 });
-watch(sessionFormCalendarDate, (newDate, oldDate) => {
-  if (getFormattedSessionName(oldDate.toDate(getLocalTimeZone())) === sessionFormState.name) {
-    sessionFormState.name = getFormattedSessionName(newDate.toDate(getLocalTimeZone()));
+watch(sessionFormDate, (newDate, oldDate) => {
+  if (getFormattedSessionName(oldDate) === sessionFormState.name) {
+    sessionFormState.name = getFormattedSessionName(newDate);
   }
 });
 // #endregion
@@ -127,40 +121,12 @@ function onClose() {
           label="Date"
           name="date"
         >
-          <UInputDate
-            ref="sessionFormInputDateRef"
-            v-model="sessionFormCalendarDate"
+          <InputDate
+            v-model="sessionFormDate"
+            :min-value="minCalendarDate"
+            :max-value="maxCalendarDate"
             class="w-full"
-          >
-            <template #trailing>
-              <UPopover
-                :content="{
-                  align: 'center',
-                  side: 'left',
-                  sideOffset: 108
-                }"
-                :reference="sessionFormInputDateRef?.inputsRef[3]?.$el"
-              >
-                <UButton
-                  color="neutral"
-                  variant="link"
-                  size="sm"
-                  icon="i-lucide-calendar"
-                  aria-label="Select a date"
-                  class="px-0"
-                />
-
-                <template #content>
-                  <UCalendar
-                    v-model="sessionFormCalendarDate"
-                    :min-value="minCalendarDate"
-                    :max-value="maxCalendarDate"
-                    class="p-2"
-                  />
-                </template>
-              </UPopover>
-            </template>
-          </UInputDate>
+          />
         </UFormField>
       </UForm>
     </template>
