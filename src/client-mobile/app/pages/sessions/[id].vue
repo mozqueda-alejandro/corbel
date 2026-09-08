@@ -16,17 +16,14 @@ const sessionRef = ref<Session | undefined>(props.session);
 const tabItems: TabsItem[] = [
   {
     label: "Attendance",
-    icon: "i-lucide-user-check",
     slot: "attendance" as const
   },
   {
     label: "Dailies",
-    icon: "i-lucide-list-checks",
     slot: "dailies" as const
   },
   {
     label: "Tests",
-    icon: "i-lucide-clipboard-list",
     slot: "tests" as const
   }
 ];
@@ -65,7 +62,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <UContainer class="my-8">
+  <UContainer class="mt-8">
     <UTabs
       v-model="active"
       color="neutral"
@@ -73,10 +70,9 @@ onMounted(async () => {
       :unmount-on-hide="false"
       :ui="{
         root: 'flex flex-col-reverse h-screen',
-        list: 'justify-around w-full shrink-0 sticky bottom-0 bg-default z-10 w-[75%]',
+        list: 'justify-around w-full shrink-0 sticky bottom-4 z-10 w-[75%]',
         content: 'flex-1 overflow-y-auto',
-        trigger: 'grow flex-col gap-1 py-1',
-        label: 'text-[10px]/3'
+
       }"
       class="w-full"
     >

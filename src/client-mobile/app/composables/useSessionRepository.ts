@@ -3,10 +3,7 @@ import { type Session, sessionSchema } from "~/schemas/session.schema";
 export function useSessionRepository() {
   const database = useDatabase();
 
-  const { data: sessionListRef, error: sessionListErrorRef } = useLiveQuery(
-    () => database.sessionTable.toArray(),
-    []
-  );
+  const { data: sessionListRef, error: sessionListErrorRef } = useLiveQuery(() => database.sessionTable.toArray());
 
   async function getSessionById(id: string): Promise<Session | undefined> {
     return database.sessionTable.get(id);
