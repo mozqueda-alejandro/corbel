@@ -2,7 +2,13 @@ import { z } from "zod";
 
 import { nameSchema } from "./utils.ts";
 
-export const studentStatusEnum = z.enum(["Active", "Inactive", "Graduated"]);
+export enum StudentStatusEnum {
+  Active = "Active",
+  Inactive = "Inactive",
+  Graduated = "Graduated"
+}
+
+const studentStatusEnum = z.enum(StudentStatusEnum);
 
 export const studentSchema = z
   .object({
@@ -14,4 +20,3 @@ export const studentSchema = z
   });
 
 export type Student = z.infer<typeof studentSchema>;
-export type StudentStatus = z.infer<typeof studentStatusEnum>;

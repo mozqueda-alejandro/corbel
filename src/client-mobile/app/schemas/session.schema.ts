@@ -2,19 +2,24 @@ import { z } from "zod";
 
 import { createBoundedStringSchema, getSessionDateBounds } from "./utils.ts";
 
-export enum StudentAttendanceEnum {
+export enum AttendanceStatusEnum {
   Present = "Present",
   Tardy = "Tardy",
   Absent = "Absent"
 }
-
 export enum SessionStatusEnum {
   Exported = "Exported",
   Drafting = "Drafting",
   Completed = "Completed"
 }
-const studentAttendanceSchema = z.enum(StudentAttendanceEnum);
+const attendanceStatusSchema = z.enum(AttendanceStatusEnum);
 const sessionStatusSchema = z.enum(SessionStatusEnum);
+
+export const attendanceRecordSchema = z.object({
+  studentId: z.uuid(),
+  status: attendanceStatusSchema
+});
+export type AttendanceRecord = z.infer<typeof attendanceRecordSchema>;
 
 export const sessionSchema = z.object({
   id: z.uuid(),
@@ -24,7 +29,7 @@ export const sessionSchema = z.object({
   date: z.date(),
   createdAt: z.date(),
   studentRoster: z.array(studentSchema),
-  studentAttendance: z.map(z.uuid(), studentAttendanceSchema)
+  attendance: z.array(attendanceRecordSchema)
 });
 
 export const sessionCreateModalSchema = sessionSchema

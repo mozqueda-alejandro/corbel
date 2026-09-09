@@ -55,6 +55,16 @@ function getItems(): NavigationMenuItem[] {
   }];
 }
 
+function getFooterItems(): NavigationMenuItem[] {
+  return [{
+    label: "Open notes",
+    icon: "i-lucide-notebook-pen",
+    onClick() {
+      openSlideover.value = true
+    }
+  }];
+}
+
 const userItems = computed<DropdownMenuItem[][]>(() => ([[{
   label: "Profile",
   icon: "i-lucide-user",
@@ -91,7 +101,7 @@ defineShortcuts(extractShortcuts(classesItems.value));
 </script>
 
 <template>
-  <div class="flex flex-1">
+  <div class="flex h-dvh w-screen overflow-hidden">
     <USidebar
       v-model:open="open"
       collapsible="offcanvas"
@@ -125,26 +135,34 @@ defineShortcuts(extractShortcuts(classesItems.value));
       </template>
 
       <template #footer>
-        <UDropdownMenu
-          :items="userItems"
-          :content="{ align: 'center', collisionPadding: 12 }"
-          :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width) min-w-48' }"
-        >
-          <UButton
-            :avatar="{ icon: 'i-lucide-user-round' }"
-            :label="currentUserRef ? `${currentUserRef.firstName} ${currentUserRef.lastName}` : 'User'"
-            trailing-icon="i-lucide-chevrons-up-down"
-            color="neutral"
-            variant="ghost"
-            square
-            class="w-full data-[state=open]:bg-elevated overflow-hidden"
-            :ui="{ trailingIcon: 'text-dimmed ms-auto' }"
+        <div class="flex flex-col gap-2 w-full">
+          <UNavigationMenu
+            :items="getFooterItems()"
+            orientation="vertical"
+            classes="mt-auto"
           />
-        </UDropdownMenu>
+          <USeparator></USeparator>
+          <UDropdownMenu
+            :items="userItems"
+            :content="{ align: 'start', collisionPadding: 12 }"
+            :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width) min-w-48' }"
+          >
+            <UButton
+              :avatar="{ icon: 'i-lucide-user-round' }"
+              :label="currentUserRef ? `${currentUserRef.firstName} ${currentUserRef.lastName}` : 'User'"
+              trailing-icon="i-lucide-chevrons-up-down"
+              color="neutral"
+              variant="ghost"
+              square
+              class="w-full data-[state=open]:bg-elevated overflow-hidden"
+              :ui="{ trailingIcon: 'text-dimmed ms-auto' }"
+            />
+          </UDropdownMenu>
+        </div>
       </template>
     </USidebar>
 
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
       <div class="h-(--ui-header-height) shrink-0 flex items-center justify-between px-4 border-b border-default">
         <UButton
           icon="i-lucide-panel-left"
@@ -164,7 +182,10 @@ defineShortcuts(extractShortcuts(classesItems.value));
           <AppLogo class="h-4 mr-2 w-auto" />
         </div>
       </div>
-      <slot />
+
+      <div class="flex-1 min-h-0 relative">
+        <slot />
+      </div>
     </div>
   </div>
 </template>

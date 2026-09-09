@@ -66,7 +66,7 @@ async function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
     overview: "Placas 2",
     createdAt: new Date(Date.now()),
     studentRoster: [],
-    studentAttendance: new Map()
+    attendance: []
   };
   emit("submit", newSession);
   onClose();

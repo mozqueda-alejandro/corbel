@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { TabsItem } from "@nuxt/ui";
 
-import Dailies from "~/components/Session/Dailies.vue";
-
 const props = defineProps<{
   session?: Session
 }>();
@@ -13,18 +11,23 @@ const { getSessionById } = useSessionRepository();
 
 const sessionRef = ref<Session | undefined>(props.session);
 
+enum SessionTypeEnum {
+  Attendance = "Attendance",
+  Dailies = "Dailies",
+  Tests = "Tests"
+}
 const tabItems: TabsItem[] = [
   {
-    label: "Attendance",
-    slot: "attendance" as const
+    label: SessionTypeEnum.Attendance,
+    slot: SessionTypeEnum.Attendance.toLowerCase()
   },
   {
-    label: "Dailies",
-    slot: "dailies" as const
+    label: SessionTypeEnum.Dailies,
+    slot: SessionTypeEnum.Dailies.toLowerCase()
   },
   {
-    label: "Tests",
-    slot: "tests" as const
+    label: SessionTypeEnum.Tests,
+    slot: SessionTypeEnum.Tests.toLowerCase()
   }
 ];
 
@@ -62,31 +65,52 @@ onMounted(async () => {
 </script>
 
 <template>
-  <UContainer class="mt-8">
-    <UTabs
-      v-model="active"
-      color="neutral"
-      :items="tabItems"
-      :unmount-on-hide="false"
-      :ui="{
-        root: 'flex flex-col-reverse h-screen',
-        list: 'justify-around w-full shrink-0 sticky bottom-4 z-10 w-[75%]',
-        content: 'flex-1 overflow-y-auto',
-
-      }"
-      class="w-full"
-    >
-      <template #attendance>
-        <SessionAttendance />
-      </template>
-      <template #dailies>
-        <SessionDailies />
-      </template>
-      <template #tests>
-        <SessionTests />
-      </template>
-    </UTabs>
-  </UContainer>
+  <UTabs
+    v-model="active"
+    color="neutral"
+    :items="tabItems"
+    :unmount-on-hide="false"
+    :ui="{
+      root: 'relative h-full w-full overflow-hidden',
+      list: 'absolute bottom-5 left-1/2 -translate-x-1/2 w-[65%] z-20 justify-around shrink-0 shadow-lg backdrop-blur-md bg-(--ui-bg)/80 border border-(--ui-border)',
+      content: 'relative h-full w-full overflow-y-auto pt-4'
+    }"
+    class="w-full"
+  >
+    <template #attendance>
+      <div
+        v-if="sessionRef"
+        class="min-h-full w-full"
+      >
+        <SessionAttendance
+          :session="sessionRef"
+          class="pb-20"
+        />
+      </div>
+    </template>
+    <template #dailies>
+      <div
+        v-if="sessionRef"
+        class="min-h-full w-full"
+      >
+        <SessionDailies
+          :session="sessionRef"
+          class="pb-20"
+        />
+      </div>
+    </template>
+    <template #tests>
+      <div
+        v-if="sessionRef"
+        class="min-h-full w-full"
+      >
+        <SessionTests
+          :session="sessionRef"
+          class="pb-20"
+        />
+      </div>
+    </template>
+  </UTabs>
 </template>
 
 <style scoped>
