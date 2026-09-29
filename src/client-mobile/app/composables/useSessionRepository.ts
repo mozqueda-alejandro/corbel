@@ -1,13 +1,10 @@
+// ~/composables/useSessionRepository.ts
 import { type Session, sessionSchema } from "~/schemas/session.schema";
 
 export function useSessionRepository() {
   const database = useDatabase();
 
   const { data: sessionListRef, error: sessionListErrorRef } = useLiveQuery(() => database.sessionTable.toArray());
-
-  async function getSessionById(id: string): Promise<Session | undefined> {
-    return database.sessionTable.get(id);
-  }
 
   async function saveSession(sessionData: Session) {
     const validatedSession = sessionSchema.parse(sessionData);
@@ -18,5 +15,9 @@ export function useSessionRepository() {
     await database.sessionTable.delete(sessionId);
   }
 
-  return { sessionListRef, sessionListErrorRef, getSessionById, saveSession, deleteSession };
+  async function getSessionById(sessionId: string) {
+    return database.sessionTable.get(sessionId);
+  }
+
+  return { sessionListRef, sessionListErrorRef, saveSession, deleteSession, getSessionById };
 }

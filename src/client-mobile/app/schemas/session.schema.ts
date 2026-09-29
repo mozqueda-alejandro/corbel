@@ -1,5 +1,7 @@
+// ~/schemas/session.schema.ts
 import { z } from "zod";
 
+import { studentSchema } from "./student.schema";
 import { createBoundedStringSchema, getSessionDateBounds } from "./utils.ts";
 
 export enum AttendanceStatusEnum {
@@ -21,15 +23,45 @@ export const attendanceRecordSchema = z.object({
 });
 export type AttendanceRecord = z.infer<typeof attendanceRecordSchema>;
 
+export const dailySkillScoreSchema = z.object({
+  skillId: z.uuid(),
+  score: z.number().min(0)
+});
+export type DailySkillScore = z.infer<typeof dailySkillScoreSchema>;
+
+export const testSkillScoreSchema = z.object({
+  skillId: z.uuid(),
+  score: z.number().min(0)
+});
+export type TestSkillScore = z.infer<typeof testSkillScoreSchema>;
+
+export const sessionDailyRecordSchema = z.object({
+  studentId: z.uuid(),
+  activityId: z.uuid(),
+  comments: createBoundedStringSchema(0, 200).optional(),
+  recommendation: createBoundedStringSchema(0, 200).optional(),
+  skills: z.array(dailySkillScoreSchema)
+});
+export type SessionDailyRecord = z.infer<typeof sessionDailyRecordSchema>;
+
+export const sessionTestRecordSchema = z.object({
+  studentId: z.uuid(),
+  testVariantId: z.uuid(),
+  skills: z.array(testSkillScoreSchema)
+});
+export type SessionTestRecord = z.infer<typeof sessionTestRecordSchema>;
+
 export const sessionSchema = z.object({
   id: z.uuid(),
   name: createBoundedStringSchema(2, 50),
   overview: createBoundedStringSchema(0, 200).optional(),
   status: sessionStatusSchema,
-  date: z.date(),
-  createdAt: z.date(),
+  date: z.coerce.date(),
+  createdAt: z.coerce.date(),
   studentRoster: z.array(studentSchema),
-  attendance: z.array(attendanceRecordSchema)
+  attendance: z.array(attendanceRecordSchema),
+  dailies: z.array(sessionDailyRecordSchema),
+  tests: z.array(sessionTestRecordSchema)
 });
 
 export const sessionCreateModalSchema = sessionSchema

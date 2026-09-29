@@ -1,22 +1,26 @@
 import Dexie, { type EntityTable } from "dexie";
 
-import type { Class } from "~/schemas/class.schema";
-import type { Session } from "~/schemas/session.schema";
-import type { User } from "~/schemas/user.schema";
-
 class CorbelDatabase extends Dexie {
-  sessionTable!: EntityTable<Session, "id">;
+  activityTypeTable!: EntityTable<ActivityType, "id">;
+  dailySkillTable!: EntityTable<DailySkill, "id">;
   classTable!: EntityTable<Class, "id">;
-  userTable!: EntityTable<User, "id">;
   noteTable!: EntityTable<Note, "id">;
+  sessionTable!: EntityTable<Session, "id">;
+  studentTable!: EntityTable<Student, "id">;
+  testVariantTable!: EntityTable<TestVariant, "id">;
+  userTable!: EntityTable<User, "id">;
 
   constructor() {
     super("attendance-database");
     this.version(3).stores({
+      activityTypeTable: "id",
+      classTable: "id, name",
+      dailySkillTable: "id",
+      noteTable: "id, name",
       sessionTable: "id, name, date",
-      classTable: "id, name, startDate, endDate",
-      userTable: "id, firstName, lastName",
-      noteTable: "id, name"
+      studentTable: "id, firstName, lastName",
+      testVariantTable: "id",
+      userTable: "id, firstName, lastName"
     });
   }
 }

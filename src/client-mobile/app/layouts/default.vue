@@ -4,14 +4,14 @@ import { useColorMode } from "@vueuse/core";
 
 import { useDBTest } from "~/composables/useDBTest.ts";
 
-const open = ref(true);
-const route = useRoute();
 const colorMode = useColorMode();
-
-const { sessionListRef } = useSessionRepository();
+const route = useRoute();
 const { classListRef, saveClass } = useClassRepository();
-const { currentUserRef } = useUserRepository();
 const { clearUserAndClassData } = useDBTest();
+const { currentUserRef } = useUserRepository();
+const { sessionListRef } = useSessionRepository();
+
+const open = ref(true);
 
 const selectedClassRef = ref(pickDefaultClass(classListRef.value ?? []));
 watch(classListRef, (newClassList) => {
@@ -25,14 +25,10 @@ const classesItems = computed<DropdownMenuItem[][]>(() => {
   return [classList.map((classItem, index) => ({
     label: classItem.name,
     avatar: { icon: "i-lucide-graduation-cap" },
-    kbds: ["meta", String(index + 1)],
     onSelect() {
       selectedClassRef.value = classItem;
     }
-  })), [{
-    label: "Create class",
-    icon: "i-lucide-circle-plus"
-  }]];
+  }))];
 });
 
 function getItems(): NavigationMenuItem[] {
@@ -57,11 +53,6 @@ function getItems(): NavigationMenuItem[] {
 
 function getFooterItems(): NavigationMenuItem[] {
   return [{
-    label: "Open notes",
-    icon: "i-lucide-notebook-pen",
-    onClick() {
-      openSlideover.value = true
-    }
   }];
 }
 
@@ -141,7 +132,7 @@ defineShortcuts(extractShortcuts(classesItems.value));
             orientation="vertical"
             classes="mt-auto"
           />
-          <USeparator></USeparator>
+          <USeparator />
           <UDropdownMenu
             :items="userItems"
             :content="{ align: 'start', collisionPadding: 12 }"

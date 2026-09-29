@@ -12,13 +12,6 @@ const toast = useToast();
 const { copy } = useClipboard();
 const { sessionListRef, saveSession, deleteSession } = useSessionRepository();
 
-type Session = {
-  id: string
-  date: string
-  status: "exported" | "drafting" | "completed"
-  overview: string
-};
-
 const isDeleteSessionModalOpen = ref(false);
 
 //#region SessionCreateModal
@@ -196,7 +189,7 @@ const table = useTemplateRef("table");
         >
           Cancel
         </UButton>
-        <UButton @click="sessionFormRef?.submit()">
+        <UButton>
           Delete
         </UButton>
       </template>

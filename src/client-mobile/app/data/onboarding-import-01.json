@@ -1,0 +1,293 @@
+{
+  "class": [
+    {
+      "id": "10e5c49f-3f42-4627-b9e5-05ec921f1d6d",
+      "name": "BAC 123",
+      "startDate": "2025-09-08T08:10:00.000Z",
+      "endDate": "2026-09-08T08:10:00.000Z"
+    }
+  ],
+  "user": {
+    "id": "b462bce3-8e16-496f-b18d-afdbdf6e7a09",
+    "firstName": "Alejandro",
+    "lastName": "Mozqueda"
+  },
+  "students": [
+    {
+      "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+      "firstName": "Alonso",
+      "lastName": "Ramirez",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
+      "firstName": "Mateo",
+      "lastName": "Alvarez",
+      "status": "Inactive",
+      "year": 2
+    },
+    {
+      "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
+      "firstName": "Diego",
+      "lastName": "Torres",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+      "firstName": "Luis",
+      "lastName": "Fernandez",
+      "status": "Active",
+      "year": 3
+    },
+    {
+      "id": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+      "firstName": "Carlos",
+      "lastName": "Mendez",
+      "status": "Graduated",
+      "year": 3
+    }
+  ],
+  "activities": [
+    {
+      "id": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+      "name": "Block Layouts Bonding and coursing"
+    },
+    {
+      "id": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+      "name": "Bonding & Elevations"
+    }
+  ],
+  "dailySkills": [
+    {
+      "id": "5368cc80-4905-49b5-81ae-209f6379edba",
+      "name": "leveling"
+    },
+    {
+      "id": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+      "name": "plumb"
+    },
+    {
+      "id": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+      "name": "clean"
+    }
+  ],
+  "testVariants": [
+    {
+      "id": "8fb01eb1-2a5b-4b3a-a4a6-22404019d137",
+      "skills": [
+        {
+          "id": "cdb25706-0159-4b14-9762-22c9587d4dec",
+          "name": "Wall Plumb",
+          "criteria": "Whatever",
+          "maxScore": 15
+        },
+        {
+          "id": "b218b208-2dff-4a96-a2ad-32e25d6eb876",
+          "name": "Level",
+          "criteria": "Whatever",
+          "maxScore": 15
+        },
+        {
+          "id": "543d29e4-1aa1-49f3-af27-f80f911f1398",
+          "name": "Story Height",
+          "criteria": "Whatever",
+          "maxScore": 15
+        }
+      ]
+    },
+    {
+      "id": "e78b9d21-d1d7-425e-90cf-cf6d18037229",
+      "skills": [
+        {
+          "id": "9a14837d-00e9-42b8-9dda-63c2256424dc",
+          "name": "Wall Plumb",
+          "criteria": "Whatever",
+          "maxScore": 15
+        },
+        {
+          "id": "611646b8-da84-4c72-a42f-074950a96132",
+          "name": "Level",
+          "criteria": "Whatever",
+          "maxScore": 15
+        },
+        {
+          "id": "4f353fc2-42b2-4c0a-8ea3-621c6763f108",
+          "name": "Story Height",
+          "criteria": "Whatever 2",
+          "maxScore": 10
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "id": "67e9d4dd-aad1-4e4f-9430-32f16592eb62",
+      "name": "Week 1 - Session 1",
+      "overview": "Intro to block layout and coursing basics.",
+      "status": "Completed",
+      "date": "2025-09-09T08:10:00.000Z",
+      "createdAt": "2025-09-09T08:10:00.000Z",
+      "studentRoster": [
+        {
+          "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "firstName": "Alonso",
+          "lastName": "Ramirez",
+          "status": "Active",
+          "year": 1
+        },
+        {
+          "id": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
+          "firstName": "Mateo",
+          "lastName": "Alvarez",
+          "status": "Inactive",
+          "year": 2
+        },
+        {
+          "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "firstName": "Diego",
+          "lastName": "Torres",
+          "status": "Active",
+          "year": 1
+        },
+        {
+          "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "firstName": "Luis",
+          "lastName": "Fernandez",
+          "status": "Active",
+          "year": 3
+        }
+      ],
+      "attendance": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "status": "Present"
+        },
+        {
+          "studentId": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
+          "status": "Absent"
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "status": "Present"
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "status": "Tardy"
+        }
+      ],
+      "dailies": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Good job, needs improvement here",
+          "recommendation": "Do this",
+          "skills": [
+            { "skillId": "5368cc80-4905-49b5-81ae-209f6379edba", "score": 5 },
+            { "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de", "score": 4 },
+            { "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2", "score": 5 }
+          ]
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            { "skillId": "5368cc80-4905-49b5-81ae-209f6379edba", "score": 3 },
+            { "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de", "score": 4 },
+            { "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2", "score": 4 }
+          ]
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of elevations",
+          "recommendation": "Keep practicing bonding patterns",
+          "skills": [
+            { "skillId": "5368cc80-4905-49b5-81ae-209f6379edba", "score": 5 },
+            { "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de", "score": 5 },
+            { "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2", "score": 4 }
+          ]
+        }
+      ],
+      "tests": []
+    },
+    {
+      "id": "dbf67089-07bd-4bad-8ef0-85c41b789e2a",
+      "name": "Week 2 - Session 1",
+      "overview": "First test on wall plumb and leveling.",
+      "status": "Drafting",
+      "date": "2025-09-16T08:10:00.000Z",
+      "createdAt": "2025-09-16T08:10:00.000Z",
+      "studentRoster": [
+        {
+          "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "firstName": "Alonso",
+          "lastName": "Ramirez",
+          "status": "Active",
+          "year": 1
+        },
+        {
+          "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "firstName": "Diego",
+          "lastName": "Torres",
+          "status": "Active",
+          "year": 1
+        },
+        {
+          "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "firstName": "Luis",
+          "lastName": "Fernandez",
+          "status": "Active",
+          "year": 3
+        }
+      ],
+      "attendance": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "status": "Present"
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "status": "Present"
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "status": "Present"
+        }
+      ],
+      "dailies": [],
+      "tests": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "testVariantId": "8fb01eb1-2a5b-4b3a-a4a6-22404019d137",
+          "skills": [
+            { "skillId": "cdb25706-0159-4b14-9762-22c9587d4dec", "score": 13 },
+            { "skillId": "b218b208-2dff-4a96-a2ad-32e25d6eb876", "score": 12 },
+            { "skillId": "543d29e4-1aa1-49f3-af27-f80f911f1398", "score": 14 }
+          ]
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "testVariantId": "8fb01eb1-2a5b-4b3a-a4a6-22404019d137",
+          "skills": [
+            { "skillId": "cdb25706-0159-4b14-9762-22c9587d4dec", "score": 10 },
+            { "skillId": "b218b208-2dff-4a96-a2ad-32e25d6eb876", "score": 11 },
+            { "skillId": "543d29e4-1aa1-49f3-af27-f80f911f1398", "score": 9 }
+          ]
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "testVariantId": "e78b9d21-d1d7-425e-90cf-cf6d18037229",
+          "skills": [
+            { "skillId": "9a14837d-00e9-42b8-9dda-63c2256424dc", "score": 14 },
+            { "skillId": "611646b8-da84-4c72-a42f-074950a96132", "score": 13 },
+            { "skillId": "4f353fc2-42b2-4c0a-8ea3-621c6763f108", "score": 8 }
+          ]
+        }
+      ]
+    }
+  ]
+}

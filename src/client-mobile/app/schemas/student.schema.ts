@@ -10,13 +10,15 @@ export enum StudentStatusEnum {
 
 const studentStatusEnum = z.enum(StudentStatusEnum);
 
-export const studentSchema = z
-  .object({
-    id: z.uuid(),
-    firstName: nameSchema.optional().default(""),
-    lastName: nameSchema.optional().default(""),
-    status: studentStatusEnum,
-    year: z.number().min(0).max(10)
-  });
+export const studentSchema = z.object({
+  id: z.uuid(),
+  firstName: nameSchema.optional().default(""),
+  lastName: nameSchema.optional().default(""),
+  preferredName: nameSchema.optional(),
+  email: z.email().optional(),
+  phoneNumber: z.e164().optional(),
+  status: studentStatusEnum,
+  year: z.number().min(0).max(10)
+});
 
 export type Student = z.infer<typeof studentSchema>;

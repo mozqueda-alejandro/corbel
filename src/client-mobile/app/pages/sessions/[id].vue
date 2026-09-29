@@ -10,6 +10,7 @@ const router = useRouter();
 const { getSessionById } = useSessionRepository();
 
 const sessionRef = ref<Session | undefined>(props.session);
+const openSlideover = ref(false);
 
 enum SessionTypeEnum {
   Attendance = "Attendance",
@@ -65,52 +66,67 @@ onMounted(async () => {
 </script>
 
 <template>
-  <UTabs
-    v-model="active"
-    color="neutral"
-    :items="tabItems"
-    :unmount-on-hide="false"
-    :ui="{
-      root: 'relative h-full w-full overflow-hidden',
-      list: 'absolute bottom-5 left-1/2 -translate-x-1/2 w-[65%] z-20 justify-around shrink-0 shadow-lg backdrop-blur-md bg-(--ui-bg)/80 border border-(--ui-border)',
-      content: 'relative h-full w-full overflow-y-auto pt-4'
-    }"
-    class="w-full"
-  >
-    <template #attendance>
-      <div
-        v-if="sessionRef"
-        class="min-h-full w-full"
-      >
-        <SessionAttendance
-          :session="sessionRef"
-          class="pb-20"
-        />
-      </div>
-    </template>
-    <template #dailies>
-      <div
-        v-if="sessionRef"
-        class="min-h-full w-full"
-      >
-        <SessionDailies
-          :session="sessionRef"
-          class="pb-20"
-        />
-      </div>
-    </template>
-    <template #tests>
-      <div
-        v-if="sessionRef"
-        class="min-h-full w-full"
-      >
-        <SessionTests
-          :session="sessionRef"
-          class="pb-20"
-        />
-      </div>
-    </template>
-  </UTabs>
+  <div class="relative h-full w-full">
+    <UTabs
+      v-model="active"
+      color="neutral"
+      :items="tabItems"
+      :unmount-on-hide="false"
+      :ui="{
+        root: 'relative h-full w-full overflow-hidden',
+        list: 'absolute bottom-5 left-1/2 -translate-x-1/2 w-[65%] h-12 z-20 justify-around items-center shrink-0 shadow-lg backdrop-blur-md bg-(--ui-bg)/80 border border-(--ui-border)',
+        content: 'relative h-full w-full overflow-y-auto pt-4'
+      }"
+      class="w-full"
+    >
+      <template #attendance>
+        <div
+          v-if="sessionRef"
+          class="min-h-full w-full"
+        >
+          <SessionAttendance
+            :session="sessionRef"
+            class="pb-20"
+          />
+        </div>
+      </template>
+      <template #dailies>
+        <div
+          v-if="sessionRef"
+          class="min-h-full w-full"
+        >
+          <SessionDailies
+            :session="sessionRef"
+            class="pb-20"
+          />
+        </div>
+      </template>
+      <template #tests>
+        <div
+          v-if="sessionRef"
+          class="min-h-full w-full"
+        >
+          <SessionTests
+            :session="sessionRef"
+            class="pb-20"
+          />
+        </div>
+      </template>
+    </UTabs>
+    <UButton
+      icon="i-lucide-notebook-pen"
+      color="neutral"
+      variant="ghost"
+      class="absolute bottom-5 z-20 h-12 w-12 justify-center shadow-lg backdrop-blur-md bg-(--ui-bg)/80 border border-(--ui-border) text-muted"
+      style="left: calc(50% + 32.5% + 0.75rem);"
+      @click="openSlideover = true"
+    />
+    <SessionNotesSlideover
+      v-if="sessionRef"
+      v-model:open="openSlideover"
+      :session-id="sessionRef.id"
+    />
+  </div>
 </template>
 
 <style scoped>

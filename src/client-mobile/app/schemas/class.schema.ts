@@ -5,8 +5,8 @@ import { createBoundedStringSchema } from "./utils.ts";
 export const classSchema = z.object({
   id: z.uuid(),
   name: createBoundedStringSchema(1, 30),
-  startDate: z.date(),
-  endDate: z.date()
+  startDate: z.coerce.date(),
+  endDate: z.coerce.date()
 }).refine(dataValue => dataValue.endDate >= dataValue.startDate, {
   message: "End date must be on or after start date",
   path: ["endDate"]
