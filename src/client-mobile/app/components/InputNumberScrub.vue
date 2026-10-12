@@ -83,7 +83,7 @@ function handleTextUpdate(rawText: string | number) {
 
 <template>
   <div
-    class="w-fit touch-pan-y"
+    class="flex w-fit touch-pan-y"
     @pointerdown="handlePointerDown"
     @pointermove="handlePointerMove"
     @pointerup="handlePointerEnd"
