@@ -1,3 +1,5 @@
+import { type Student, studentSchema } from "~/schemas/student.schema";
+
 export function useStudentRepository() {
   const database = useDatabase();
 
@@ -7,5 +9,10 @@ export function useStudentRepository() {
     return database.studentTable.get(id);
   }
 
-  return { studentListRef, getStudentById };
+  async function saveStudent(studentData: Student) {
+    const validatedStudent = studentSchema.parse(studentData);
+    await database.studentTable.put(validatedStudent);
+  }
+
+  return { studentListRef, studentListErrorRef, getStudentById, saveStudent };
 }

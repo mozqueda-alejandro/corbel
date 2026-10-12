@@ -31,13 +31,13 @@ export default withNuxt({
     "sort-imports": "off",
     "spaced-comment": ["error", "always", {
       line: {
-        markers: ["#region", "#endregion"]
+        markers: ["region", "endregion"]
       }
     }],
     // If you are using Nuxt's built-in stylistic plugin config:
     "@stylistic/spaced-comment": ["error", "always", {
       line: {
-        markers: ["#region", "#endregion"]
+        markers: ["region", "endregion"]
       }
     }],
     "import/order": "off",

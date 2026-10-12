@@ -10,6 +10,7 @@ const { classListRef, saveClass } = useClassRepository();
 const { clearUserAndClassData } = useDBTest();
 const { currentUserRef } = useUserRepository();
 const { sessionListRef } = useSessionRepository();
+useAutoArchive();
 
 const open = ref(true);
 
@@ -37,7 +38,7 @@ function getItems(): NavigationMenuItem[] {
     icon: "i-lucide-calendar",
     to: "/",
     active: route.path.endsWith("/") || route.path.startsWith("/sessions"),
-    badge: String(sessionListRef.value?.length)
+    badge: String(sessionListRef.value?.filter(sessionItem => sessionItem.status !== SessionStatusEnum.Archived).length ?? "")
   }, {
     label: "Contacts",
     icon: "i-lucide-contact",

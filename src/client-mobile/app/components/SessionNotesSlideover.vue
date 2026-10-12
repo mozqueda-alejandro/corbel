@@ -3,8 +3,10 @@ import { useDebounceFn } from "@vueuse/core";
 
 import { type Note, NoteColor } from "~/schemas/note.schema";
 
+// readonly is set for completed and archived sessions.
 const props = defineProps<{
   sessionId: string
+  readonly?: boolean
 }>();
 
 const isOpenRef = defineModel<boolean>("open", { required: true });
@@ -53,11 +55,12 @@ async function handleDeleteNote(noteId: string) {
   <USlideover
     v-model:open="isOpenRef"
     title="Session Notes"
-    description="Unsorted notes for this session."
+    :description="readonly ? 'Read-only because this session is locked.' : 'Unsorted notes for this session.'"
   >
     <template #body>
       <div class="space-y-3">
         <UButton
+          v-if="!readonly"
           icon="i-lucide-plus"
           color="neutral"
           variant="outline"
@@ -71,7 +74,7 @@ async function handleDeleteNote(noteId: string) {
           v-if="!noteListForSessionRef.length"
           class="text-sm text-muted text-center py-6"
         >
-          No notes yet — add one above.
+          {{ readonly ? "No notes for this session." : "No notes yet — add one above." }}
         </p>
 
         <UCard
@@ -85,6 +88,7 @@ async function handleDeleteNote(noteId: string) {
               placeholder="Write a note..."
               autoresize
               :rows="2"
+              :disabled="readonly"
               class="w-full"
               :ui="{ base: 'ring-0 focus:ring-0 shadow-none px-0' }"
               @update:model-value="(newText: string) => handleNoteTextInput({ ...noteItem, text: newText })"
@@ -97,11 +101,14 @@ async function handleDeleteNote(noteId: string) {
                 :label="tagItem"
                 variant="subtle"
                 color="neutral"
-                class="cursor-pointer"
-                @click="handleRemoveTag(noteItem, tagItem)"
+                :class="{ 'cursor-pointer': !readonly }"
+                @click="!readonly && handleRemoveTag(noteItem, tagItem)"
               >
                 {{ tagItem }}
-                <template #trailing>
+                <template
+                  v-if="!readonly"
+                  #trailing
+                >
                   <UIcon
                     name="i-lucide-x"
                     class="size-3"
@@ -110,6 +117,7 @@ async function handleDeleteNote(noteId: string) {
               </UBadge>
 
               <UInput
+                v-if="!readonly"
                 v-model="newTagTextByNoteIdRef[noteItem.id]"
                 placeholder="Add tag..."
                 size="xs"
@@ -120,7 +128,10 @@ async function handleDeleteNote(noteId: string) {
               />
             </div>
 
-            <div class="flex items-center justify-between pt-1">
+            <div
+              v-if="!readonly"
+              class="flex items-center justify-between pt-1"
+            >
               <div class="flex items-center gap-1">
                 <UButton
                   v-for="colorOption in noteColorOptionList"

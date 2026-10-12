@@ -11,6 +11,7 @@ withDefaults(defineProps<{
   popoverAlign?: "start" | "center" | "end"
   popoverSide?: "top" | "right" | "bottom" | "left"
   popoverSideOffset?: number
+  disabled?: boolean
 }>(), {
   popoverAlign: "center",
   popoverSide: "left",
@@ -44,6 +45,7 @@ defineExpose({
     ref="inputDateRef"
     v-model="calendarValueRef"
     v-bind="$attrs"
+    :disabled="disabled"
   >
     <template
       v-for="(_, slotName) in $slots"
@@ -71,6 +73,7 @@ defineExpose({
           size="sm"
           icon="i-lucide-calendar"
           aria-label="Select a date"
+          :disabled="disabled"
           class="px-0"
         />
 

@@ -30,6 +30,8 @@ async function handleImportFileSelected(fileInputEvent: Event) {
     });
     return;
   }
+
+  return navigateTo("/");
 }
 </script>
 

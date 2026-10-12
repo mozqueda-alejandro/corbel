@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import type { TableColumn } from "@nuxt/ui";
-import { useClipboard } from "@vueuse/core";
+import type { DropdownMenuItem, TableColumn, TabsItem } from "@nuxt/ui";
 import { h, resolveComponent } from "vue";
 
 const UButton = resolveComponent("UButton");
 const UCheckbox = resolveComponent("UCheckbox");
 const UBadge = resolveComponent("UBadge");
 const UDropdownMenu = resolveComponent("UDropdownMenu");
+const NuxtLink = resolveComponent("NuxtLink");
 
+const route = useRoute();
+const router = useRouter();
 const toast = useToast();
-const { copy } = useClipboard();
-const { sessionListRef, saveSession, deleteSession } = useSessionRepository();
-
-const isDeleteSessionModalOpen = ref(false);
+const { sessionListRef, saveSession, deleteSession, transitionSession } = useSessionRepository();
+const { getAvailableTransitionList, runSessionTransition } = useSessionActions();
+const { currentUserSettingsRef } = useUserRepository();
 
 //#region SessionCreateModal
 const isCreateModalOpen = ref(false);
@@ -29,14 +30,166 @@ async function handleSessionCreateSubmit(sessionCreateModalData: Session) {
 }
 //#endregion
 
+//#region Views
+enum SessionViewEnum {
+  Active = "active",
+  Archived = "archived"
+}
+
+// Kept in the URL so returning from a session lands back on the same view.
+const sessionViewRef = computed<SessionViewEnum>({
+  get: () => (route.query.view === SessionViewEnum.Archived ? SessionViewEnum.Archived : SessionViewEnum.Active),
+  set: (view) => {
+    router.replace({ query: { ...route.query, view: view === SessionViewEnum.Active ? undefined : view } });
+  }
+});
+
+const activeSessionListRef = computed(() => (sessionListRef.value ?? []).filter(sessionItem => sessionItem.status !== SessionStatusEnum.Archived));
+const archivedSessionListRef = computed(() => (sessionListRef.value ?? []).filter(sessionItem => sessionItem.status === SessionStatusEnum.Archived));
+
+const visibleSessionListRef = computed(() =>
+  sessionViewRef.value === SessionViewEnum.Archived ? archivedSessionListRef.value : activeSessionListRef.value);
+
+const viewTabItemList = computed<TabsItem[]>(() => [
+  { label: "Active", value: SessionViewEnum.Active, icon: "i-lucide-calendar", badge: { label: String(activeSessionListRef.value.length), color: "neutral", variant: "subtle" } },
+  { label: "Archived", value: SessionViewEnum.Archived, icon: "i-lucide-archive", badge: { label: String(archivedSessionListRef.value.length), color: "neutral", variant: "subtle" } }
+]);
+
+const searchQueryRef = ref("");
+const rowSelectionRef = ref<Record<string, boolean>>({});
+const sortingRef = ref([{ id: "date", desc: true }]);
+
+// Each view has different columns, so selection and sorting don't carry over.
+watch(sessionViewRef, () => {
+  rowSelectionRef.value = {};
+  sortingRef.value = [{ id: "date", desc: true }];
+});
+
+const autoArchiveDescriptionRef = computed(() => {
+  const { enabled, amount, unit } = currentUserSettingsRef.value.autoArchive;
+  if (!enabled) return "Archive completed sessions to keep this list focused.";
+  const unitLabel = unit.toLowerCase().replace(/s$/, "");
+  return `Completed sessions are archived automatically after ${amount} ${unitLabel}${amount === 1 ? "" : "s"}, or you can archive them yourself.`;
+});
+//#endregion
+
+//#region Bulk Actions
+const selectedSessionListRef = computed(() =>
+  visibleSessionListRef.value.filter(sessionItem => rowSelectionRef.value[sessionItem.id]));
+
+const bulkTransitionRef = computed(() =>
+  sessionViewRef.value === SessionViewEnum.Archived ? SessionTransitionEnum.Unarchive : SessionTransitionEnum.Archive);
+
+const bulkEligibleSessionListRef = computed(() =>
+  selectedSessionListRef.value.filter(sessionItem => canTransitionSession(sessionItem, bulkTransitionRef.value)));
+
+async function handleBulkTransition() {
+  const transition = bulkTransitionRef.value;
+  const eligibleSessionList = bulkEligibleSessionListRef.value;
+  const { label, pastTense, icon } = sessionTransitionDisplayMap[transition];
+
+  const resultList = await Promise.allSettled(eligibleSessionList.map(sessionItem => transitionSession(sessionItem.id, transition)));
+  const failedCount = resultList.filter(result => result.status === "rejected").length;
+  const succeededCount = resultList.length - failedCount;
+  rowSelectionRef.value = {};
+
+  if (succeededCount > 0) {
+    toast.add({ title: `${succeededCount} ${succeededCount === 1 ? "session" : "sessions"} ${pastTense}`, color: "success", icon });
+  }
+  if (failedCount > 0) {
+    console.error(`Bulk ${label.toLowerCase()} failed:`, resultList);
+    toast.add({ title: `Couldn't ${label.toLowerCase()} ${failedCount} ${failedCount === 1 ? "session" : "sessions"}`, color: "error", icon: "i-lucide-circle-x" });
+  }
+}
+//#endregion
+
+//#region Delete
+const sessionPendingDeleteRef = ref<Session>();
+const isDeleteSessionModalOpen = computed({
+  get: () => !!sessionPendingDeleteRef.value,
+  set: (isOpen) => {
+    if (!isOpen) sessionPendingDeleteRef.value = undefined;
+  }
+});
+
+async function handleConfirmDelete() {
+  const session = sessionPendingDeleteRef.value;
+  if (!session) return;
+  try {
+    await deleteSession(session.id);
+    toast.add({ title: `"${session.name}" deleted`, color: "success", icon: "i-lucide-trash-2" });
+  } catch (deleteError) {
+    console.error("Session delete failed:", deleteError);
+    toast.add({
+      title: "Couldn't delete session",
+      description: deleteError instanceof Error ? deleteError.message : undefined,
+      color: "error",
+      icon: "i-lucide-circle-x"
+    });
+  }
+  sessionPendingDeleteRef.value = undefined;
+}
+//#endregion
+
 //#region Table UI
-const statusColorMap: Record<SessionStatusEnum, "success" | "error" | "neutral"> = {
-  [SessionStatusEnum.Exported]: "success",
-  [SessionStatusEnum.Drafting]: "error",
-  [SessionStatusEnum.Completed]: "neutral"
+function formatTableDate(dateValue: Date | undefined) {
+  if (!dateValue) return "";
+  const date = new Date(dateValue);
+  const yy = String(date.getFullYear()).slice(-2);
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+
+  return `${mm}-${dd}-${yy}`;
+}
+
+type SortableColumn = {
+  getIsSorted: () => false | "asc" | "desc"
+  toggleSorting: (desc?: boolean) => void
 };
 
-const columns: TableColumn<Session>[] = [
+function renderSortableHeader(column: SortableColumn, label: string) {
+  const isSorted = column.getIsSorted();
+
+  return h(UButton, {
+    color: "neutral",
+    variant: "ghost",
+    label,
+    icon: isSorted ? (isSorted === "asc" ? "i-lucide-arrow-up-narrow-wide" : "i-lucide-arrow-down-wide-narrow") : "i-lucide-arrow-up-down",
+    class: "-mx-2.5",
+    onClick: () => column.toggleSorting(column.getIsSorted() === "asc")
+  });
+}
+
+function getRowActionItemList(session: Session): DropdownMenuItem[][] {
+  const isLocked = isSessionLocked(session);
+  const itemGroupList: DropdownMenuItem[][] = [
+    [{
+      label: isLocked ? "View" : "Open",
+      icon: isLocked ? "i-lucide-eye" : "i-lucide-square-arrow-out-up-right",
+      onSelect: () => navigateToSession(session)
+    }],
+    getAvailableTransitionList(session).map((transition) => {
+      const { label, icon } = sessionTransitionDisplayMap[transition];
+      const isReExport = transition === SessionTransitionEnum.Export && session.status === SessionStatusEnum.Exported;
+      return {
+        label: isReExport ? "Re-export" : label,
+        icon,
+        onSelect: () => { runSessionTransition(session, transition); }
+      };
+    }),
+    [{
+      label: "Delete",
+      icon: "i-lucide-trash-2",
+      color: "error",
+      // Locked sessions can't be deleted; revert to draft first.
+      disabled: isLocked,
+      onSelect: () => { sessionPendingDeleteRef.value = session; }
+    }]
+  ];
+  return itemGroupList.filter(itemGroup => itemGroup.length > 0);
+}
+
+const columns = computed<TableColumn<Session>[]>(() => [
   {
     id: "select",
     header: ({ table }) => h(UCheckbox, {
@@ -53,114 +206,175 @@ const columns: TableColumn<Session>[] = [
     enableHiding: false
   }, {
     accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => row.getValue("name")
+    header: ({ column }) => renderSortableHeader(column, "Name"),
+    cell: ({ row }) => h(NuxtLink, {
+      to: `/sessions/${row.original.id}`,
+      class: "font-medium text-highlighted hover:underline"
+    }, () => row.original.name)
   }, {
     accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("date"));
-      const yy = String(date.getFullYear()).slice(-2);
-      const mm = String(date.getMonth() + 1).padStart(2, "0");
-      const dd = String(date.getDate()).padStart(2, "0");
-
-      return `${mm}-${dd}-${yy}`;
-    }
+    header: ({ column }) => renderSortableHeader(column, "Date"),
+    sortingFn: "datetime",
+    cell: ({ row }) => formatTableDate(row.original.date)
   }, {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const statusValue = row.getValue("status") as SessionStatusEnum;
-      const color = statusColorMap[statusValue] || "neutral";
+      const statusValue = row.original.status;
 
       return h(UBadge, {
         class: "capitalize",
         variant: "subtle",
-        color
+        color: sessionStatusColorMap[statusValue] || "neutral",
+        icon: sessionStatusIconMap[statusValue]
       }, () => statusValue);
     }
-  }, {
-    accessorKey: "overview",
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return h(UButton, {
-        color: "neutral",
-        variant: "ghost",
-        label: "Overview",
-        icon: isSorted ? (isSorted === "asc" ? "i-lucide-arrow-up-narrow-wide" : "i-lucide-arrow-down-wide-narrow") : "i-lucide-arrow-up-down",
-        class: "-mx-2.5",
-        onClick: () => column.toggleSorting(column.getIsSorted() === "asc")
-      });
-    }
-  }, {
+  },
+  sessionViewRef.value === SessionViewEnum.Archived
+    ? {
+        accessorKey: "archivedAt",
+        header: ({ column }) => renderSortableHeader(column, "Archived"),
+        sortingFn: "datetime",
+        cell: ({ row }) => formatTableDate(row.original.archivedAt)
+      }
+    : {
+        accessorKey: "overview",
+        header: ({ column }) => renderSortableHeader(column, "Overview"),
+        cell: ({ row }) => h("span", { class: "line-clamp-1 text-muted" }, row.original.overview ?? "")
+      },
+  {
     id: "actions",
     enableHiding: false,
     meta: { class: { td: "text-right" } },
-    cell: ({ row }) => {
-      const items = [{
-        type: "label",
-        label: "Actions"
-      }, {
-        label: "Edit",
-        onSelect() {
-          navigateToSession(row.original);
-        }
-      }, {
-        label: "Delete",
-        onSelect() {
-          deleteSession(row.original.id);
-        }
-      }, { type: "separator" }, { label: "Action #1" }, { label: "Action #2" }];
-
-      return h(UDropdownMenu, {
-        "content": { align: "end" },
-        items,
-        "aria-label": "Actions dropdown"
-      }, () => h(UButton, {
-        "icon": "i-lucide-ellipsis-vertical",
-        "color": "neutral",
-        "variant": "ghost",
-        "aria-label": "Actions dropdown"
-      }));
-    }
+    cell: ({ row }) => h(UDropdownMenu, {
+      "content": { align: "end" },
+      "items": getRowActionItemList(row.original),
+      "aria-label": "Actions dropdown"
+    }, () => h(UButton, {
+      "icon": "i-lucide-ellipsis-vertical",
+      "color": "neutral",
+      "variant": "ghost",
+      "aria-label": "Actions dropdown"
+    }))
   }
-];
-
-const table = useTemplateRef("table");
+]);
 //#endregion
 </script>
 
 <template>
   <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
-    <h2>Sessions</h2>
+    <div class="flex items-center justify-between gap-2">
+      <h2>Sessions</h2>
+      <UButton
+        color="neutral"
+        label="New Session"
+        icon="i-lucide-plus"
+        @click="isCreateModalOpen = true"
+      />
+    </div>
 
     <div class="border border-muted rounded-md overflow-hidden">
       <div class="flex-1 divide-y divide-accented w-full">
-        <div class="flex items-center gap-2 px-4 py-3.5 overflow-x-auto">
-          <UButton
+        <div class="flex flex-wrap items-center gap-2 px-4 py-3.5">
+          <UTabs
+            v-model="sessionViewRef"
+            :items="viewTabItemList"
+            :content="false"
+            size="sm"
             color="neutral"
-            label="New Session"
-            icon="i-lucide-plus"
-            @click="isCreateModalOpen = true"
           />
+
+          <div class="ms-auto flex flex-wrap items-center gap-2">
+            <template v-if="selectedSessionListRef.length > 0">
+              <span class="text-sm text-muted">
+                {{ selectedSessionListRef.length }} selected
+              </span>
+              <UButton
+                :label="`${sessionTransitionDisplayMap[bulkTransitionRef].label}${bulkEligibleSessionListRef.length > 0 ? ` (${bulkEligibleSessionListRef.length})` : ''}`"
+                :icon="sessionTransitionDisplayMap[bulkTransitionRef].icon"
+                color="neutral"
+                variant="outline"
+                size="sm"
+                :disabled="bulkEligibleSessionListRef.length === 0"
+                loading-auto
+                @click="handleBulkTransition"
+              />
+              <UButton
+                label="Clear"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                @click="rowSelectionRef = {}"
+              />
+            </template>
+            <UInput
+              v-model="searchQueryRef"
+              icon="i-lucide-search"
+              placeholder="Search sessions..."
+              size="sm"
+              class="w-48"
+            />
+          </div>
         </div>
 
         <UTable
-          ref="table"
-          :data="sessionListRef"
+          v-model:row-selection="rowSelectionRef"
+          v-model:sorting="sortingRef"
+          v-model:global-filter="searchQueryRef"
+          :data="visibleSessionListRef"
           :columns="columns"
+          :get-row-id="(sessionItem: Session) => sessionItem.id"
+          :loading="sessionListRef === undefined"
           sticky
           class="h-96"
         >
-          <template #expanded="{ row }">
-            <pre>{{ row.original }}</pre>
+          <template #empty>
+            <UEmpty
+              v-if="searchQueryRef"
+              variant="naked"
+              icon="i-lucide-search-x"
+              title="No matching sessions"
+              :description="`Nothing matches &quot;${searchQueryRef}&quot; in ${sessionViewRef} sessions.`"
+              :actions="[{ label: 'Clear search', color: 'neutral', variant: 'outline', onClick: () => (searchQueryRef = '') }]"
+              class="py-10"
+            />
+            <UEmpty
+              v-else-if="sessionViewRef === SessionViewEnum.Archived"
+              variant="naked"
+              icon="i-lucide-archive"
+              title="No archived sessions"
+              :description="autoArchiveDescriptionRef"
+              class="py-10"
+            />
+            <UEmpty
+              v-else-if="archivedSessionListRef.length > 0"
+              variant="naked"
+              icon="i-lucide-calendar-check"
+              title="No active sessions"
+              description="All of your sessions are archived."
+              :actions="[
+                { label: 'New Session', icon: 'i-lucide-plus', onClick: () => (isCreateModalOpen = true) },
+                { label: 'View archived', icon: 'i-lucide-archive', color: 'neutral', variant: 'outline', onClick: () => (sessionViewRef = SessionViewEnum.Archived) }
+              ]"
+              class="py-10"
+            />
+            <UEmpty
+              v-else
+              variant="naked"
+              icon="i-lucide-calendar-plus"
+              title="No sessions yet"
+              description="Create a session to start taking attendance."
+              :actions="[{ label: 'New Session', icon: 'i-lucide-plus', onClick: () => (isCreateModalOpen = true) }]"
+              class="py-10"
+            />
           </template>
         </UTable>
 
         <div class="px-4 py-3.5 text-sm text-muted">
-          {{ table?.tableApi?.getFilteredSelectedRowModel().rows.length || 0 }} of
-          {{ table?.tableApi?.getFilteredRowModel().rows.length || 0 }} row(s) selected.
+          {{ visibleSessionListRef.length }} {{ visibleSessionListRef.length === 1 ? "session" : "sessions" }}
+          <template v-if="sessionViewRef === SessionViewEnum.Archived">
+            · Archived sessions are read-only. Unarchive to reopen them.
+          </template>
         </div>
       </div>
     </div>
@@ -169,15 +383,12 @@ const table = useTemplateRef("table");
       v-model:open="isCreateModalOpen"
       @submit="handleSessionCreateSubmit"
     />
-    <UModal title="Delete session">
-      <UButton
-        label="Open"
-        color="neutral"
-        variant="subtle"
-      />
-
+    <UModal
+      v-model:open="isDeleteSessionModalOpen"
+      title="Delete session"
+    >
       <template #body>
-        Are you sure you want to delete session "session.name"?
+        Are you sure you want to delete "{{ sessionPendingDeleteRef?.name }}"? This can't be undone.
       </template>
 
       <template #footer="{ close }">
@@ -189,7 +400,11 @@ const table = useTemplateRef("table");
         >
           Cancel
         </UButton>
-        <UButton>
+        <UButton
+          color="error"
+          loading-auto
+          @click="handleConfirmDelete"
+        >
           Delete
         </UButton>
       </template>

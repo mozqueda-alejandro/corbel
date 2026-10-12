@@ -57,8 +57,9 @@ export function useOnboardingImport() {
             await database.testVariantTable.put(testVariant);
           }
 
+          // Imported files carry no image data, so any photo references would point at nothing.
           for (const session of importedData.sessions) {
-            await database.sessionTable.put(session);
+            await database.sessionTable.put({ ...session, photos: [] });
           }
         }
       );

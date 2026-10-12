@@ -62,15 +62,55 @@
   "dailySkills": [
     {
       "id": "5368cc80-4905-49b5-81ae-209f6379edba",
-      "name": "leveling"
+      "name": "Level"
     },
     {
       "id": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
-      "name": "plumb"
+      "name": "Plumb"
+    },
+    {
+      "id": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+      "name": "Square"
+    },
+    {
+      "id": "00f57be7-6803-4676-a301-89c32e738073",
+      "name": "Bonded"
+    },
+    {
+      "id": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+      "name": "Height"
     },
     {
       "id": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
-      "name": "clean"
+      "name": "Clean"
+    },
+    {
+      "id": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+      "name": "Striking"
+    },
+    {
+      "id": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+      "name": "Lifting technique"
+    },
+    {
+      "id": "79630ce3-447b-492b-8057-8163af623c5a",
+      "name": "Spreading"
+    },
+    {
+      "id": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+      "name": "Head joints"
+    },
+    {
+      "id": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+      "name": "Leveling sequence"
+    },
+    {
+      "id": "e367d4dc-d991-48cb-982f-67964b36c094",
+      "name": "Hammer cuts"
+    },
+    {
+      "id": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+      "name": "Speed"
     }
   ],
   "testVariants": [
