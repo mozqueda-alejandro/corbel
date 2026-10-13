@@ -38,6 +38,19 @@ function handleResetSettings() {
   Object.assign(settingsFormStateRef, structuredClone(toRaw(currentUserSettingsRef.value)));
 }
 // #endregion
+
+// #region Feedback
+// Awaiting the warm-up lets the very first preview play instead of only loading the sound.
+async function previewHaptic() {
+  await primeFeedback();
+  triggerHaptic();
+}
+
+async function previewSound() {
+  await primeFeedback();
+  triggerSound();
+}
+// #endregion
 </script>
 
 <template>
@@ -95,6 +108,48 @@ function handleResetSettings() {
           icon="i-lucide-archive"
           :title="`${dueSessionCountRef} completed ${dueSessionCountRef === 1 ? 'session' : 'sessions'} will be archived when you save.`"
         />
+      </div>
+
+      <div class="px-4 py-3.5">
+        <h3 class="font-medium">
+          Sliders
+        </h3>
+      </div>
+
+      <div class="space-y-4 px-4 py-4">
+        <UFormField
+          name="feedback.haptics"
+          label="Vibration"
+          description="A small tap each time a score changes while sliding. Not available on every device."
+          :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
+        >
+          <UButton
+            type="button"
+            label="Try"
+            color="neutral"
+            variant="ghost"
+            size="xs"
+            @click="previewHaptic"
+          />
+          <USwitch v-model="settingsFormStateRef.feedback.haptics" />
+        </UFormField>
+
+        <UFormField
+          name="feedback.sound"
+          label="Sound"
+          description="A soft tick each time a score changes while sliding. Silent if the device is muted."
+          :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
+        >
+          <UButton
+            type="button"
+            label="Try"
+            color="neutral"
+            variant="ghost"
+            size="xs"
+            @click="previewSound"
+          />
+          <USwitch v-model="settingsFormStateRef.feedback.sound" />
+        </UFormField>
       </div>
 
       <div class="flex justify-end gap-2 px-4 py-3">

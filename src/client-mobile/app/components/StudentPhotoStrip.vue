@@ -55,9 +55,7 @@ watch(photoRowListRef, (photoRowList) => {
   for (const photoRow of currentPhotoRowList) {
     let url = urlByPhotoId.get(photoRow.id);
     if (!url) {
-      const photoBlob = getPhotoBlob(photoRow);
-      if (!photoBlob) continue;
-      url = URL.createObjectURL(photoBlob);
+      url = URL.createObjectURL(getPhotoBlob(photoRow));
       urlByPhotoId.set(photoRow.id, url);
     }
     thumbnailList.push({ id: photoRow.id, url });
@@ -72,11 +70,10 @@ function handleImageError(photoId: string) {
   retriedPhotoIdSet.add(photoId);
 
   const photoRow = photoRowListRef.value?.find(row => row.id === photoId);
-  const photoBlob = photoRow && getPhotoBlob(photoRow);
-  if (!photoBlob) return;
+  if (!photoRow) return;
 
   const staleUrl = urlByPhotoId.get(photoId);
-  const freshUrl = URL.createObjectURL(photoBlob);
+  const freshUrl = URL.createObjectURL(getPhotoBlob(photoRow));
   urlByPhotoId.set(photoId, freshUrl);
   thumbnailListRef.value = thumbnailListRef.value.map(thumbnail =>
     (thumbnail.id === photoId ? { id: photoId, url: freshUrl } : thumbnail));

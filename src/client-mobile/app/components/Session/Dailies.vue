@@ -288,6 +288,7 @@ async function handleConfirmBlankSubmit() {
     ref="formRef"
     :schema="sessionDailyFormSchema"
     :state="formStateRef"
+    :validate-on="['input', 'change']"
     class="space-y-4 px-3 sm:px-4"
     @submit="handleFormSubmit"
     @error="handleFormError"
@@ -328,7 +329,7 @@ async function handleConfirmBlankSubmit() {
         >
           <UTextarea
             v-model="formStateRef.comments"
-            :rows="8"
+            :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly"
             class="w-full"
@@ -341,7 +342,7 @@ async function handleConfirmBlankSubmit() {
         >
           <UTextarea
             v-model="formStateRef.recommendation"
-            :rows="8"
+            :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly"
             class="w-full"
@@ -363,25 +364,18 @@ async function handleConfirmBlankSubmit() {
             >
               No daily skills yet.
             </p>
-            <div
+            <InputNumberScrub
               v-for="dailySkill in dailySkillListRef"
               :key="dailySkill.id"
-              class="flex items-center justify-between gap-3 border-t border-muted px-4 py-1.5 first:border-t-0"
-            >
-              <span class="min-w-0 truncate font-medium">
-                {{ dailySkill.name }}
-              </span>
-              <InputNumberScrub
-                :model-value="getSkillScore(dailySkill.id)"
-                :min="DAILY_SKILL_SCORE_MIN"
-                :max="DAILY_SKILL_SCORE_MAX"
-                :disabled="readonly"
-                :aria-label="`${dailySkill.name} score`"
-                size="sm"
-                class="w-28"
-                @update:model-value="setSkillScore(dailySkill.id, $event)"
-              />
-            </div>
+              :model-value="getSkillScore(dailySkill.id)"
+              :label="dailySkill.name"
+              :min="DAILY_SKILL_SCORE_MIN"
+              :max="DAILY_SKILL_SCORE_MAX"
+              :disabled="readonly"
+              size="sm"
+              class="border-t border-muted first:border-t-0"
+              @update:model-value="setSkillScore(dailySkill.id, $event)"
+            />
             <div
               v-if="scoreSummaryRef.totalCount > 0"
               class="flex items-center justify-between gap-3 border-t border-muted bg-elevated/50 px-4 py-3"
@@ -400,35 +394,35 @@ async function handleConfirmBlankSubmit() {
             </div>
           </div>
         </UFormField>
-        <div class="flex justify-end gap-2">
+        <div class="flex justify-between">
           <UButton
             type="button"
-            label="Clear"
-            icon="i-lucide-eraser"
+            label="Clear daily"
             color="neutral"
             variant="outline"
             size="lg"
             :disabled="readonly"
             @click="runUnlessUnsaved(resetForm)"
           />
-          <UButton
-            type="submit"
-            label="Save"
-            icon="i-lucide-save"
-            color="neutral"
-            variant="soft"
-            size="lg"
-            :disabled="readonly"
-            @click="pendingActionRef = 'save'"
-          />
-          <UButton
-            type="submit"
-            label="Submit"
-            icon="i-lucide-send"
-            size="lg"
-            :disabled="readonly"
-            @click="pendingActionRef = 'submit'"
-          />
+          <div class="flex justify-end gap-2">
+            <UButton
+              type="submit"
+              label="Save"
+              color="neutral"
+              variant="outline"
+              size="lg"
+              :disabled="readonly"
+              @click="pendingActionRef = 'save'"
+            />
+            <UButton
+              type="submit"
+              label="Submit"
+              icon="i-lucide-send"
+              size="lg"
+              :disabled="readonly"
+              @click="pendingActionRef = 'submit'"
+            />
+          </div>
         </div>
       </div>
     </div>

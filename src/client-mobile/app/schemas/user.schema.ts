@@ -16,13 +16,19 @@ export const userSettingsSchema = z.object({
       .min(1)
       .max(999),
     unit: z.enum(AutoArchiveUnitEnum)
+  }),
+  // Tick feedback when a score slider changes value.
+  feedback: z.object({
+    haptics: z.boolean(),
+    sound: z.boolean()
   })
 });
 
 export type UserSettings = z.infer<typeof userSettingsSchema>;
 
 export const defaultUserSettings: UserSettings = {
-  autoArchive: { enabled: true, amount: 1, unit: AutoArchiveUnitEnum.Years }
+  autoArchive: { enabled: true, amount: 1, unit: AutoArchiveUnitEnum.Years },
+  feedback: { haptics: true, sound: true }
 };
 
 export const userSchema = z.object({

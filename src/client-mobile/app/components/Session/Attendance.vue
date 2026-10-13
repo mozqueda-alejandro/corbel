@@ -337,13 +337,17 @@ const tableColumnList: TableColumn<Student>[] = [
   {
     id: "name",
     accessorFn: student => `${student.firstName} ${student.lastName}`,
-    meta: { class: { th: "w-[20%]", td: "w-[20%]" } },
+    meta: { class: { th: "w-[30%]", td: "w-[30%]" } },
     header: ({ column }) => renderSortableHeader(column, "Student"),
     cell: ({ row }) => {
       const fullName = `${row.original.firstName} ${row.original.lastName}`;
-      return row.original.preferredName
-        ? h("div", [h("div", fullName), h("div", { class: "text-xs text-muted" }, `"${row.original.preferredName}"`)])
-        : fullName;
+      const { preferredName } = row.original;
+      // Two 16px lines fill the 32px a row already has from its buttons, so the row height never changes;
+      // a long name is clamped rather than growing the row.
+      return h("div", { class: "flex h-8 flex-col justify-center break-words", title: fullName }, [
+        h("div", { class: `${preferredName ? "line-clamp-1" : "line-clamp-2"} leading-4` }, fullName),
+        preferredName ? h("div", { class: "line-clamp-1 text-xs text-muted" }, `"${preferredName}"`) : undefined
+      ]);
     }
   },
   {
@@ -359,7 +363,7 @@ const tableColumnList: TableColumn<Student>[] = [
 
       return sortA - sortB;
     },
-    meta: { class: { th: "w-[30%]", td: "w-[30%]" } },
+    meta: { class: { th: "w-[40%]", td: "w-[40%]" } },
     header: ({ column }) => renderSortableHeader(column, "Attendance"),
     cell: ({ row }) => {
       const currentStatus = getAttendanceStatus(row.original.id);
@@ -385,12 +389,14 @@ const tableColumnList: TableColumn<Student>[] = [
     id: "totalSessions",
     header: "# Sessions",
     enableSorting: false,
+    meta: { class: { th: "w-[10%] whitespace-nowrap", td: "w-[10%]" } },
     cell: ({ row }) => getTotalSessionsForStudent(row.original.id)
   },
   {
     id: "status",
     header: "Status",
     enableSorting: false,
+    meta: { class: { th: "w-[10%]", td: "w-[10%]" } },
     cell: ({ row }) =>
       h(UBadge, { variant: "subtle", color: studentStatusColorMap[row.original.status] }, () => row.original.status)
   },
@@ -398,6 +404,7 @@ const tableColumnList: TableColumn<Student>[] = [
     id: "actions",
     header: "",
     enableSorting: false,
+    meta: { class: { th: "w-[10%]", td: "w-[10%]" } },
     cell: ({ row }) =>
       h("div", { class: "flex gap-2 justify-end" }, [
         h(UButton, {
