@@ -35,11 +35,58 @@ const { data: photoRowListRef } = useLiveQuery(
 
 const thumbnailListRef = shallowRef<{ id: string, url: string }[]>([]);
 
-watch(photoRowListRef, (photoRowList, _previousPhotoRowList, onCleanup) => {
-  const thumbnailList = (photoRowList ?? []).map(photoRow => ({ id: photoRow.id, url: URL.createObjectURL(photoRow.blob) }));
+// One object URL per photo, kept across live-query emissions so images that are on screen or still
+// decoding never have their URL revoked. A URL is revoked only when its photo leaves the list.
+const urlByPhotoId = new Map<string, string>();
+const retriedPhotoIdSet = new Set<string>();
+
+watch(photoRowListRef, (photoRowList) => {
+  const currentPhotoRowList = photoRowList ?? [];
+  const currentPhotoIdSet = new Set(currentPhotoRowList.map(photoRow => photoRow.id));
+
+  for (const [photoId, url] of urlByPhotoId) {
+    if (currentPhotoIdSet.has(photoId)) continue;
+    URL.revokeObjectURL(url);
+    urlByPhotoId.delete(photoId);
+    retriedPhotoIdSet.delete(photoId);
+  }
+
+  const thumbnailList: { id: string, url: string }[] = [];
+  for (const photoRow of currentPhotoRowList) {
+    let url = urlByPhotoId.get(photoRow.id);
+    if (!url) {
+      const photoBlob = getPhotoBlob(photoRow);
+      if (!photoBlob) continue;
+      url = URL.createObjectURL(photoBlob);
+      urlByPhotoId.set(photoRow.id, url);
+    }
+    thumbnailList.push({ id: photoRow.id, url });
+  }
   thumbnailListRef.value = thumbnailList;
-  onCleanup(() => thumbnailList.forEach(thumbnail => URL.revokeObjectURL(thumbnail.url)));
 }, { immediate: true });
+
+// A failed load gets one retry with a fresh URL built from the stored bytes.
+function handleImageError(photoId: string) {
+  console.warn("Photo failed to load:", photoId);
+  if (retriedPhotoIdSet.has(photoId)) return;
+  retriedPhotoIdSet.add(photoId);
+
+  const photoRow = photoRowListRef.value?.find(row => row.id === photoId);
+  const photoBlob = photoRow && getPhotoBlob(photoRow);
+  if (!photoBlob) return;
+
+  const staleUrl = urlByPhotoId.get(photoId);
+  const freshUrl = URL.createObjectURL(photoBlob);
+  urlByPhotoId.set(photoId, freshUrl);
+  thumbnailListRef.value = thumbnailListRef.value.map(thumbnail =>
+    (thumbnail.id === photoId ? { id: photoId, url: freshUrl } : thumbnail));
+  if (staleUrl) URL.revokeObjectURL(staleUrl);
+}
+
+onBeforeUnmount(() => {
+  urlByPhotoId.forEach(url => URL.revokeObjectURL(url));
+  urlByPhotoId.clear();
+});
 
 const previewUrlRef = computed(() => thumbnailListRef.value.find(thumbnail => thumbnail.id === previewPhotoIdRef.value)?.url);
 const previewIndexRef = computed(() => thumbnailListRef.value.findIndex(thumbnail => thumbnail.id === previewPhotoIdRef.value));
@@ -113,8 +160,10 @@ function showError(title: string, errorValue?: unknown) {
 async function handleFilesSelected(fileInputEvent: Event) {
   const fileInput = fileInputEvent.target as HTMLInputElement;
   const selectedFileList = Array.from(fileInput.files ?? []);
-  fileInput.value = "";
-  if (selectedFileList.length === 0 || !props.studentId || props.readonly) return;
+  if (selectedFileList.length === 0 || !props.studentId || props.readonly) {
+    fileInput.value = "";
+    return;
+  }
 
   const remainingSlotCount = MAX_PHOTOS_PER_STUDENT - photoCountRef.value;
   const acceptedFileList = selectedFileList.slice(0, Math.max(0, remainingSlotCount));
@@ -148,6 +197,8 @@ async function handleFilesSelected(fileInputEvent: Event) {
     console.error("Adding photos failed:", addError);
     showError("Couldn't save photos", addError);
   } finally {
+    // Cleared only after the files are read: iOS may release the picked temp files once the input resets.
+    fileInput.value = "";
     isAddingRef.value = false;
   }
 }
@@ -228,6 +279,7 @@ async function handleConfirmDelete() {
             :src="thumbnail.url"
             alt="Student photo"
             class="size-full object-cover"
+            @error="handleImageError(thumbnail.id)"
           >
         </button>
         <UButton
@@ -253,8 +305,8 @@ async function handleConfirmDelete() {
     <UModal
       :open="!!previewPhotoIdRef"
       :title="previewTitleRef"
-      :description="previewTakenAtRef"
-      :ui="{ content: 'sm:max-w-2xl' }"
+      :description="`${previewTakenAtRef}  (${previewIndexRef + 1}/${thumbnailListRef.length})`"
+      :ui="{ content: 'sm:max-w-5xl' }"
       @update:open="previewPhotoIdRef = undefined"
     >
       <template #body>
@@ -282,7 +334,8 @@ async function handleConfirmDelete() {
                 :src="previewUrlRef"
                 alt="Student photo"
                 draggable="false"
-                class="max-h-[calc(100dvh-26rem)] min-h-32 w-full rounded-md object-contain"
+                class="max-h-[calc(100dvh-19rem)] min-h-32 w-full rounded-md object-contain"
+                @error="handleImageError(previewPhotoIdRef!)"
               >
             </div>
             <UButton
@@ -297,9 +350,6 @@ async function handleConfirmDelete() {
               @click="showAdjacentPhoto(1)"
             />
           </div>
-          <p class="text-center text-sm text-muted">
-            {{ previewIndexRef + 1 }}/{{ thumbnailListRef.length }}
-          </p>
           <UFormField
             label="Tags"
           >

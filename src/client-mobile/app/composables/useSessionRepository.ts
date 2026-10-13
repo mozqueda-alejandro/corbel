@@ -44,16 +44,23 @@ export function useSessionRepository() {
 
   // Returns how many photos were added; anything beyond the per-student limit is dropped.
   async function addSessionPhotoList(sessionId: string, studentId: string, photoBlobList: Blob[]) {
+    // Bytes are read before the transaction opens, since a transaction can't await non-Dexie promises.
+    const photoDataList = await Promise.all(photoBlobList.map(async (blob) => {
+      const data = await blob.arrayBuffer();
+      if (data.byteLength === 0) throw new Error("A photo was empty and couldn't be saved.");
+      return { data, type: blob.type || "image/jpeg" };
+    }));
+
     return database.transaction("rw", database.sessionTable, database.photoTable, async () => {
       const storedSession = await database.sessionTable.get(sessionId);
       if (!storedSession) throw new Error("Session not found.");
 
       const storedPhotoCount = storedSession.photos.filter(photo => photo.studentId === studentId).length;
-      const acceptedBlobList = photoBlobList.slice(0, Math.max(0, MAX_PHOTOS_PER_STUDENT - storedPhotoCount));
-      if (acceptedBlobList.length === 0) return 0;
+      const acceptedDataList = photoDataList.slice(0, Math.max(0, MAX_PHOTOS_PER_STUDENT - storedPhotoCount));
+      if (acceptedDataList.length === 0) return 0;
 
       const createdAt = new Date();
-      const newPhotoList = acceptedBlobList.map(blob => ({ id: crypto.randomUUID(), sessionId, studentId, blob, createdAt }));
+      const newPhotoList = acceptedDataList.map(({ data, type }) => ({ id: crypto.randomUUID(), sessionId, studentId, data, type, createdAt }));
 
       // Updated first so a locked session throws before any image is written.
       await updateStoredSession(sessionId, session => applySessionEdit({

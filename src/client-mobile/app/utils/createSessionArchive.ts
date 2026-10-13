@@ -20,8 +20,10 @@ export async function createSessionArchive(session: Session, photoList: Photo[])
   const zipWriter = new ZipWriter(new BlobWriter("application/zip"));
   await zipWriter.add("session.json", new TextReader(JSON.stringify(sessionJson, null, 2)));
   for (const photo of includedPhotoList) {
+    const photoBlob = getPhotoBlob(photoById.get(photo.id)!);
+    if (!photoBlob) continue;
     // JPEGs are already compressed, so they are stored as-is.
-    await zipWriter.add(getPhotoArchivePath(photo.id), new BlobReader(photoById.get(photo.id)!.blob), { level: 0 });
+    await zipWriter.add(getPhotoArchivePath(photo.id), new BlobReader(photoBlob), { level: 0 });
   }
   return zipWriter.close();
 }
