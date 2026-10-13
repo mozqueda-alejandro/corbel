@@ -3,7 +3,8 @@ import {
   MAX_PHOTOS_PER_STUDENT,
   type Session,
   sessionSchema,
-  SessionStatusEnum
+  SessionStatusEnum,
+  type SessionTestRecord
 } from "~/schemas/session.schema";
 import { defaultUserSettings, type UserSettings } from "~/schemas/user.schema";
 import { saveFile, saveJsonFile } from "~/utils/saveFile";
@@ -40,6 +41,15 @@ export function useSessionRepository() {
       if (!hasSessionContentChanged(storedSession, editedSession)) return storedSession;
       return applySessionEdit(editedSession);
     });
+  }
+
+  // Replaces the student's test record. Reads the stored session inside the transaction, so rapid
+  // consecutive edits never overwrite each other with a stale copy of the other students' tests.
+  async function saveSessionTestRecord(sessionId: string, testRecord: SessionTestRecord) {
+    return updateStoredSession(sessionId, session => applySessionEdit({
+      ...session,
+      tests: [...session.tests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId), testRecord]
+    }));
   }
 
   // Returns how many photos were added; anything beyond the per-student limit is dropped.
@@ -148,6 +158,7 @@ export function useSessionRepository() {
     sessionListErrorRef,
     saveSession,
     saveSessionEdit,
+    saveSessionTestRecord,
     addSessionPhotoList,
     updateSessionPhotoTagList,
     deleteSessionPhoto,

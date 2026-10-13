@@ -3,25 +3,29 @@ import type { SelectMenuItem } from "@nuxt/ui";
 
 import type { Student } from "~/schemas/student.schema";
 
-// Students missing from progressByStudentId have no information yet and are listed first.
-const props = defineProps<{
+type ProgressGroup = { progress: string | undefined, label: string };
+
+// Students missing from progressByStudentId have no progress value, which matches the group whose
+// progress is undefined. Students whose progress matches no group are not listed.
+const props = withDefaults(defineProps<{
   studentList: Student[]
-  progressByStudentId: Record<string, "saved" | "submitted">
+  progressByStudentId: Record<string, string>
+  groupList?: ProgressGroup[]
   disabled?: boolean
-}>();
+}>(), {
+  groupList: () => [
+    { progress: undefined, label: "Not started" },
+    { progress: "saved", label: "Saved" },
+    { progress: "submitted", label: "Submitted" }
+  ]
+});
 
 const studentIdRef = defineModel<string | undefined>();
-
-const groupList = [
-  { progress: undefined, label: "Not started" },
-  { progress: "saved", label: "Saved" },
-  { progress: "submitted", label: "Submitted" }
-] as const;
 
 const itemListRef = computed(() => {
   const itemList: SelectMenuItem[] = [];
 
-  for (const group of groupList) {
+  for (const group of props.groupList) {
     const groupItemList = props.studentList
       .filter(studentItem => props.progressByStudentId[studentItem.id] === group.progress)
       .map(studentItem => ({ id: studentItem.id, label: `${studentItem.firstName} ${studentItem.lastName}`.trim() }))

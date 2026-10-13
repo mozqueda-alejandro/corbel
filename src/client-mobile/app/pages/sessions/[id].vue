@@ -232,6 +232,7 @@ onMounted(() => {
           >
             <SessionTests
               :session="sessionRef"
+              :readonly="isSessionLockedRef"
               class="pb-20"
             />
           </div>

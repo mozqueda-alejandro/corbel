@@ -3,7 +3,6 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 import { useEventListener } from "@vueuse/core";
 
 import {
-  AttendanceStatusEnum,
   DAILY_SKILL_SCORE_MAX,
   DAILY_SKILL_SCORE_MIN,
   type DailySkillScore,
@@ -33,7 +32,7 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
-const { studentListRef } = useStudentRepository();
+const { attendingStudentListRef } = useAttendingStudentList(() => props.session);
 const { activityTypeListRef } = useActivityTypeRepository();
 const { dailySkillListRef } = useDailySkillRepository();
 const { saveSessionEdit } = useSessionRepository();
@@ -170,13 +169,6 @@ useEventListener(window, "beforeunload", (unloadEvent) => {
 //endregion
 
 //region Dropdown Data
-const presentStudentListRef = computed(() => {
-  const presentStudentIdSet = new Set(props.session.attendance
-    .filter(attendanceRecord => attendanceRecord.status === AttendanceStatusEnum.Present)
-    .map(attendanceRecord => attendanceRecord.studentId));
-  return (studentListRef.value ?? []).filter(studentItem => presentStudentIdSet.has(studentItem.id));
-});
-
 const progressByStudentIdRef = computed(() => {
   const progressByStudentId: Record<string, "saved" | "submitted"> = {};
   for (const record of props.session.dailies) {
@@ -302,7 +294,7 @@ async function handleConfirmBlankSubmit() {
         >
           <StudentSelect
             :model-value="formStateRef.studentId"
-            :student-list="presentStudentListRef"
+            :student-list="attendingStudentListRef"
             :progress-by-student-id="progressByStudentIdRef"
             :disabled="readonly"
             @update:model-value="handleStudentChange"

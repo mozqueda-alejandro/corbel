@@ -5,6 +5,9 @@ export function useDBTest() {
     await database.userTable.clear();
     await database.classTable.clear();
     await database.noteTable.clear();
+    // Re-importing test data brings new test ids, so the old rows would linger as nameless dropdown entries.
+    await database.testVariantTable.clear();
+    await database.photoTable.clear();
     window.location.reload();
   }
 

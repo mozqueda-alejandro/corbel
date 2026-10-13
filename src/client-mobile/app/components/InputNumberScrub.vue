@@ -2,6 +2,8 @@
 // The label sits inside the draggable row so a finger sliding it doesn't cover the value.
 const props = defineProps<{
   label: string
+  description?: string
+  showMax?: boolean
   min: number
   max: number
   size?: "xs" | "sm" | "md" | "lg" | "xl"
@@ -104,9 +106,17 @@ function handleTextUpdate(rawText: string | number) {
     @pointercancel="handlePointerEnd"
     @selectstart="handleSelectStart"
   >
-    <span class="min-w-0 select-none truncate font-medium">
-      {{ label }}
-    </span>
+    <div class="min-w-0 select-none">
+      <span class="block truncate font-medium">
+        {{ label }}
+      </span>
+      <span
+        v-if="description"
+        class="block text-xs text-muted"
+      >
+        {{ description }}
+      </span>
+    </div>
     <UInput
       ref="inputRef"
       :size="size"
@@ -122,6 +132,13 @@ function handleTextUpdate(rawText: string | number) {
       :disabled="disabled"
       :ui="{ base: 'text-center cursor-ew-resize' }"
       @update:model-value="handleTextUpdate"
-    />
+    >
+      <template
+        v-if="showMax"
+        #trailing
+      >
+        <span class="text-xs text-muted">/{{ max }}</span>
+      </template>
+    </UInput>
   </div>
 </template>

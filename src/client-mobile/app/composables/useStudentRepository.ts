@@ -14,5 +14,15 @@ export function useStudentRepository() {
     await database.studentTable.put(validatedStudent);
   }
 
-  return { studentListRef, studentListErrorRef, getStudentById, saveStudent };
+  // Validates every student first so a bad row can't leave a partial import behind.
+  async function saveStudentList(studentList: Student[]) {
+    const validatedStudentList = studentList.map(studentItem => studentSchema.parse(studentItem));
+    await database.studentTable.bulkPut(validatedStudentList);
+  }
+
+  async function deleteStudentList(studentIdList: string[]) {
+    await database.studentTable.bulkDelete(studentIdList);
+  }
+
+  return { studentListRef, studentListErrorRef, getStudentById, saveStudent, saveStudentList, deleteStudentList };
 }

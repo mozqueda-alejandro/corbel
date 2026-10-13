@@ -14,7 +14,7 @@ export function createBoundedStringSchema(min: number, max: number, allowSpecial
     return baseSchema;
   }
 
-  return baseSchema.regex(/^[a-zA-Z\s\-'.]+$/, { message: "Name can only contain letters, spaces, hyphens, apostrophes, and periods" });
+  return baseSchema.regex(/^[\p{L}\s\-'.]+$/u, { message: "Name can only contain letters, spaces, hyphens, apostrophes, and periods" });
 }
 
 export const nameSchema = createBoundedStringSchema(2, 30, false);

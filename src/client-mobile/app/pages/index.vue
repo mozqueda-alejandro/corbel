@@ -15,7 +15,7 @@ const { sessionListRef, saveSession, deleteSession, transitionSession } = useSes
 const { getAvailableTransitionList, runSessionTransition } = useSessionActions();
 const { currentUserSettingsRef } = useUserRepository();
 
-//#region SessionCreateModal
+// #region SessionCreateModal
 const isCreateModalOpen = ref(false);
 
 function navigateToSession(session: Session) {
@@ -28,9 +28,9 @@ async function handleSessionCreateSubmit(sessionCreateModalData: Session) {
   isCreateModalOpen.value = false;
   navigateToSession(sessionCreateModalData);
 }
-//#endregion
+// #endregion
 
-//#region Views
+// #region Views
 enum SessionViewEnum {
   Active = "active",
   Archived = "archived"
@@ -71,9 +71,9 @@ const autoArchiveDescriptionRef = computed(() => {
   const unitLabel = unit.toLowerCase().replace(/s$/, "");
   return `Completed sessions are archived automatically after ${amount} ${unitLabel}${amount === 1 ? "" : "s"}, or you can archive them yourself.`;
 });
-//#endregion
+// #endregion
 
-//#region Bulk Actions
+// #region Bulk Actions
 const selectedSessionListRef = computed(() =>
   visibleSessionListRef.value.filter(sessionItem => rowSelectionRef.value[sessionItem.id]));
 
@@ -101,9 +101,9 @@ async function handleBulkTransition() {
     toast.add({ title: `Couldn't ${label.toLowerCase()} ${failedCount} ${failedCount === 1 ? "session" : "sessions"}`, color: "error", icon: "i-lucide-circle-x" });
   }
 }
-//#endregion
+// #endregion
 
-//#region Delete
+// #region Delete
 const sessionPendingDeleteRef = ref<Session>();
 const isDeleteSessionModalOpen = computed({
   get: () => !!sessionPendingDeleteRef.value,
@@ -129,9 +129,9 @@ async function handleConfirmDelete() {
   }
   sessionPendingDeleteRef.value = undefined;
 }
-//#endregion
+// #endregion
 
-//#region Table UI
+// #region Table UI
 function formatTableDate(dateValue: Date | undefined) {
   if (!dateValue) return "";
   const date = new Date(dateValue);
@@ -258,63 +258,75 @@ const columns = computed<TableColumn<Session>[]>(() => [
     }))
   }
 ]);
-//#endregion
+// #endregion
 </script>
 
 <template>
-  <div class="flex flex-col w-3/4 max-w-(--ui-container) mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 gap-6">
-    <div class="flex items-center justify-between gap-2">
-      <h2>Sessions</h2>
+  <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-3 py-5 sm:gap-6 sm:px-6 sm:py-8">
+    <div class="flex items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h2 class="text-xl font-semibold text-highlighted sm:text-2xl">
+          Sessions
+        </h2>
+        <p class="text-sm text-muted">
+          Take attendance, record dailies and tests, and export each class session.
+        </p>
+      </div>
       <UButton
-        color="neutral"
+        class="shrink-0"
         label="New Session"
         icon="i-lucide-plus"
         @click="isCreateModalOpen = true"
       />
     </div>
 
-    <div class="border border-muted rounded-md overflow-hidden">
-      <div class="flex-1 divide-y divide-accented w-full">
-        <div class="flex flex-wrap items-center gap-2 px-4 py-3.5">
+    <div class="overflow-hidden rounded-lg border border-muted bg-default shadow-xs">
+      <div class="w-full divide-y divide-muted">
+        <div class="flex flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:gap-2 sm:px-4">
           <UTabs
             v-model="sessionViewRef"
             :items="viewTabItemList"
             :content="false"
             size="sm"
             color="neutral"
+            class="sm:w-auto"
           />
 
-          <div class="ms-auto flex flex-wrap items-center gap-2">
-            <template v-if="selectedSessionListRef.length > 0">
-              <span class="text-sm text-muted">
-                {{ selectedSessionListRef.length }} selected
-              </span>
-              <UButton
-                :label="`${sessionTransitionDisplayMap[bulkTransitionRef].label}${bulkEligibleSessionListRef.length > 0 ? ` (${bulkEligibleSessionListRef.length})` : ''}`"
-                :icon="sessionTransitionDisplayMap[bulkTransitionRef].icon"
-                color="neutral"
-                variant="outline"
-                size="sm"
-                :disabled="bulkEligibleSessionListRef.length === 0"
-                loading-auto
-                @click="handleBulkTransition"
-              />
-              <UButton
-                label="Clear"
-                color="neutral"
-                variant="ghost"
-                size="sm"
-                @click="rowSelectionRef = {}"
-              />
-            </template>
+          <div class="flex flex-wrap items-center gap-2 sm:ms-auto sm:flex-nowrap">
             <UInput
               v-model="searchQueryRef"
               icon="i-lucide-search"
               placeholder="Search sessions..."
               size="sm"
-              class="w-48"
+              class="w-full sm:w-64"
             />
           </div>
+        </div>
+
+        <div
+          v-if="selectedSessionListRef.length > 0"
+          class="flex flex-wrap items-center gap-2 bg-elevated/50 px-3 py-2 sm:px-4"
+        >
+          <span class="me-auto text-sm font-medium">
+            {{ selectedSessionListRef.length }} selected
+          </span>
+          <UButton
+            :label="`${sessionTransitionDisplayMap[bulkTransitionRef].label}${bulkEligibleSessionListRef.length > 0 ? ` (${bulkEligibleSessionListRef.length})` : ''}`"
+            :icon="sessionTransitionDisplayMap[bulkTransitionRef].icon"
+            color="neutral"
+            variant="outline"
+            size="sm"
+            :disabled="bulkEligibleSessionListRef.length === 0"
+            loading-auto
+            @click="handleBulkTransition"
+          />
+          <UButton
+            label="Clear"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            @click="rowSelectionRef = {}"
+          />
         </div>
 
         <UTable
@@ -326,7 +338,7 @@ const columns = computed<TableColumn<Session>[]>(() => [
           :get-row-id="(sessionItem: Session) => sessionItem.id"
           :loading="sessionListRef === undefined"
           sticky
-          class="h-96"
+          class="max-h-[calc(100dvh-22rem)] min-h-64"
         >
           <template #empty>
             <UEmpty
@@ -370,7 +382,7 @@ const columns = computed<TableColumn<Session>[]>(() => [
           </template>
         </UTable>
 
-        <div class="px-4 py-3.5 text-sm text-muted">
+        <div class="px-3 py-3 text-sm text-muted sm:px-4">
           {{ visibleSessionListRef.length }} {{ visibleSessionListRef.length === 1 ? "session" : "sessions" }}
           <template v-if="sessionViewRef === SessionViewEnum.Archived">
             · Archived sessions are read-only. Unarchive to reopen them.

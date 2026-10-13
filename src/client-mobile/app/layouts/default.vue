@@ -40,10 +40,10 @@ function getItems(): NavigationMenuItem[] {
     active: route.path.endsWith("/") || route.path.startsWith("/sessions"),
     badge: String(sessionListRef.value?.filter(sessionItem => sessionItem.status !== SessionStatusEnum.Archived).length ?? "")
   }, {
-    label: "Contacts",
+    label: "Students",
     icon: "i-lucide-contact",
-    to: "/contacts",
-    active: route.path.startsWith("/contacts")
+    to: "/students",
+    active: route.path.startsWith("/students")
   }, {
     label: "Tests",
     icon: "i-lucide-clipboard-list",
