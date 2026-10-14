@@ -6,7 +6,7 @@ import { z } from "zod";
 
 import type { Session } from "~/schemas/session.schema";
 import { AttendanceStatusEnum, sessionSchema } from "~/schemas/session.schema";
-import { type Student, studentSchema, StudentStatusEnum } from "~/schemas/student.schema";
+import { type SessionStudent, type Student, StudentStatusEnum } from "~/schemas/student.schema";
 
 //region Types and Constants
 const UButton = resolveComponent("UButton");
@@ -43,11 +43,6 @@ const attendanceStatusIconMap: Record<AttendanceStatusEnum, "check" | "clock" | 
   Absent: "x"
 };
 
-const studentStatusColorMap: Record<StudentStatusEnum, "success" | "neutral" | "info"> = {
-  [StudentStatusEnum.Active]: "success",
-  [StudentStatusEnum.Inactive]: "neutral",
-  [StudentStatusEnum.Graduated]: "info"
-};
 //endregion
 
 //region Props and Composables
@@ -58,7 +53,8 @@ const props = defineProps<{
 }>();
 
 const toast = useToast();
-const { studentListRef, saveStudent } = useStudentRepository();
+const { studentListRef } = useStudentRepository();
+const { sessionStudentListRef, isRosterFrozenRef } = useSessionStudentList(() => props.session);
 const { sessionListRef, saveSessionEdit } = useSessionRepository();
 const { importOnboardingDataFromJson } = useOnboardingImport();
 const { minCalendarDate, maxCalendarDate } = getSessionDateBounds();
@@ -129,13 +125,15 @@ function getDayChipColor(day: DateValue) {
 //region Students
 const studentStatusFilterRef = ref<StudentStatusEnum>(StudentStatusEnum.Active);
 
+// A frozen roster is shown in full; otherwise the live roster is filtered by status.
 const filteredStudentListRef = computed(() => {
-  if (!studentListRef.value) return [];
+  const sessionStudentList = sessionStudentListRef.value ?? [];
+  if (isRosterFrozenRef.value) return sessionStudentList;
 
-  return studentListRef.value.filter(studentItem => studentItem.status === studentStatusFilterRef.value);
+  return sessionStudentList.filter(studentItem => studentItem.status === studentStatusFilterRef.value);
 });
 
-const hasAnyStudentsRef = computed(() => (studentListRef.value?.length ?? 0) > 0);
+const hasAnyStudentsRef = computed(() => (sessionStudentListRef.value?.length ?? 0) > 0);
 
 function getTotalSessionsForStudent(_studentId: string): number {
   // TODO: replace with real aggregation once session history querying is wired up.
@@ -251,61 +249,28 @@ async function handleImportFileSelected(fileInputEvent: Event) {
 
 //region Student Modals
 const isEditModalOpenRef = ref(false);
-const isNewStudentRef = ref(false);
-const editFormStateRef = reactive<Student>(createBlankStudent());
+const editingStudentRef = ref<Student>();
 
 const isContactModalOpenRef = ref(false);
-const contactStudentRef = ref<Student | null>(null);
+const contactStudentRef = ref<(SessionStudent & Partial<Pick<Student, "email" | "phoneNumber">>) | null>(null);
 
-function createBlankStudent(): Student {
-  return {
-    id: crypto.randomUUID(),
-    firstName: "",
-    lastName: "",
-    preferredName: "",
-    email: "",
-    phoneNumber: "",
-    status: StudentStatusEnum.Active,
-    year: 0
-  };
-}
-
-function openEditModal(student: Student) {
-  Object.assign(editFormStateRef, createBlankStudent(), student);
-  isNewStudentRef.value = false;
+// The edit form works on the live record; a roster entry is only the session's view of it.
+function openEditModal(student: SessionStudent) {
+  const liveStudent = studentListRef.value?.find(studentItem => studentItem.id === student.id);
+  if (!liveStudent) return;
+  editingStudentRef.value = liveStudent;
   isEditModalOpenRef.value = true;
 }
 
 function openNewStudentModal() {
-  Object.assign(editFormStateRef, createBlankStudent(), { status: studentStatusFilterRef.value });
-  isNewStudentRef.value = true;
+  editingStudentRef.value = undefined;
   isEditModalOpenRef.value = true;
 }
 
-function handleCancelEdit() {
-  isEditModalOpenRef.value = false;
-}
-
-async function handleSaveEdit() {
-  // Blank optional fields are stored as missing rather than as invalid empty strings.
-  const studentResult = studentSchema.safeParse({
-    ...editFormStateRef,
-    preferredName: editFormStateRef.preferredName || undefined,
-    email: editFormStateRef.email || undefined,
-    phoneNumber: editFormStateRef.phoneNumber || undefined
-  });
-  if (!studentResult.success) {
-    const firstIssue = studentResult.error.issues[0];
-    toast.add({ title: "Check student details", description: `${firstIssue?.path.join(".")}: ${firstIssue?.message}`, color: "error", icon: "i-lucide-circle-x" });
-    return;
-  }
-
-  await saveStudent(studentResult.data);
-  isEditModalOpenRef.value = false;
-}
-
-function openContactModal(student: Student) {
-  contactStudentRef.value = student;
+// Contact details aren't kept in a roster entry, so they come from the live record when it still exists.
+function openContactModal(student: SessionStudent) {
+  const liveStudent = studentListRef.value?.find(studentItem => studentItem.id === student.id);
+  contactStudentRef.value = { ...liveStudent, ...student };
   isContactModalOpenRef.value = true;
 }
 //endregion
@@ -333,17 +298,17 @@ function renderSortableHeader(column: SortableColumn, label: string) {
   });
 }
 
-const tableColumnList: TableColumn<Student>[] = [
+const tableColumnList: TableColumn<SessionStudent>[] = [
   {
     id: "name",
-    accessorFn: student => `${student.firstName} ${student.lastName}`,
+    accessorFn: student => getStudentFullName(student),
     meta: { class: { th: "w-[30%]", td: "w-[30%]" } },
     header: ({ column }) => renderSortableHeader(column, "Student"),
     cell: ({ row }) => {
-      const fullName = `${row.original.firstName} ${row.original.lastName}`;
+      const fullName = getStudentFullName(row.original);
       const { preferredName } = row.original;
-      // Two 16px lines fill the 32px a row already has from its buttons, so the row height never changes;
-      // a long name is clamped rather than growing the row.
+      // Two 16px lines fill the 32px the row's buttons already need, so a stacked preferred name never makes
+      // the row taller; a long name is clamped rather than growing it.
       return h("div", { class: "flex h-8 flex-col justify-center break-words", title: fullName }, [
         h("div", { class: `${preferredName ? "line-clamp-1" : "line-clamp-2"} leading-4` }, fullName),
         preferredName ? h("div", { class: "line-clamp-1 text-xs text-muted" }, `"${preferredName}"`) : undefined
@@ -441,10 +406,6 @@ const tableColumnList: TableColumn<Student>[] = [
           type="button"
           class="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-elevated/50 transition-colors"
         >
-          <UIcon
-            name="i-lucide-calendar-days"
-            class="size-5 shrink-0 text-muted"
-          />
           <div class="min-w-0 flex-1">
             <p class="truncate font-medium">
               {{ sessionDetailsStateRef.name || "Untitled session" }}
@@ -547,10 +508,11 @@ const tableColumnList: TableColumn<Student>[] = [
           color="neutral"
           label="New Student"
           icon="i-lucide-user-round-plus"
-          :disabled="readonly"
+          :disabled="readonly || isRosterFrozenRef"
           @click="openNewStudentModal"
         />
         <USelect
+          v-if="!isRosterFrozenRef"
           v-model="studentStatusFilterRef"
           :items="studentStatusFilterOptionList"
         />
@@ -572,6 +534,7 @@ const tableColumnList: TableColumn<Student>[] = [
         :columns="tableColumnList"
         :loading="studentListRef === undefined"
         sticky="header"
+        :ui="{ td: 'py-2' }"
         class="max-h-[60vh]"
       >
         <template #empty>
@@ -580,8 +543,8 @@ const tableColumnList: TableColumn<Student>[] = [
             variant="naked"
             icon="i-lucide-users-round"
             title="No students yet"
-            :description="readonly ? 'Your roster is empty.' : 'Import your roster to start taking attendance, or add students one at a time.'"
-            :actions="readonly ? [] : [
+            :description="readonly || isRosterFrozenRef ? 'Your roster is empty.' : 'Import your roster to start taking attendance, or add students one at a time.'"
+            :actions="readonly || isRosterFrozenRef ? [] : [
               { label: 'Import roster', icon: 'i-lucide-upload', loading: isImportingRef, onClick: triggerImportFilePicker },
               { label: 'Add student', icon: 'i-lucide-user-round-plus', color: 'neutral', variant: 'outline', onClick: openNewStudentModal }
             ]"
@@ -633,76 +596,11 @@ const tableColumnList: TableColumn<Student>[] = [
       @change="handleImportFileSelected"
     >
 
-    <UModal
+    <StudentFormModal
       v-model:open="isEditModalOpenRef"
-      :title="isNewStudentRef ? 'New Student' : 'Edit Student'"
-    >
-      <template #body>
-        <div class="space-y-4">
-          <UFormField label="First name">
-            <UInput
-              v-model="editFormStateRef.firstName"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Last name">
-            <UInput
-              v-model="editFormStateRef.lastName"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Preferred name">
-            <UInput
-              v-model="editFormStateRef.preferredName"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Email">
-            <UInput
-              v-model="editFormStateRef.email"
-              type="email"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Phone number">
-            <UInput
-              v-model="editFormStateRef.phoneNumber"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Status">
-            <USelect
-              v-model="editFormStateRef.status"
-              :items="Object.values(StudentStatusEnum)"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField label="Year">
-            <UInputNumber
-              v-model="editFormStateRef.year"
-              :min="0"
-              :max="10"
-              class="w-full"
-            />
-          </UFormField>
-        </div>
-      </template>
-      <template #footer>
-        <div class="flex justify-end gap-2 w-full">
-          <UButton
-            label="Cancel"
-            color="neutral"
-            variant="outline"
-            @click="handleCancelEdit"
-          />
-          <UButton
-            label="Save"
-            loading-auto
-            @click="handleSaveEdit"
-          />
-        </div>
-      </template>
-    </UModal>
+      :student="editingStudentRef"
+      :default-status="studentStatusFilterRef"
+    />
 
     <UModal
       v-model:open="isContactModalOpenRef"

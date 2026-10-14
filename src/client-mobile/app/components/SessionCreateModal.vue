@@ -65,7 +65,6 @@ async function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
     status: SessionStatusEnum.Drafting,
     overview: "Placas 2",
     createdAt: new Date(Date.now()),
-    studentRoster: [],
     attendance: [],
     dailies: [],
     tests: [],

@@ -3,8 +3,8 @@
     {
       "id": "10e5c49f-3f42-4627-b9e5-05ec921f1d6d",
       "name": "BAC 123",
-      "startDate": "2025-09-08T08:10:00.000Z",
-      "endDate": "2026-09-08T08:10:00.000Z"
+      "startDate": "2026-09-08T08:10:00.000Z",
+      "endDate": "2027-09-08T08:10:00.000Z"
     }
   ],
   "user": {
@@ -17,34 +17,350 @@
       "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
       "firstName": "Alonso",
       "lastName": "Ramirez",
+      "preferredName": "Lonzo",
+      "email": "alonso.ramirez@example.org",
+      "phoneNumber": "+13105550173",
       "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
+      "firstName": "Diego",
+      "lastName": "Torres",
+      "email": "diego.torres@example.org",
+      "phoneNumber": "+16265550112",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+      "firstName": "Sofia",
+      "lastName": "Castillo",
+      "email": "sofia.castillo@example.com",
+      "phoneNumber": "+18185550130",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "04ca9f15-12db-440e-964d-6637d7516e90",
+      "firstName": "Emma",
+      "lastName": "Johnson",
+      "email": "emma.johnson@example.net",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+      "firstName": "Noah",
+      "lastName": "Williams",
+      "phoneNumber": "+12135550131",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "73aaf599-336f-4c14-a101-3820999a51fd",
+      "firstName": "Isabella",
+      "lastName": "Reyes",
+      "preferredName": "Bella",
+      "email": "isabella.reyes@example.net",
+      "phoneNumber": "+13105550105",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+      "firstName": "Liam",
+      "lastName": "O'Brien",
+      "email": "liam.obrien@example.net",
+      "phoneNumber": "+17145550195",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+      "firstName": "Valentina",
+      "lastName": "Cruz",
+      "preferredName": "Val",
+      "email": "valentina.cruz@example.org",
+      "phoneNumber": "+18185550191",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "975e2b39-edc5-47de-8d37-65617854c084",
+      "firstName": "Jayden",
+      "lastName": "Carter",
+      "email": "jayden.carter@example.org",
+      "phoneNumber": "+16265550155",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+      "firstName": "Mia",
+      "lastName": "Nguyen",
+      "email": "mia.nguyen@example.net",
+      "phoneNumber": "+13235550101",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+      "firstName": "Ethan",
+      "lastName": "Patel",
+      "email": "ethan.patel@example.com",
+      "phoneNumber": "+17145550182",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+      "firstName": "Camila",
+      "lastName": "Herrera",
+      "phoneNumber": "+16265550185",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+      "firstName": "Lucas",
+      "lastName": "Moreno",
+      "email": "lucas.moreno@example.org",
+      "phoneNumber": "+13105550167",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+      "firstName": "Aaliyah",
+      "lastName": "Brooks",
+      "email": "aaliyah.brooks@example.org",
+      "phoneNumber": "+13105550147",
+      "status": "Active",
+      "year": 1
+    },
+    {
+      "id": "d344330f-e920-4fac-9c14-8272327444e4",
+      "firstName": "Daniel",
+      "lastName": "Ortiz",
+      "preferredName": "Danny",
+      "email": "daniel.ortiz@example.com",
+      "phoneNumber": "+18185550161",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+      "firstName": "Olivia",
+      "lastName": "Bennett",
+      "preferredName": "Liv",
+      "email": "olivia.bennett@example.com",
+      "phoneNumber": "+13235550119",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+      "firstName": "Santiago",
+      "lastName": "Vargas",
+      "preferredName": "Santi",
+      "email": "santiago.vargas@example.net",
+      "phoneNumber": "+13235550151",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+      "firstName": "Priya",
+      "lastName": "Sharma",
+      "email": "priya.sharma@example.com",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+      "firstName": "Marcus",
+      "lastName": "Johnson",
+      "preferredName": "Marc",
+      "phoneNumber": "+18185550101",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+      "firstName": "Ximena",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+      "firstName": "Tyler",
+      "lastName": "Anderson",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "978021f7-bc07-4ade-8949-19b41160db92",
+      "firstName": "Ava",
+      "lastName": "Kowalski",
+      "email": "ava.kowalski@example.com",
+      "phoneNumber": "+16265550181",
+      "status": "Active",
+      "year": 2
+    },
+    {
+      "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+      "firstName": "Luis",
+      "lastName": "Fernandez",
+      "email": "luis.fernandez@example.org",
+      "phoneNumber": "+13235550187",
+      "status": "Active",
+      "year": 3
+    },
+    {
+      "id": "76faf6ff-587c-438c-9268-a07d81081429",
+      "firstName": "Gabriela",
+      "lastName": "Ruiz",
+      "preferredName": "Gabi",
+      "email": "gabriela.ruiz@example.org",
+      "phoneNumber": "+12135550187",
+      "status": "Active",
+      "year": 3
+    },
+    {
+      "id": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+      "firstName": "Jamal",
+      "lastName": "Washington",
+      "email": "jamal.washington@example.com",
+      "phoneNumber": "+13235550136",
+      "status": "Active",
+      "year": 3
+    },
+    {
+      "id": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+      "firstName": "Brandon",
+      "lastName": "Lee",
+      "preferredName": "Bran",
+      "email": "brandon.lee@example.org",
+      "phoneNumber": "+18185550184",
+      "status": "Inactive",
+      "year": 1
+    },
+    {
+      "id": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+      "firstName": "Natalia",
+      "lastName": "Flores",
+      "preferredName": "Nati",
+      "email": "natalia.flores@example.org",
+      "phoneNumber": "+17145550172",
+      "status": "Inactive",
+      "year": 1
+    },
+    {
+      "id": "c3c28f6b-f087-40e8-9f49-235ee5575427",
+      "firstName": "Connor",
+      "lastName": "Murphy",
+      "status": "Inactive",
+      "year": 1
+    },
+    {
+      "id": "32251218-4490-4793-a370-eb13b311b7ab",
+      "firstName": "Destiny",
+      "lastName": "Harris",
+      "phoneNumber": "+13105550177",
+      "status": "Inactive",
+      "year": 1
+    },
+    {
+      "id": "3253d570-ecd4-4a6d-93ea-14c99728af4b",
+      "firstName": "Andrés",
+      "lastName": "Salazar",
+      "email": "andres.salazar@example.com",
+      "phoneNumber": "+18185550102",
+      "status": "Inactive",
       "year": 1
     },
     {
       "id": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
       "firstName": "Mateo",
       "lastName": "Alvarez",
+      "email": "mateo.alvarez@example.org",
+      "phoneNumber": "+17145550110",
       "status": "Inactive",
       "year": 2
     },
     {
-      "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
-      "firstName": "Diego",
-      "lastName": "Torres",
-      "status": "Active",
-      "year": 1
+      "id": "63dca5eb-7376-4b79-87c4-0ec0e13efc19",
+      "firstName": "Hailey",
+      "lastName": "Thompson",
+      "email": "hailey.thompson@example.net",
+      "phoneNumber": "+16265550121",
+      "status": "Inactive",
+      "year": 2
     },
     {
-      "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
-      "firstName": "Luis",
-      "lastName": "Fernandez",
-      "status": "Active",
-      "year": 3
+      "id": "98043955-5b3f-4890-9a7a-3cb43c4397e3",
+      "lastName": "Haddad",
+      "status": "Inactive",
+      "year": 2
+    },
+    {
+      "id": "52075a7d-aa7e-45e2-a376-d35ed1367a4e",
+      "firstName": "Chloe",
+      "lastName": "Martin",
+      "email": "chloe.martin@example.org",
+      "status": "Inactive",
+      "year": 2
+    },
+    {
+      "id": "97a6de5e-03c6-4503-8d02-ff4fa965d33d",
+      "firstName": "Ricardo",
+      "lastName": "Peña",
+      "email": "ricardo.pena@example.org",
+      "phoneNumber": "+17145550193",
+      "status": "Inactive",
+      "year": 2
     },
     {
       "id": "92c42aa4-12a0-4b20-9725-e48daf10b709",
       "firstName": "Carlos",
       "lastName": "Mendez",
+      "email": "carlos.mendez@example.com",
+      "phoneNumber": "+16265550167",
+      "status": "Graduated",
+      "year": 3
+    },
+    {
+      "id": "f106df1f-0649-4692-ae10-e6335e0d92c2",
+      "firstName": "Elena",
+      "lastName": "Gutierrez",
+      "email": "elena.gutierrez@example.org",
+      "status": "Graduated",
+      "year": 3
+    },
+    {
+      "id": "ef42797c-8454-4e34-b4da-ddf31169fba4",
+      "firstName": "Trevor",
+      "lastName": "Collins",
+      "status": "Graduated",
+      "year": 3
+    },
+    {
+      "id": "8d7ecc8a-aa9d-4321-8a8c-4f12eed997f7",
+      "firstName": "Mei-Ling",
+      "lastName": "Chen",
+      "email": "meiling.chen@example.net",
+      "phoneNumber": "+18185550187",
+      "status": "Graduated",
+      "year": 3
+    },
+    {
+      "id": "6122b169-0b12-457d-8fd4-8fe0df5f090d",
+      "firstName": "José",
+      "lastName": "Navarro",
+      "preferredName": "Pepe",
+      "email": "jose.navarro@example.com",
+      "phoneNumber": "+13235550193",
       "status": "Graduated",
       "year": 3
     }
@@ -121,60 +437,70 @@
         {
           "id": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
           "name": "Wall Plumb",
+          "category": "Objective",
           "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.",
           "maxScore": 15
         },
         {
           "id": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
           "name": "Level",
+          "category": "Objective",
           "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.",
           "maxScore": 10
         },
         {
           "id": "66808961-2af4-4206-a7d8-45959ea4597b",
           "name": "Story Height",
+          "category": "Objective",
           "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 1 point.",
           "maxScore": 5
         },
         {
           "id": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
           "name": "Wall Length",
+          "category": "Objective",
           "criteria": "End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/16” deviation.",
           "maxScore": 10
         },
         {
           "id": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
           "name": "Voids",
+          "category": "Objective",
           "criteria": "Deduct 1 pt for every void in mortar joints.",
           "maxScore": 10
         },
         {
           "id": "e9be8d64-1e67-4130-b9e5-891239581be5",
           "name": "Time",
+          "category": "Objective",
           "criteria": "Full score if completed in time limit. Deduct 1 pt per minute over.",
           "maxScore": 10
         },
         {
           "id": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
           "name": "Brick/Block Technique",
+          "category": "Subjective",
           "criteria": "Deduct 1 pt per instance: relayed blocks, exposed sashes, smearing, over-tapping, redundant leveling.",
           "maxScore": 10
         },
         {
           "id": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
           "name": "Safety Practices",
+          "category": "Subjective",
           "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls.",
           "maxScore": 10
         },
         {
           "id": "43aadae4-55f8-4a12-8987-55dd375a3dda",
           "name": "Overall Appearance",
+          "category": "Subjective",
           "criteria": "Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks.",
           "maxScore": 10
         },
         {
           "id": "639dde50-cb03-455a-aecb-a31b73611cd5",
           "name": "Hammer Cuts",
+          "category": "Subjective",
           "criteria": "Accuracy and cleanliness of hammer cuts.",
           "maxScore": 10
         }
@@ -187,48 +513,56 @@
         {
           "id": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
           "name": "Q1. Mortar types",
+          "category": "Objective",
           "criteria": "Name the five ASTM mortar types (M, S, N, O, K) and rank them from highest to lowest compressive strength. 1 pt per type, 1 pt for correct order.",
           "maxScore": 6
         },
         {
           "id": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
           "name": "Q2. Bond patterns",
+          "category": "Subjective",
           "criteria": "Name three common bond patterns and describe the brick arrangement of each. 2 pts per pattern.",
           "maxScore": 6
         },
         {
           "id": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
           "name": "Q3. Course height",
+          "category": "Objective",
           "criteria": "A wall is laid with 8 in. nominal courses (joint included). How tall is a 10-course wall? 3 pts for 80 in., 2 pts for showing work.",
           "maxScore": 5
         },
         {
           "id": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
           "name": "Q4. Tools",
+          "category": "Subjective",
           "criteria": "Give the use of each: trowel, jointer, level, plumb bob, line pin, brick hammer. 1 pt each.",
           "maxScore": 6
         },
         {
           "id": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
           "name": "Q5. Safety",
+          "category": "Subjective",
           "criteria": "List three pieces of required PPE and one hazard each protects against. 1 pt per item, 1 pt per hazard.",
           "maxScore": 6
         },
         {
           "id": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
           "name": "Q6. Joint types",
+          "category": "Subjective",
           "criteria": "Explain the difference between a concave and a raked joint, and which sheds water better. 5 pts.",
           "maxScore": 5
         },
         {
           "id": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
           "name": "Q7. Block count",
+          "category": "Objective",
           "criteria": "How many 16 x 8 in. blocks are needed for a 12 ft x 4 ft wall, ignoring waste? 5 pts for 54 blocks, 3 pts for showing work.",
           "maxScore": 8
         },
         {
           "id": "59983cc8-2b1c-42c9-abd6-f16775660df9",
           "name": "Q8. Mixing mortar",
+          "category": "Subjective",
           "criteria": "Describe the steps to hand-mix a batch of mortar, including tempering. 1 pt per correct step, up to 8.",
           "maxScore": 8
         }
@@ -237,89 +571,406 @@
   ],
   "sessions": [
     {
-      "id": "67e9d4dd-aad1-4e4f-9430-32f16592eb62",
+      "id": "962c7d20-aa56-4f05-8572-55d448543b8a",
       "name": "Week 1 - Session 1",
       "overview": "Intro to block layout and coursing basics.",
-      "status": "Completed",
-      "date": "2025-09-09T08:10:00.000Z",
-      "createdAt": "2025-09-09T08:10:00.000Z",
+      "status": "Archived",
+      "date": "2026-09-09T08:10:00.000Z",
+      "createdAt": "2026-09-06T08:10:00.000Z",
+      "completedAt": "2026-09-09T16:10:00.000Z",
+      "archivedAt": "2026-10-01T08:10:00.000Z",
       "studentRoster": [
         {
           "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
           "firstName": "Alonso",
           "lastName": "Ramirez",
-          "status": "Active",
-          "year": 1
-        },
-        {
-          "id": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
-          "firstName": "Mateo",
-          "lastName": "Alvarez",
-          "status": "Inactive",
-          "year": 2
+          "preferredName": "Lonzo",
+          "status": "Active"
         },
         {
           "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
           "firstName": "Diego",
           "lastName": "Torres",
-          "status": "Active",
-          "year": 1
+          "status": "Active"
+        },
+        {
+          "id": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "firstName": "Sofia",
+          "lastName": "Castillo",
+          "status": "Active"
+        },
+        {
+          "id": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "firstName": "Emma",
+          "lastName": "Johnson",
+          "status": "Active"
+        },
+        {
+          "id": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "firstName": "Noah",
+          "lastName": "Williams",
+          "status": "Active"
+        },
+        {
+          "id": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "firstName": "Isabella",
+          "lastName": "Reyes",
+          "preferredName": "Bella",
+          "status": "Active"
+        },
+        {
+          "id": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "firstName": "Liam",
+          "lastName": "O'Brien",
+          "status": "Active"
+        },
+        {
+          "id": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "firstName": "Valentina",
+          "lastName": "Cruz",
+          "preferredName": "Val",
+          "status": "Active"
+        },
+        {
+          "id": "975e2b39-edc5-47de-8d37-65617854c084",
+          "firstName": "Jayden",
+          "lastName": "Carter",
+          "status": "Active"
+        },
+        {
+          "id": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "firstName": "Mia",
+          "lastName": "Nguyen",
+          "status": "Active"
+        },
+        {
+          "id": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "firstName": "Ethan",
+          "lastName": "Patel",
+          "status": "Active"
+        },
+        {
+          "id": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "firstName": "Camila",
+          "lastName": "Herrera",
+          "status": "Active"
+        },
+        {
+          "id": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "firstName": "Lucas",
+          "lastName": "Moreno",
+          "status": "Active"
+        },
+        {
+          "id": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "firstName": "Aaliyah",
+          "lastName": "Brooks",
+          "status": "Active"
+        },
+        {
+          "id": "d344330f-e920-4fac-9c14-8272327444e4",
+          "firstName": "Daniel",
+          "lastName": "Ortiz",
+          "preferredName": "Danny",
+          "status": "Active"
+        },
+        {
+          "id": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "firstName": "Olivia",
+          "lastName": "Bennett",
+          "preferredName": "Liv",
+          "status": "Active"
+        },
+        {
+          "id": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "firstName": "Santiago",
+          "lastName": "Vargas",
+          "preferredName": "Santi",
+          "status": "Active"
+        },
+        {
+          "id": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "firstName": "Priya",
+          "lastName": "Sharma",
+          "status": "Active"
+        },
+        {
+          "id": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "firstName": "Marcus",
+          "lastName": "Johnson",
+          "preferredName": "Marc",
+          "status": "Active"
+        },
+        {
+          "id": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "firstName": "Ximena",
+          "status": "Active"
+        },
+        {
+          "id": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "firstName": "Tyler",
+          "lastName": "Anderson",
+          "status": "Active"
+        },
+        {
+          "id": "978021f7-bc07-4ade-8949-19b41160db92",
+          "firstName": "Ava",
+          "lastName": "Kowalski",
+          "status": "Active"
         },
         {
           "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
           "firstName": "Luis",
           "lastName": "Fernandez",
-          "status": "Active",
-          "year": 3
+          "status": "Active"
+        },
+        {
+          "id": "76faf6ff-587c-438c-9268-a07d81081429",
+          "firstName": "Gabriela",
+          "lastName": "Ruiz",
+          "preferredName": "Gabi",
+          "status": "Active"
+        },
+        {
+          "id": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "firstName": "Jamal",
+          "lastName": "Washington",
+          "status": "Active"
+        },
+        {
+          "id": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+          "firstName": "Brandon",
+          "lastName": "Lee",
+          "preferredName": "Bran",
+          "status": "Active"
+        },
+        {
+          "id": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+          "firstName": "Natalia",
+          "lastName": "Flores",
+          "preferredName": "Nati",
+          "status": "Active"
+        },
+        {
+          "id": "c3c28f6b-f087-40e8-9f49-235ee5575427",
+          "firstName": "Connor",
+          "lastName": "Murphy",
+          "status": "Active"
+        },
+        {
+          "id": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "firstName": "Carlos",
+          "lastName": "Mendez",
+          "status": "Active"
+        },
+        {
+          "id": "f106df1f-0649-4692-ae10-e6335e0d92c2",
+          "firstName": "Elena",
+          "lastName": "Gutierrez",
+          "status": "Active"
+        },
+        {
+          "id": "ef42797c-8454-4e34-b4da-ddf31169fba4",
+          "firstName": "Trevor",
+          "lastName": "Collins",
+          "status": "Active"
         }
       ],
       "attendance": [
         {
           "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
-          "status": "Present"
-        },
-        {
-          "studentId": "9ff0f5ef-b631-4b62-9d43-7fa26712eef4",
-          "status": "Absent"
+          "status": "Tardy"
         },
         {
           "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
           "status": "Present"
         },
         {
-          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "status": "Absent"
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "status": "Present"
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "status": "Present"
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
           "status": "Tardy"
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "status": "Present"
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "status": "Present"
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "status": "Present"
+        },
+        {
+          "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "status": "Absent"
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "status": "Present"
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "status": "Present"
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "status": "Present"
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "status": "Present"
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "status": "Present"
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "status": "Present"
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "status": "Present"
+        },
+        {
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "status": "Present"
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "status": "Absent"
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "status": "Absent"
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "status": "Absent"
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "status": "Present"
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "status": "Present"
+        },
+        {
+          "studentId": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+          "status": "Present"
+        },
+        {
+          "studentId": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+          "status": "Present"
+        },
+        {
+          "studentId": "c3c28f6b-f087-40e8-9f49-235ee5575427",
+          "status": "Present"
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "status": "Present"
+        },
+        {
+          "studentId": "f106df1f-0649-4692-ae10-e6335e0d92c2",
+          "status": "Present"
+        },
+        {
+          "studentId": "ef42797c-8454-4e34-b4da-ddf31169fba4",
+          "status": "Absent"
         }
       ],
       "dailies": [
         {
-          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
-          "comments": "Good job, needs improvement here",
-          "recommendation": "Do this",
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Slow down on layout",
           "skills": [
             {
-              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 1
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
               "score": 5
             },
             {
-              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
-              "score": 4
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
             },
             {
-              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
               "score": 5
             }
           ]
         },
         {
-          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
-          "comments": "Solid start, watch your spacing",
-          "recommendation": "Slow down on layout",
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Review story pole use",
           "skills": [
             {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
               "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Good job, needs improvement here",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
               "score": 3
             },
             {
@@ -327,16 +978,292 @@
               "score": 4
             },
             {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 2
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 2
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 2
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 2
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Clean work area, well organized",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 2
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            },
+            {
               "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
               "score": 4
             }
           ]
         },
         {
-          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
-          "comments": "Strong grasp of elevations",
-          "recommendation": "Keep practicing bonding patterns",
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Keep doing what you're doing",
           "skills": [
             {
               "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
@@ -347,42 +1274,903 @@
               "score": 5
             },
             {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 2
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Joints were consistent, keep it up",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
               "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
               "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Clean work area, well organized",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 1
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "c3c28f6b-f087-40e8-9f49-235ee5575427",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Excellent speed without losing quality",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 2
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "studentId": "f106df1f-0649-4692-ae10-e6335e0d92c2",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Good job, needs improvement here",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
             }
           ]
         }
       ],
-      "tests": []
+      "tests": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 3
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 6
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 3
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 3
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 6
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 3
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 6
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 5
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            }
+          ]
+        },
+        {
+          "studentId": "c3c28f6b-f087-40e8-9f49-235ee5575427",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 4
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 3
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 6
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 6
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 5
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            }
+          ]
+        },
+        {
+          "studentId": "f106df1f-0649-4692-ae10-e6335e0d92c2",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 4
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 6
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 3
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            }
+          ]
+        }
+      ],
+      "testVariants": [
+        {
+          "id": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "name": "Masonry Fundamentals Quiz",
+          "skills": [
+            {
+              "id": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "name": "Q1. Mortar types",
+              "category": "Objective",
+              "criteria": "Name the five ASTM mortar types (M, S, N, O, K) and rank them from highest to lowest compressive strength. 1 pt per type, 1 pt for correct order.",
+              "maxScore": 6
+            },
+            {
+              "id": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "name": "Q2. Bond patterns",
+              "category": "Subjective",
+              "criteria": "Name three common bond patterns and describe the brick arrangement of each. 2 pts per pattern.",
+              "maxScore": 6
+            },
+            {
+              "id": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "name": "Q3. Course height",
+              "category": "Objective",
+              "criteria": "A wall is laid with 8 in. nominal courses (joint included). How tall is a 10-course wall? 3 pts for 80 in., 2 pts for showing work.",
+              "maxScore": 5
+            },
+            {
+              "id": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "name": "Q4. Tools",
+              "category": "Subjective",
+              "criteria": "Give the use of each: trowel, jointer, level, plumb bob, line pin, brick hammer. 1 pt each.",
+              "maxScore": 6
+            },
+            {
+              "id": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "name": "Q5. Safety",
+              "category": "Subjective",
+              "criteria": "List three pieces of required PPE and one hazard each protects against. 1 pt per item, 1 pt per hazard.",
+              "maxScore": 6
+            },
+            {
+              "id": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "name": "Q6. Joint types",
+              "category": "Subjective",
+              "criteria": "Explain the difference between a concave and a raked joint, and which sheds water better. 5 pts.",
+              "maxScore": 5
+            },
+            {
+              "id": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "name": "Q7. Block count",
+              "category": "Objective",
+              "criteria": "How many 16 x 8 in. blocks are needed for a 12 ft x 4 ft wall, ignoring waste? 5 pts for 54 blocks, 3 pts for showing work.",
+              "maxScore": 8
+            }
+          ]
+        }
+      ]
     },
     {
-      "id": "dbf67089-07bd-4bad-8ef0-85c41b789e2a",
-      "name": "Week 2 - Session 1",
-      "overview": "First test on wall plumb and leveling.",
-      "status": "Drafting",
-      "date": "2025-09-16T08:10:00.000Z",
-      "createdAt": "2025-09-16T08:10:00.000Z",
+      "id": "faf43996-5c1a-4972-aaf6-9e76189578d0",
+      "name": "Week 1 - Session 2",
+      "overview": "Bonding patterns and building to the line.",
+      "status": "Completed",
+      "date": "2026-09-11T08:10:00.000Z",
+      "createdAt": "2026-09-09T08:10:00.000Z",
+      "completedAt": "2026-10-12T08:10:00.000Z",
       "studentRoster": [
         {
           "id": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
           "firstName": "Alonso",
           "lastName": "Ramirez",
-          "status": "Active",
-          "year": 1
+          "preferredName": "Lonzo",
+          "status": "Active"
         },
         {
           "id": "e49bdfbb-eb05-474f-a595-5507f208af03",
           "firstName": "Diego",
           "lastName": "Torres",
-          "status": "Active",
-          "year": 1
+          "status": "Active"
+        },
+        {
+          "id": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "firstName": "Sofia",
+          "lastName": "Castillo",
+          "status": "Active"
+        },
+        {
+          "id": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "firstName": "Emma",
+          "lastName": "Johnson",
+          "status": "Active"
+        },
+        {
+          "id": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "firstName": "Noah",
+          "lastName": "Williams",
+          "status": "Active"
+        },
+        {
+          "id": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "firstName": "Isabella",
+          "lastName": "Reyes",
+          "preferredName": "Bella",
+          "status": "Active"
+        },
+        {
+          "id": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "firstName": "Liam",
+          "lastName": "O'Brien",
+          "status": "Active"
+        },
+        {
+          "id": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "firstName": "Valentina",
+          "lastName": "Cruz",
+          "preferredName": "Val",
+          "status": "Active"
+        },
+        {
+          "id": "975e2b39-edc5-47de-8d37-65617854c084",
+          "firstName": "Jayden",
+          "lastName": "Carter",
+          "status": "Active"
+        },
+        {
+          "id": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "firstName": "Mia",
+          "lastName": "Nguyen",
+          "status": "Active"
+        },
+        {
+          "id": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "firstName": "Ethan",
+          "lastName": "Patel",
+          "status": "Active"
+        },
+        {
+          "id": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "firstName": "Camila",
+          "lastName": "Herrera",
+          "status": "Active"
+        },
+        {
+          "id": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "firstName": "Lucas",
+          "lastName": "Moreno",
+          "status": "Active"
+        },
+        {
+          "id": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "firstName": "Aaliyah",
+          "lastName": "Brooks",
+          "status": "Active"
+        },
+        {
+          "id": "d344330f-e920-4fac-9c14-8272327444e4",
+          "firstName": "Daniel",
+          "lastName": "Ortiz",
+          "preferredName": "Danny",
+          "status": "Active"
+        },
+        {
+          "id": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "firstName": "Olivia",
+          "lastName": "Bennett",
+          "preferredName": "Liv",
+          "status": "Active"
+        },
+        {
+          "id": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "firstName": "Santiago",
+          "lastName": "Vargas",
+          "preferredName": "Santi",
+          "status": "Active"
+        },
+        {
+          "id": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "firstName": "Priya",
+          "lastName": "Sharma",
+          "status": "Active"
+        },
+        {
+          "id": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "firstName": "Marcus",
+          "lastName": "Johnson",
+          "preferredName": "Marc",
+          "status": "Active"
+        },
+        {
+          "id": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "firstName": "Ximena",
+          "status": "Active"
+        },
+        {
+          "id": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "firstName": "Tyler",
+          "lastName": "Anderson",
+          "status": "Active"
+        },
+        {
+          "id": "978021f7-bc07-4ade-8949-19b41160db92",
+          "firstName": "Ava",
+          "lastName": "Kowalski",
+          "status": "Active"
         },
         {
           "id": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
           "firstName": "Luis",
           "lastName": "Fernandez",
-          "status": "Active",
-          "year": 3
+          "status": "Active"
+        },
+        {
+          "id": "76faf6ff-587c-438c-9268-a07d81081429",
+          "firstName": "Gabriela",
+          "lastName": "Ruiz",
+          "preferredName": "Gabi",
+          "status": "Active"
+        },
+        {
+          "id": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "firstName": "Jamal",
+          "lastName": "Washington",
+          "status": "Active"
+        },
+        {
+          "id": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+          "firstName": "Brandon",
+          "lastName": "Lee",
+          "preferredName": "Bran",
+          "status": "Active"
+        },
+        {
+          "id": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+          "firstName": "Natalia",
+          "lastName": "Flores",
+          "preferredName": "Nati",
+          "status": "Active"
+        },
+        {
+          "id": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "firstName": "Carlos",
+          "lastName": "Mendez",
+          "status": "Active"
         }
       ],
       "attendance": [
@@ -392,17 +2180,1924 @@
         },
         {
           "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "status": "Absent"
+        },
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "status": "Absent"
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "status": "Present"
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "status": "Absent"
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "status": "Present"
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "status": "Present"
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "status": "Tardy"
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "status": "Present"
+        },
+        {
+          "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "status": "Present"
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "status": "Present"
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "status": "Present"
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "status": "Present"
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "status": "Present"
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "status": "Present"
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "status": "Present"
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "status": "Present"
+        },
+        {
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "status": "Present"
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "status": "Absent"
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "status": "Tardy"
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "status": "Present"
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "status": "Present"
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "status": "Present"
+        },
+        {
+          "studentId": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
+          "status": "Absent"
+        },
+        {
+          "studentId": "2bde17e5-b7fb-4b17-82ef-06408b624cf4",
+          "status": "Absent"
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "status": "Present"
+        }
+      ],
+      "dailies": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Good job, needs improvement here",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 3
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 2
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 2
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 1
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Clean work area, well organized",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 2
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 1
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 1
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 1
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 2
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 2
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 2
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Showed real improvement from last time",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Rushed the last course, slow down",
+          "recommendation": "Keep practicing bonding patterns",
+          "skills": [
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Check plumb after every course",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 1
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Joints were consistent, keep it up",
+          "recommendation": "Keep practicing bonding patterns",
+          "skills": [
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 1
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 2
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Showed real improvement from last time",
+          "recommendation": "Keep practicing bonding patterns",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 1
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Showed real improvement from last time",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            }
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 14
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 9
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 3
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 10
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 7
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 8
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 7
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 7
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 6
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 6
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 7
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 11
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 7
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 5
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 6
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 6
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 7
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 7
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 8
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 10
+            }
+          ]
+        },
+        {
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 14
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 6
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 4
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 7
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 10
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 7
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 6
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 9
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 8
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 10
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 9
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 5
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 9
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 10
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 8
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 9
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 10
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 7
+            }
+          ]
+        },
+        {
+          "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 4
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 6
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 7
+            }
+          ]
+        }
+      ],
+      "testVariants": [
+        {
+          "id": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "name": "Wall Build Practical",
+          "skills": [
+            {
+              "id": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "name": "Wall Plumb",
+              "category": "Objective",
+              "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.",
+              "maxScore": 15
+            },
+            {
+              "id": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "name": "Level",
+              "category": "Objective",
+              "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.",
+              "maxScore": 10
+            },
+            {
+              "id": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "name": "Story Height",
+              "category": "Objective",
+              "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 1 point.",
+              "maxScore": 5
+            },
+            {
+              "id": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "name": "Wall Length",
+              "category": "Objective",
+              "criteria": "End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/16” deviation.",
+              "maxScore": 10
+            },
+            {
+              "id": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "name": "Voids",
+              "category": "Objective",
+              "criteria": "Deduct 1 pt for every void in mortar joints.",
+              "maxScore": 10
+            },
+            {
+              "id": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "name": "Time",
+              "category": "Objective",
+              "criteria": "Full score if completed in time limit. Deduct 1 pt per minute over.",
+              "maxScore": 10
+            },
+            {
+              "id": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "name": "Brick/Block Technique",
+              "category": "Subjective",
+              "criteria": "Deduct 1 pt per instance: relayed blocks, exposed sashes, smearing, over-tapping, redundant leveling.",
+              "maxScore": 10
+            },
+            {
+              "id": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "name": "Safety Practices",
+              "category": "Subjective",
+              "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls.",
+              "maxScore": 10
+            },
+            {
+              "id": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "name": "Overall Appearance",
+              "category": "Subjective",
+              "criteria": "Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks.",
+              "maxScore": 10
+            },
+            {
+              "id": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "name": "Hammer Cuts",
+              "category": "Subjective",
+              "criteria": "Accuracy and cleanliness of hammer cuts.",
+              "maxScore": 10
+            }
+          ]
+        },
+        {
+          "id": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "name": "Masonry Fundamentals Written Test",
+          "skills": [
+            {
+              "id": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "name": "Q1. Mortar types",
+              "category": "Objective",
+              "criteria": "Name the five ASTM mortar types (M, S, N, O, K) and rank them from highest to lowest compressive strength. 1 pt per type, 1 pt for correct order.",
+              "maxScore": 6
+            },
+            {
+              "id": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "name": "Q2. Bond patterns",
+              "category": "Subjective",
+              "criteria": "Name three common bond patterns and describe the brick arrangement of each. 2 pts per pattern.",
+              "maxScore": 6
+            },
+            {
+              "id": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "name": "Q3. Course height",
+              "category": "Objective",
+              "criteria": "A wall is laid with 8 in. nominal courses (joint included). How tall is a 10-course wall? 3 pts for 80 in., 2 pts for showing work.",
+              "maxScore": 5
+            },
+            {
+              "id": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "name": "Q4. Tools",
+              "category": "Subjective",
+              "criteria": "Give the use of each: trowel, jointer, level, plumb bob, line pin, brick hammer. 1 pt each.",
+              "maxScore": 6
+            },
+            {
+              "id": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "name": "Q5. Safety",
+              "category": "Subjective",
+              "criteria": "List three pieces of required PPE and one hazard each protects against. 1 pt per item, 1 pt per hazard.",
+              "maxScore": 6
+            },
+            {
+              "id": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "name": "Q6. Joint types",
+              "category": "Subjective",
+              "criteria": "Explain the difference between a concave and a raked joint, and which sheds water better. 5 pts.",
+              "maxScore": 5
+            },
+            {
+              "id": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "name": "Q7. Block count",
+              "category": "Objective",
+              "criteria": "How many 16 x 8 in. blocks are needed for a 12 ft x 4 ft wall, ignoring waste? 5 pts for 54 blocks, 3 pts for showing work.",
+              "maxScore": 8
+            },
+            {
+              "id": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "name": "Q8. Mixing mortar",
+              "category": "Subjective",
+              "criteria": "Describe the steps to hand-mix a batch of mortar, including tempering. 1 pt per correct step, up to 8.",
+              "maxScore": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ef72fede-111b-4906-b917-26c447149d1d",
+      "name": "Week 2 - Session 1",
+      "overview": "Corners, story poles and leveling.",
+      "status": "Exported",
+      "date": "2026-09-16T08:10:00.000Z",
+      "createdAt": "2026-09-14T08:10:00.000Z",
+      "exportedAt": "2026-09-16T17:10:00.000Z",
+      "attendance": [
+        {
+          "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "status": "Tardy"
+        },
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "status": "Present"
+        },
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "status": "Present"
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "status": "Present"
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "status": "Tardy"
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "status": "Present"
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "status": "Present"
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "status": "Present"
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "status": "Absent"
+        },
+        {
+          "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "status": "Absent"
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "status": "Tardy"
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "status": "Present"
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "status": "Present"
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "status": "Present"
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "status": "Present"
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "status": "Present"
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "status": "Present"
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "status": "Present"
+        },
+        {
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "status": "Absent"
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "status": "Present"
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
           "status": "Present"
         },
         {
           "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
           "status": "Present"
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "status": "Present"
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "status": "Present"
         }
       ],
-      "dailies": [],
-      "tests": [
+      "dailies": [
         {
           "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Showed real improvement from last time",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 1
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Showed real improvement from last time",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 1
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 1
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 2
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 2
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Check plumb after every course",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 2
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 2
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 2
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 2
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Rushed the last course, slow down",
+          "skills": [
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 1
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 2
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 2
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Rushed the last course, slow down",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Keep practicing bonding patterns",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 5
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Needs reminders about PPE",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Rushed the last course, slow down",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Excellent speed without losing quality",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 1
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 2
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Clean work area, well organized",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Clean work area, well organized",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 5
+            }
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
           "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
           "skills": [
             {
@@ -411,53 +4106,7 @@
             },
             {
               "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
-              "score": 9
-            },
-            {
-              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
-              "score": 5
-            },
-            {
-              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
-              "score": 8
-            },
-            {
-              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
-              "score": 9
-            },
-            {
-              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
-              "score": 10
-            },
-            {
-              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
-              "score": 8
-            },
-            {
-              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
-              "score": 10
-            },
-            {
-              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
-              "score": 8
-            },
-            {
-              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
               "score": 7
-            }
-          ]
-        },
-        {
-          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
-          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
-          "skills": [
-            {
-              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
-              "score": 10
-            },
-            {
-              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
-              "score": 8
             },
             {
               "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
@@ -469,32 +4118,184 @@
             },
             {
               "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
-              "score": 7
+              "score": 10
             },
             {
               "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
-              "score": 8
+              "score": 10
             },
             {
               "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
-              "score": 7
+              "score": 10
             },
             {
               "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
-              "score": 9
+              "score": 7
             },
             {
               "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
-              "score": 6
+              "score": 10
             },
             {
               "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 9
+            }
+          ]
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 4
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 6
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
               "score": 5
             }
           ]
         },
         {
-          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 6
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 5
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 6
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 6
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 5
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
           "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
           "skills": [
             {
@@ -515,7 +4316,45 @@
             },
             {
               "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
               "score": 6
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 4
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 3
             },
             {
               "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
@@ -528,6 +4367,1042 @@
             {
               "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
               "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 6
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 5
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 11
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 9
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 4
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 8
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 7
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 9
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 10
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 6
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 6
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5f4d3c99-9b73-4ecf-80a4-9d5d5464b427",
+      "name": "Week 6 - Session 1",
+      "overview": "Mid-term practical: wall build under time limit.",
+      "status": "Drafting",
+      "date": "2026-10-13T08:10:00.000Z",
+      "createdAt": "2026-10-12T08:10:00.000Z",
+      "attendance": [
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "status": "Present"
+        },
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "status": "Present"
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "status": "Present"
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "status": "Present"
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "status": "Present"
+        },
+        {
+          "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
+          "status": "Present"
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "status": "Present"
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "status": "Present"
+        },
+        {
+          "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "status": "Present"
+        },
+        {
+          "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
+          "status": "Present"
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "status": "Present"
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "status": "Present"
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "status": "Present"
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "status": "Present"
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "status": "Present"
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "status": "Present"
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "status": "Present"
+        },
+        {
+          "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
+          "status": "Absent"
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "status": "Present"
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "status": "Present"
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "status": "Present"
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "status": "Present"
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "status": "Tardy"
+        }
+      ],
+      "dailies": [
+        {
+          "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 2
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Review story pole use",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 2
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Excellent speed without losing quality",
+          "skills": [
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 1
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 2
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Excellent speed without losing quality",
+          "skills": [
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 5
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Rushed the last course, slow down",
+          "recommendation": "Check plumb after every course",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 2
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 2
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Keep doing what you're doing",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 5
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Practice leveling sequence",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 1
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 2
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Check plumb after every course",
+          "skills": [
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 1
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "skills": [
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 2
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 4
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Great teamwork with the group",
+          "recommendation": "Spread mortar in shorter runs",
+          "skills": [
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 4
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Tooling was sloppy, revisit joint timing",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 3
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 3
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 3
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Struggled with plumb on the corners",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 5
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 3
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 4
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 3
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 3
+            }
+          ]
+        },
+        {
+          "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Solid start, watch your spacing",
+          "skills": [
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 3
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 1
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Strong grasp of the layout sequence",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 5
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 2
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 5
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
+          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "comments": "Good job, needs improvement here",
+          "recommendation": "Work on head joints",
+          "skills": [
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 1
+            },
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 5
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "comments": "Solid start, watch your spacing",
+          "recommendation": "Slow down on layout",
+          "skills": [
+            {
+              "skillId": "5368cc80-4905-49b5-81ae-209f6379edba",
+              "score": 4
+            },
+            {
+              "skillId": "d40a5e20-d7ad-4bd2-8187-29dcf31c03de",
+              "score": 3
+            },
+            {
+              "skillId": "6789ec2b-36a0-4b26-bbeb-5db2dfc33f2c",
+              "score": 4
+            },
+            {
+              "skillId": "00f57be7-6803-4676-a301-89c32e738073",
+              "score": 5
+            },
+            {
+              "skillId": "8ffbda6c-7380-43a9-8aa6-87ec4b9e988b",
+              "score": 5
+            },
+            {
+              "skillId": "a5cede71-f7d0-4301-9a5d-b087c2ed52a2",
+              "score": 4
+            },
+            {
+              "skillId": "e665e60f-b1c6-4b62-9447-93d3d5cf2000",
+              "score": 4
+            },
+            {
+              "skillId": "f6e05d10-8db3-436d-8c5d-3622364b2a31",
+              "score": 3
+            },
+            {
+              "skillId": "79630ce3-447b-492b-8057-8163af623c5a",
+              "score": 4
+            },
+            {
+              "skillId": "944067eb-43e0-4723-bea7-7c0f3731ec63",
+              "score": 5
+            },
+            {
+              "skillId": "88ebed04-fe32-4f97-87c6-299c2ffe4f07",
+              "score": 3
+            },
+            {
+              "skillId": "e367d4dc-d991-48cb-982f-67964b36c094",
+              "score": 5
+            },
+            {
+              "skillId": "b3e586e3-3c0f-448f-8c86-c19791d5d57e",
+              "score": 2
+            }
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 13
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 8
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 4
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 8
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 8
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 6
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 7
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 10
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 5
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 3
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 4
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 3
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 5
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 8
+            }
+          ]
+        },
+        {
+          "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
+          "testVariantId": "4042014e-3d51-4710-87fb-2b7fef8fc7bd",
+          "skills": [
+            {
+              "skillId": "f352b7f9-55fe-4ec7-9a5e-96db5dcc33ad",
+              "score": 4
+            },
+            {
+              "skillId": "07ab3991-35dd-4145-91d8-c7a9adc35b1f",
+              "score": 5
+            },
+            {
+              "skillId": "1ca9c13e-8c4a-4174-9458-f555b6222bd7",
+              "score": 3
+            },
+            {
+              "skillId": "47724d7b-b90d-4a24-b3f5-e8d4aca0475a",
+              "score": 5
+            },
+            {
+              "skillId": "3506a7cc-6555-4aa2-a0fd-ee705edece5f",
+              "score": 4
+            },
+            {
+              "skillId": "070c9aeb-66ec-4694-aab6-66b9f022bd9e",
+              "score": 4
+            },
+            {
+              "skillId": "746772e7-e21f-4a0d-901d-e3b2b57c1b3f",
+              "score": 7
+            },
+            {
+              "skillId": "59983cc8-2b1c-42c9-abd6-f16775660df9",
+              "score": 7
+            }
+          ]
+        },
+        {
+          "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 9
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 8
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 4
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 6
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 8
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 7
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 8
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 7
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 9
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 6
+            }
+          ]
+        },
+        {
+          "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
+          "testVariantId": "cbb5424a-3765-405c-ac11-580af58a60ea",
+          "skills": [
+            {
+              "skillId": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+              "score": 9
+            },
+            {
+              "skillId": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+              "score": 8
+            },
+            {
+              "skillId": "66808961-2af4-4206-a7d8-45959ea4597b",
+              "score": 5
+            },
+            {
+              "skillId": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+              "score": 8
+            },
+            {
+              "skillId": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+              "score": 10
+            },
+            {
+              "skillId": "e9be8d64-1e67-4130-b9e5-891239581be5",
+              "score": 7
+            },
+            {
+              "skillId": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+              "score": 9
+            },
+            {
+              "skillId": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+              "score": 7
+            },
+            {
+              "skillId": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+              "score": 8
+            },
+            {
+              "skillId": "639dde50-cb03-455a-aecb-a31b73611cd5",
+              "score": 8
             }
           ]
         }

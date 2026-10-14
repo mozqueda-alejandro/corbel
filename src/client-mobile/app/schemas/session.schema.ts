@@ -1,7 +1,8 @@
 // ~/schemas/session.schema.ts
 import { z } from "zod";
 
-import { studentSchema } from "./student.schema";
+import { sessionStudentSchema } from "./student.schema";
+import { testVariantSchema } from "./test-variant.schema";
 import { createBoundedStringSchema, getSessionDateBounds } from "./utils.ts";
 
 export enum AttendanceStatusEnum {
@@ -40,24 +41,16 @@ export const testSkillScoreSchema = z.object({
 });
 export type TestSkillScore = z.infer<typeof testSkillScoreSchema>;
 
+// Saved as it is filled in, so any field may still be missing. Whether it counts as completed is worked
+// out from its content (activity, recommendation and every daily skill present; comments are optional), not stored.
 export const sessionDailyRecordSchema = z.object({
   studentId: z.uuid(),
-  activityId: z.uuid(),
+  activityId: z.uuid().optional(),
   comments: createBoundedStringSchema(0, 200).optional(),
   recommendation: createBoundedStringSchema(0, 200).optional(),
-  skills: z.array(dailySkillScoreSchema),
-  // Missing means the record is saved but not yet submitted.
-  submittedAt: z.coerce.date().optional()
+  skills: z.array(dailySkillScoreSchema)
 });
 export type SessionDailyRecord = z.infer<typeof sessionDailyRecordSchema>;
-
-export const sessionDailyFormSchema = sessionDailyRecordSchema
-  .omit({ submittedAt: true })
-  .extend({
-    studentId: z.uuid("Select a student."),
-    activityId: z.uuid("Select an activity.")
-  });
-export type SessionDailyForm = z.infer<typeof sessionDailyFormSchema>;
 
 export const sessionTestRecordSchema = z.object({
   studentId: z.uuid(),
@@ -93,7 +86,13 @@ export const sessionSchema = z.object({
   archivedAt: z.coerce.date().optional(),
   // Restarts the auto-archive clock so an unarchived session isn't immediately re-archived.
   unarchivedAt: z.coerce.date().optional(),
-  studentRoster: z.array(studentSchema),
+  // Set the first time the session is completed and never changed after, not even by reverting to draft.
+  // Undefined means the session has never been completed and follows the live student list.
+  studentRoster: z.array(sessionStudentSchema).optional(),
+  // Copy of each test this session has scored, made when its first score is saved and never changed after.
+  // Every student scored on a test uses this same copy, so a later edit, re-import or delete of the test
+  // can't alter scores already entered.
+  testVariants: z.array(testVariantSchema).optional(),
   attendance: z.array(attendanceRecordSchema),
   dailies: z.array(sessionDailyRecordSchema),
   tests: z.array(sessionTestRecordSchema),

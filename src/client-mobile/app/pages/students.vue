@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import type { DropdownMenuItem, FormError, TableColumn } from "@nuxt/ui";
+import type { DropdownMenuItem, TableColumn } from "@nuxt/ui";
 import { h, resolveComponent } from "vue";
-import { z } from "zod";
 
-import { type Student, studentSchema, StudentStatusEnum } from "~/schemas/student.schema";
-import { nameSchema } from "~/schemas/utils";
+import { type Student, StudentStatusEnum } from "~/schemas/student.schema";
 
 const UButton = resolveComponent("UButton");
 const UBadge = resolveComponent("UBadge");
@@ -12,20 +10,10 @@ const UCheckbox = resolveComponent("UCheckbox");
 const UDropdownMenu = resolveComponent("UDropdownMenu");
 
 const toast = useToast();
-const { studentListRef, saveStudent, saveStudentList, deleteStudentList } = useStudentRepository();
-
-const studentStatusColorMap: Record<StudentStatusEnum, "success" | "neutral" | "info"> = {
-  [StudentStatusEnum.Active]: "success",
-  [StudentStatusEnum.Inactive]: "neutral",
-  [StudentStatusEnum.Graduated]: "info"
-};
+const { studentListRef, saveStudentList, deleteStudentList } = useStudentRepository();
 
 function showError(title: string, description?: string) {
   toast.add({ title, description, color: "error", icon: "i-lucide-circle-x" });
-}
-
-function getFullName(student: { firstName: string, lastName: string }) {
-  return `${student.firstName} ${student.lastName}`.trim();
 }
 
 // #region Filters
@@ -49,107 +37,17 @@ const selectedStudentListRef = computed(() =>
 // #endregion
 
 // #region Edit
-type StudentFormState = {
-  firstName: string
-  lastName: string
-  preferredName: string
-  email: string
-  phoneNumber: string
-  status: StudentStatusEnum
-  year: number | undefined
-};
-
 const isEditModalOpenRef = ref(false);
-const editingStudentIdRef = ref<string>();
-const formStateRef = reactive<StudentFormState>(createBlankFormState());
-
-function createBlankFormState(): StudentFormState {
-  return { firstName: "", lastName: "", preferredName: "", email: "", phoneNumber: "", status: StudentStatusEnum.Active, year: 0 };
-}
+const editingStudentRef = ref<Student>();
 
 function openNewStudentModal() {
-  Object.assign(formStateRef, createBlankFormState());
-  editingStudentIdRef.value = undefined;
+  editingStudentRef.value = undefined;
   isEditModalOpenRef.value = true;
 }
 
 function openEditModal(student: Student) {
-  Object.assign(formStateRef, {
-    firstName: student.firstName,
-    lastName: student.lastName,
-    preferredName: student.preferredName ?? "",
-    email: student.email ?? "",
-    phoneNumber: formatPhoneNumber(student.phoneNumber),
-    status: student.status,
-    year: student.year
-  });
-  editingStudentIdRef.value = student.id;
+  editingStudentRef.value = student;
   isEditModalOpenRef.value = true;
-}
-
-// Email and phone must be unique across students; the student being edited doesn't conflict with itself.
-function findOtherStudent(predicate: (student: Student) => boolean) {
-  return (studentListRef.value ?? []).find(student => student.id !== editingStudentIdRef.value && predicate(student));
-}
-
-function validateForm(state: Partial<StudentFormState>): FormError[] {
-  const errorList: FormError[] = [];
-
-  const firstName = (state.firstName ?? "").trim();
-  const lastName = (state.lastName ?? "").trim();
-  if (!firstName && !lastName) {
-    errorList.push({ name: "firstName", message: "Enter a first or last name." });
-  }
-  for (const [name, value] of [["firstName", firstName], ["lastName", lastName], ["preferredName", (state.preferredName ?? "").trim()]] as const) {
-    const nameResult = value ? nameSchema.safeParse(value) : undefined;
-    if (nameResult && !nameResult.success) errorList.push({ name, message: nameResult.error.issues[0]?.message ?? "Invalid name." });
-  }
-
-  const email = normalizeEmail(state.email ?? "");
-  if (email) {
-    const emailOwner = z.email().safeParse(email).success ? findOtherStudent(student => student.email?.toLowerCase() === email) : undefined;
-    if (!z.email().safeParse(email).success) errorList.push({ name: "email", message: "Enter a valid email address." });
-    else if (emailOwner) errorList.push({ name: "email", message: `Already used by ${getFullName(emailOwner)}.` });
-  }
-
-  const phoneText = (state.phoneNumber ?? "").trim();
-  if (phoneText) {
-    const phoneNumber = normalizePhoneNumber(phoneText);
-    const phoneOwner = phoneNumber ? findOtherStudent(student => student.phoneNumber === phoneNumber) : undefined;
-    if (!phoneNumber) errorList.push({ name: "phoneNumber", message: "Enter a valid phone number, e.g. (555) 123-4567." });
-    else if (phoneOwner) errorList.push({ name: "phoneNumber", message: `Already used by ${getFullName(phoneOwner)}.` });
-  }
-
-  if (state.year === undefined || state.year < 0 || state.year > 10) {
-    errorList.push({ name: "year", message: "Year must be between 0 and 10." });
-  }
-  return errorList;
-}
-
-async function handleSaveStudent() {
-  const studentResult = studentSchema.safeParse({
-    id: editingStudentIdRef.value ?? crypto.randomUUID(),
-    firstName: formStateRef.firstName.trim(),
-    lastName: formStateRef.lastName.trim(),
-    preferredName: formStateRef.preferredName.trim() || undefined,
-    email: normalizeEmail(formStateRef.email) || undefined,
-    phoneNumber: normalizePhoneNumber(formStateRef.phoneNumber) || undefined,
-    status: formStateRef.status,
-    year: formStateRef.year
-  });
-  if (!studentResult.success) {
-    showError("Check student details", studentResult.error.issues[0]?.message);
-    return;
-  }
-
-  try {
-    await saveStudent(studentResult.data);
-    isEditModalOpenRef.value = false;
-    toast.add({ title: "Student saved", color: "success", icon: "i-lucide-circle-check" });
-  } catch (saveError) {
-    console.error("Student save failed:", saveError);
-    showError("Couldn't save student", saveError instanceof Error ? saveError.message : undefined);
-  }
 }
 // #endregion
 
@@ -313,7 +211,7 @@ function renderSortableHeader(column: SortableColumn, label: string) {
 }
 
 function renderContactLink(href: string, text: string) {
-  return h("a", { href, class: "text-primary hover:underline" }, text);
+  return h("a", { href, class: "hover:underline" }, text);
 }
 
 function getRowActionItemList(student: Student): DropdownMenuItem[][] {
@@ -342,7 +240,7 @@ const columnList: TableColumn<Student>[] = [
     accessorFn: student => `${student.lastName} ${student.firstName} ${student.preferredName ?? ""}`,
     header: ({ column }) => renderSortableHeader(column, "Student"),
     cell: ({ row }) => h("div", [
-      h("div", { class: "font-medium text-highlighted" }, getFullName(row.original)),
+      h("div", { class: "font-medium text-highlighted" }, getStudentFullName(row.original)),
       row.original.preferredName ? h("div", { class: "text-xs text-muted" }, `"${row.original.preferredName}"`) : undefined
     ])
   }, {
@@ -480,6 +378,7 @@ const columnList: TableColumn<Student>[] = [
           :get-row-id="(student: Student) => student.id"
           :loading="studentListRef === undefined"
           sticky
+          :ui="{ td: 'py-2' }"
           class="max-h-[calc(100dvh-22rem)] min-h-64"
         >
           <template #empty>
@@ -513,116 +412,10 @@ const columnList: TableColumn<Student>[] = [
       </div>
     </div>
 
-    <UModal
+    <StudentFormModal
       v-model:open="isEditModalOpenRef"
-      :title="editingStudentIdRef ? 'Edit student' : 'New student'"
-    >
-      <template #body>
-        <UForm
-          id="student-form"
-          :state="formStateRef"
-          :validate="validateForm"
-          :validate-on="['input', 'change']"
-          class="space-y-4"
-          @submit="handleSaveStudent"
-        >
-          <div class="grid gap-4 sm:grid-cols-2">
-            <UFormField
-              label="First name"
-              name="firstName"
-            >
-              <UInput
-                v-model="formStateRef.firstName"
-                class="w-full"
-              />
-            </UFormField>
-            <UFormField
-              label="Last name"
-              name="lastName"
-            >
-              <UInput
-                v-model="formStateRef.lastName"
-                class="w-full"
-              />
-            </UFormField>
-          </div>
-          <UFormField
-            label="Preferred name"
-            name="preferredName"
-          >
-            <UInput
-              v-model="formStateRef.preferredName"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField
-            label="Email"
-            name="email"
-          >
-            <UInput
-              v-model="formStateRef.email"
-              type="email"
-              inputmode="email"
-              autocomplete="off"
-              class="w-full"
-            />
-          </UFormField>
-          <UFormField
-            label="Phone"
-            name="phoneNumber"
-            hint="Any format; saved as an international number"
-          >
-            <UInput
-              v-model="formStateRef.phoneNumber"
-              type="tel"
-              inputmode="tel"
-              autocomplete="off"
-              class="w-full"
-            />
-          </UFormField>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <UFormField
-              label="Status"
-              name="status"
-            >
-              <USelect
-                v-model="formStateRef.status"
-                :items="Object.values(StudentStatusEnum)"
-                class="w-full"
-              />
-            </UFormField>
-            <UFormField
-              label="Year"
-              name="year"
-            >
-              <UInputNumber
-                v-model="formStateRef.year"
-                :min="0"
-                :max="10"
-                class="w-full"
-              />
-            </UFormField>
-          </div>
-        </UForm>
-      </template>
-      <template #footer>
-        <div class="flex w-full justify-end gap-2">
-          <UButton
-            type="button"
-            label="Cancel"
-            color="neutral"
-            variant="outline"
-            @click="isEditModalOpenRef = false"
-          />
-          <UButton
-            type="submit"
-            form="student-form"
-            label="Save"
-            loading-auto
-          />
-        </div>
-      </template>
-    </UModal>
+      :student="editingStudentRef"
+    />
 
     <UModal
       v-model:open="isDeleteModalOpenRef"
@@ -631,7 +424,7 @@ const columnList: TableColumn<Student>[] = [
       <template #body>
         <p class="text-sm">
           <template v-if="studentListPendingDeleteRef.length === 1">
-            Delete <span class="font-medium">{{ getFullName(studentListPendingDeleteRef[0]!) }}</span>?
+            Delete <span class="font-medium">{{ getStudentFullName(studentListPendingDeleteRef[0]!) }}</span>?
           </template>
           <template v-else>
             Delete <span class="font-medium">{{ studentListPendingDeleteRef.length }} students</span>?

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Session, TestSkillScore } from "~/schemas/session.schema";
+import { TestSkillCategoryEnum } from "~/schemas/test-skill.schema";
 
 //region Props and Composables
 // readonly is set for completed and archived sessions.
@@ -10,7 +11,7 @@ const props = defineProps<{
 
 const toast = useToast();
 const { attendingStudentListRef } = useAttendingStudentList(() => props.session);
-const { testVariantListRef } = useTestVariantRepository();
+const { sessionTestVariantListRef } = useSessionTestVariantList(() => props.session);
 const { saveSessionTestRecord } = useSessionRepository();
 //endregion
 
@@ -36,11 +37,14 @@ async function persistRecord() {
   const testVariantId = recordStateRef.testVariantId;
   if (!studentId || !testVariantId || props.readonly) return;
 
+  // Scores for skills the test no longer has (it may have been re-imported with different skills) are dropped.
+  const testSkillIdSet = new Set(selectedTestVariantRef.value?.skills.map(skill => skill.id));
+
   try {
     await saveSessionTestRecord(props.session.id, {
       studentId,
       testVariantId,
-      skills: recordStateRef.skills.map(skillScore => ({ ...skillScore }))
+      skills: recordStateRef.skills.filter(skillScore => testSkillIdSet.has(skillScore.skillId)).map(skillScore => ({ ...skillScore }))
     });
   } catch (saveError) {
     console.error("Test save failed:", saveError);
@@ -53,24 +57,22 @@ async function persistRecord() {
   }
 }
 
-// A test is completed once every one of its skills has a score; removing any score puts it back in progress.
-const studentGroupList = [
-  { progress: undefined, label: "In progress" },
-  { progress: "completed", label: "Completed" }
-];
-
+// Progress is the number of the test's skills that have a score; the open student's unsaved-in-props edits
+// take precedence so the bar updates as scores change.
 const progressByStudentIdRef = computed(() => {
-  const progressByStudentId: Record<string, string> = {};
+  const progressByStudentId: Record<string, { done: number, total: number }> = {};
   for (const testRecord of props.session.tests) {
-    // The open student's unsaved-in-props edits take precedence so the group updates as scores change.
     const isOpenStudent = testRecord.studentId === studentIdRef.value;
     const testVariantId = isOpenStudent ? recordStateRef.testVariantId : testRecord.testVariantId;
     const skillList = isOpenStudent ? recordStateRef.skills : testRecord.skills;
-    const testVariant = testVariantListRef.value?.find(variantItem => variantItem.id === testVariantId);
+    const testVariant = sessionTestVariantListRef.value?.find(variantItem => variantItem.id === testVariantId);
     if (!testVariant) continue;
 
     const scoredSkillIdSet = new Set(skillList.map(skillScore => skillScore.skillId));
-    if (testVariant.skills.every(skill => scoredSkillIdSet.has(skill.id))) progressByStudentId[testRecord.studentId] = "completed";
+    progressByStudentId[testRecord.studentId] = {
+      done: testVariant.skills.filter(skill => scoredSkillIdSet.has(skill.id)).length,
+      total: testVariant.skills.length
+    };
   }
   return progressByStudentId;
 });
@@ -78,10 +80,10 @@ const progressByStudentIdRef = computed(() => {
 
 //region Test Selection
 const testItemListRef = computed(() =>
-  (testVariantListRef.value ?? []).map(testVariant => ({ label: testVariant.name, value: testVariant.id })));
+  (sessionTestVariantListRef.value ?? []).map(testVariant => ({ label: testVariant.name, value: testVariant.id })));
 
 const selectedTestVariantRef = computed(() =>
-  testVariantListRef.value?.find(testVariant => testVariant.id === recordStateRef.testVariantId));
+  sessionTestVariantListRef.value?.find(testVariant => testVariant.id === recordStateRef.testVariantId));
 
 const isChangeConfirmOpenRef = ref(false);
 const pendingTestVariantIdRef = ref<string>();
@@ -129,9 +131,28 @@ function setSkillScore(skillId: string, score: number | undefined) {
   persistRecord();
 }
 
+const scoreBySkillIdRef = computed(() => new Map(recordStateRef.skills.map(skillScore => [skillScore.skillId, skillScore.score])));
+
+// Skills grouped under their category, in the enum's order, with the points earned and available per group.
+const skillGroupListRef = computed(() => {
+  const skillList = selectedTestVariantRef.value?.skills ?? [];
+  return Object.values(TestSkillCategoryEnum)
+    .map((category) => {
+      const groupSkillList = skillList.filter(skill => skill.category === category);
+      return {
+        category,
+        label: `${category} Evaluation`,
+        skillList: groupSkillList,
+        earnedScore: groupSkillList.reduce((scoreSum, skill) => scoreSum + (scoreBySkillIdRef.value.get(skill.id) ?? 0), 0),
+        maxScore: groupSkillList.reduce((maxSum, skill) => maxSum + skill.maxScore, 0)
+      };
+    })
+    .filter(skillGroup => skillGroup.skillList.length > 0);
+});
+
 const scoreSummaryRef = computed(() => {
   const skillList = selectedTestVariantRef.value?.skills ?? [];
-  const scoreBySkillId = new Map(recordStateRef.skills.map(skillScore => [skillScore.skillId, skillScore.score]));
+  const scoreBySkillId = scoreBySkillIdRef.value;
 
   const totalScore = skillList.reduce((scoreSum, skill) => scoreSum + (scoreBySkillId.get(skill.id) ?? 0), 0);
   const maxTotalScore = skillList.reduce((maxSum, skill) => maxSum + skill.maxScore, 0);
@@ -158,7 +179,6 @@ const scoreSummaryRef = computed(() => {
           v-model="studentIdRef"
           :student-list="attendingStudentListRef"
           :progress-by-student-id="progressByStudentIdRef"
-          :group-list="studentGroupList"
         />
       </UFormField>
 
@@ -189,20 +209,33 @@ const scoreSummaryRef = computed(() => {
       v-if="selectedTestVariantRef"
       class="overflow-hidden rounded-md border border-muted"
     >
-      <InputNumberScrub
-        v-for="skill in selectedTestVariantRef.skills"
-        :key="skill.id"
-        :model-value="getSkillScore(skill.id)"
-        :label="skill.name"
-        :description="skill.criteria"
-        show-max
-        :min="0"
-        :max="skill.maxScore"
-        :disabled="readonly"
-        size="sm"
-        class="border-t border-muted first:border-t-0"
-        @update:model-value="setSkillScore(skill.id, $event)"
-      />
+      <template
+        v-for="skillGroup in skillGroupListRef"
+        :key="skillGroup.category"
+      >
+        <div class="flex items-center justify-between gap-3 border-t border-muted bg-elevated/50 px-4 py-2 first:border-t-0">
+          <h3 class="text-sm font-semibold">
+            {{ skillGroup.label }}
+          </h3>
+          <span class="text-sm text-muted">
+            {{ skillGroup.earnedScore }}/{{ skillGroup.maxScore }} pts
+          </span>
+        </div>
+        <InputNumberScrub
+          v-for="skill in skillGroup.skillList"
+          :key="skill.id"
+          :model-value="getSkillScore(skill.id)"
+          :label="skill.name"
+          :description="skill.criteria"
+          show-max
+          :min="0"
+          :max="skill.maxScore"
+          :disabled="readonly"
+          size="sm"
+          class="border-t border-muted"
+          @update:model-value="setSkillScore(skill.id, $event)"
+        />
+      </template>
       <div class="flex items-center justify-between gap-3 border-t border-muted bg-elevated/50 px-4 py-3">
         <span class="text-sm text-muted">
           {{ scoreSummaryRef.filledCount }}/{{ scoreSummaryRef.totalCount }} scored
@@ -217,6 +250,15 @@ const scoreSummaryRef = computed(() => {
         </div>
       </div>
     </div>
+
+    <UEmpty
+      v-else-if="testItemListRef.length > 0"
+      variant="naked"
+      :icon="studentIdRef ? 'i-lucide-clipboard-list' : 'i-lucide-user-round-search'"
+      :title="studentIdRef ? 'No test selected' : 'No student selected'"
+      :description="studentIdRef ? 'Choose a test above to start entering scores.' : 'Choose a student above, then pick a test to score.'"
+      class="py-10"
+    />
 
     <UModal
       v-model:open="isChangeConfirmOpenRef"

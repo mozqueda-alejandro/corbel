@@ -2,6 +2,7 @@
 import {
   MAX_PHOTOS_PER_STUDENT,
   type Session,
+  type SessionDailyRecord,
   sessionSchema,
   SessionStatusEnum,
   type SessionTestRecord
@@ -45,10 +46,27 @@ export function useSessionRepository() {
 
   // Replaces the student's test record. Reads the stored session inside the transaction, so rapid
   // consecutive edits never overwrite each other with a stale copy of the other students' tests.
+  // The first score on a test copies its definition into the session; later scores reuse that copy.
   async function saveSessionTestRecord(sessionId: string, testRecord: SessionTestRecord) {
+    return database.transaction("rw", [database.sessionTable, database.photoTable, database.testVariantTable], async () => {
+      const liveTestVariant = await database.testVariantTable.get(testRecord.testVariantId);
+      return updateStoredSession(sessionId, (session) => {
+        const isCopied = session.testVariants?.some(testVariant => testVariant.id === testRecord.testVariantId);
+        return applySessionEdit({
+          ...session,
+          testVariants: isCopied || !liveTestVariant ? session.testVariants : [...(session.testVariants ?? []), liveTestVariant],
+          tests: [...session.tests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId), testRecord]
+        });
+      });
+    });
+  }
+
+  // Replaces the student's daily record. Like saveSessionTestRecord it reads the stored session inside the
+  // transaction, so saves for different students in quick succession never overwrite each other.
+  async function saveSessionDailyRecord(sessionId: string, dailyRecord: SessionDailyRecord) {
     return updateStoredSession(sessionId, session => applySessionEdit({
       ...session,
-      tests: [...session.tests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId), testRecord]
+      dailies: [...session.dailies.filter(existingRecord => existingRecord.studentId !== dailyRecord.studentId), dailyRecord]
     }));
   }
 
@@ -101,7 +119,12 @@ export function useSessionRepository() {
   }
 
   async function transitionSession(sessionId: string, transition: SessionTransitionEnum) {
-    return updateStoredSession(sessionId, storedSession => applySessionTransition(storedSession, transition));
+    return database.transaction("rw", database.sessionTable, database.photoTable, database.studentTable, async () => {
+      // Completing freezes the roster, so it needs the students as they are right now.
+      const studentList = transition === SessionTransitionEnum.Complete ? await database.studentTable.toArray() : [];
+      return updateStoredSession(sessionId, storedSession =>
+        applySessionTransition(storedSession, transition, new Date(), studentList));
+    });
   }
 
   // A session with photos is exported as a zip of session.json and its images, otherwise as plain JSON.
@@ -159,6 +182,7 @@ export function useSessionRepository() {
     saveSession,
     saveSessionEdit,
     saveSessionTestRecord,
+    saveSessionDailyRecord,
     addSessionPhotoList,
     updateSessionPhotoTagList,
     deleteSessionPhoto,

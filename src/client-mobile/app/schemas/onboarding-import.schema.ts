@@ -59,7 +59,14 @@ export const onboardingImportSchema = z
     });
 
     data.sessions.forEach((session, sessionIndex) => {
-      const duplicateRosterIndexList = findDuplicateIdIndexList(session.studentRoster);
+      for (const duplicateIndex of findDuplicateIdIndexList(session.testVariants ?? [])) {
+        context.addIssue({
+          code: "custom",
+          path: ["sessions", sessionIndex, "testVariants", duplicateIndex, "id"],
+          message: "Duplicate test in session"
+        });
+      }
+      const duplicateRosterIndexList = findDuplicateIdIndexList(session.studentRoster ?? []);
       for (const duplicateIndex of duplicateRosterIndexList) {
         context.addIssue({
           code: "custom",

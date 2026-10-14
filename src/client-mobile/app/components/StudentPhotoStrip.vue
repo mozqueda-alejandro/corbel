@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const toast = useToast();
 const database = useDatabase();
-const { studentListRef } = useStudentRepository();
+const { sessionStudentListRef } = useSessionStudentList(() => props.session);
 const { dailySkillListRef } = useDailySkillRepository();
 const { addSessionPhotoList, updateSessionPhotoTagList, deleteSessionPhoto } = useSessionRepository();
 
@@ -116,8 +116,8 @@ const previewTitleRef = computed(() => {
   const previewPhoto = previewPhotoRef.value;
   if (!previewPhoto) return "Photo";
 
-  const student = studentListRef.value?.find(studentItem => studentItem.id === previewPhoto.studentId);
-  return student ? `${student.firstName} ${student.lastName}`.trim() : "Student";
+  const student = sessionStudentListRef.value?.find(studentItem => studentItem.id === previewPhoto.studentId);
+  return student ? getStudentFullName(student) : "Student";
 });
 
 const previewTakenAtRef = computed(() => {

@@ -1,34 +1,52 @@
 <script setup lang="ts">
 import type { SelectMenuItem } from "@nuxt/ui";
 
-import type { Student } from "~/schemas/student.schema";
+import type { SessionStudent } from "~/schemas/student.schema";
 
-type ProgressGroup = { progress: string | undefined, label: string };
+type Progress = { done: number, total: number };
 
-// Students missing from progressByStudentId have no progress value, which matches the group whose
-// progress is undefined. Students whose progress matches no group are not listed.
-const props = withDefaults(defineProps<{
-  studentList: Student[]
-  progressByStudentId: Record<string, string>
-  groupList?: ProgressGroup[]
+// Students missing from progressByStudentId haven't started; the rest are in progress or, once every
+// part is done, completed.
+const props = defineProps<{
+  studentList: SessionStudent[]
+  progressByStudentId: Record<string, Progress>
   disabled?: boolean
-}>(), {
-  groupList: () => [
-    { progress: undefined, label: "Not started" },
-    { progress: "saved", label: "Saved" },
-    { progress: "submitted", label: "Submitted" }
-  ]
-});
+}>();
+
+function getProgress(item: unknown) {
+  return (item as { progress?: Progress }).progress;
+}
+
+function isComplete(progress: Progress) {
+  return progress.done >= progress.total;
+}
+
+// The check (or the ratio, on unselected rows) is taken out of the row's flow and the bar keeps room for
+// it, so the bars line up whether or not a row is selected.
+const menuUi = {
+  itemTrailing: "self-center pe-11",
+  itemTrailingIcon: "absolute end-2.5 top-1/2 -translate-y-1/2"
+};
 
 const studentIdRef = defineModel<string | undefined>();
+
+const groupList = [
+  { label: "Not started", isMatch: (progress?: Progress) => !progress },
+  { label: "In progress", isMatch: (progress?: Progress) => !!progress && progress.done < progress.total },
+  { label: "Completed", isMatch: (progress?: Progress) => !!progress && isComplete(progress) }
+];
 
 const itemListRef = computed(() => {
   const itemList: SelectMenuItem[] = [];
 
-  for (const group of props.groupList) {
+  for (const group of groupList) {
     const groupItemList = props.studentList
-      .filter(studentItem => props.progressByStudentId[studentItem.id] === group.progress)
-      .map(studentItem => ({ id: studentItem.id, label: `${studentItem.firstName} ${studentItem.lastName}`.trim() }))
+      .filter(studentItem => group.isMatch(props.progressByStudentId[studentItem.id]))
+      .map(studentItem => ({
+        id: studentItem.id,
+        label: getStudentFullName(studentItem),
+        progress: props.progressByStudentId[studentItem.id]
+      }))
       .sort((itemA, itemB) => itemA.label.localeCompare(itemB.label));
     if (groupItemList.length === 0) continue;
 
@@ -49,6 +67,23 @@ const itemListRef = computed(() => {
     placeholder="Select student"
     :search-input="false"
     :disabled="disabled"
+    :ui="menuUi"
     class="w-full"
-  />
+  >
+    <template #item-trailing="{ item }">
+      <template v-if="getProgress(item)">
+        <UProgress
+          :model-value="getProgress(item)!.done"
+          :max="getProgress(item)!.total"
+          :ui="{ indicator: isComplete(getProgress(item)!) ? 'bg-success/70' : 'bg-inverted/45' }"
+          size="sm"
+          class="w-16"
+        />
+        <!-- Takes the checkmark's place on rows that aren't selected. -->
+        <span class="absolute end-2.5 top-1/2 -translate-y-1/2 text-xs tabular-nums text-dimmed group-data-[state=checked]:hidden">
+          {{ getProgress(item)!.done }}/{{ getProgress(item)!.total }}
+        </span>
+      </template>
+    </template>
+  </USelectMenu>
 </template>

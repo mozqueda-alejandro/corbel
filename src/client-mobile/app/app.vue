@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isLoading, isReady } = useAppReadiness();
+const { isLoading, isAppVisible } = useAppReadiness();
 </script>
 
 <template>
@@ -16,9 +16,9 @@ const { isLoading, isReady } = useAppReadiness();
 
     <NuxtLayout
       v-else
-      :name="isReady ? 'default' : 'empty'"
+      :name="isAppVisible ? 'default' : 'empty'"
     >
-      <NuxtPage v-if="isReady" />
+      <NuxtPage v-if="isAppVisible" />
       <OnboardingForm v-else />
     </NuxtLayout>
   </UApp>

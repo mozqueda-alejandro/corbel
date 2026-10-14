@@ -1,4 +1,5 @@
 import { type Session, SessionStatusEnum } from "~/schemas/session.schema";
+import { type SessionStudent, type Student, StudentStatusEnum } from "~/schemas/student.schema";
 import { AutoArchiveUnitEnum, type UserSettings } from "~/schemas/user.schema";
 
 export enum SessionTransitionEnum {
@@ -33,7 +34,26 @@ export function canTransitionSession(session: Pick<Session, "status">, transitio
   return sessionTransitionRuleMap[transition].fromStatusList.includes(session.status);
 }
 
-export function applySessionTransition(session: Session, transition: SessionTransitionEnum, now = new Date()): Session {
+export function toSessionStudent(student: Student): SessionStudent {
+  const { id, firstName, lastName, preferredName, status } = student;
+  return { id, firstName, lastName, preferredName, status };
+}
+
+// Everyone who is active now, plus anyone the session already refers to, whatever their status.
+export function buildSessionRoster(session: Session, studentList: Student[]): SessionStudent[] {
+  const referencedStudentIdSet = new Set([
+    ...session.attendance.map(record => record.studentId),
+    ...session.dailies.map(record => record.studentId),
+    ...session.tests.map(record => record.studentId),
+    ...session.photos.map(photo => photo.studentId)
+  ]);
+  return studentList
+    .filter(student => student.status === StudentStatusEnum.Active || referencedStudentIdSet.has(student.id))
+    .map(toSessionStudent);
+}
+
+// studentList is only read the first time a session is completed, to freeze the roster.
+export function applySessionTransition(session: Session, transition: SessionTransitionEnum, now = new Date(), studentList: Student[] = []): Session {
   if (!canTransitionSession(session, transition)) {
     throw new Error(`Cannot ${transition.toLowerCase()} a session that is ${session.status.toLowerCase()}.`);
   }
@@ -45,6 +65,8 @@ export function applySessionTransition(session: Session, transition: SessionTran
       break;
     case SessionTransitionEnum.Complete:
       transitionedSession.completedAt = now;
+      // Only the first completion freezes the roster, so reopening a session can't change who was in it.
+      transitionedSession.studentRoster = session.studentRoster ?? buildSessionRoster(session, studentList);
       break;
     case SessionTransitionEnum.RevertToDraft:
       transitionedSession.completedAt = undefined;
@@ -67,7 +89,7 @@ export function applySessionEdit(session: Session): Session {
   return session.status === SessionStatusEnum.Exported ? { ...session, status: SessionStatusEnum.Drafting } : session;
 }
 
-export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "attendance" | "dailies" | "tests" | "photos">;
+export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "dailies" | "tests" | "photos">;
 
 export function pickSessionContent(session: SessionContent): SessionContent {
   return {
@@ -75,6 +97,7 @@ export function pickSessionContent(session: SessionContent): SessionContent {
     overview: session.overview,
     date: session.date,
     studentRoster: session.studentRoster,
+    testVariants: session.testVariants,
     attendance: session.attendance,
     dailies: session.dailies,
     tests: session.tests,
