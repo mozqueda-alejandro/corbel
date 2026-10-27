@@ -55,6 +55,9 @@ function handlePointerMove(pointerEvent: PointerEvent) {
 
 function handlePointerEnd(pointerEvent: PointerEvent) {
   // A tap on the label or row padding focuses the input just like a tap on the input itself.
+  // Touch browsers (notably iOS) only count pointerup, not pointerdown, as the activation that unlocks audio,
+  // so the audio context is resumed here too. Without it a touch slide never gets sound.
+  if (pointerEvent.type === "pointerup") void primeFeedback();
   const isTap = dragOrigin && !dragOrigin.isDragging && pointerEvent.type === "pointerup";
   dragOrigin = undefined;
   if (isTap && !props.disabled && pointerEvent.target !== inputRef.value?.inputRef) inputRef.value?.inputRef?.focus();

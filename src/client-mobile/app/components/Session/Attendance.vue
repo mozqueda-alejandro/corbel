@@ -22,8 +22,8 @@ type SortableColumn = {
   clearSorting: () => void
 };
 
-const attendanceStatusOptionList = Object.values(AttendanceStatusEnum);
-const studentStatusFilterOptionList = Object.values(StudentStatusEnum);
+const attendanceStatusOptionList: AttendanceStatusEnum[] = Object.values(AttendanceStatusEnum);
+const studentStatusFilterOptionList: StudentStatusEnum[] = Object.values(StudentStatusEnum);
 
 const attendanceStatusColorMap: Record<AttendanceStatusEnum, "success" | "warning" | "error"> = {
   Present: "success",
@@ -151,6 +151,15 @@ const attendanceSummaryRef = computed(() => {
   }
   return summary;
 });
+
+// Built in the script so the status is typed here instead of relying on v-for inference in the template.
+const attendanceSummaryBadgeListRef = computed(() =>
+  attendanceStatusOptionList.map((status: AttendanceStatusEnum) => ({
+    status,
+    color: attendanceStatusColorMap[status],
+    icon: `i-lucide-${attendanceStatusIconMap[status]}`,
+    label: String(attendanceSummaryRef.value[status])
+  })));
 
 function getAttendanceMap(session: Session) {
   return new Map(session.attendance.map(attendanceRecord => [attendanceRecord.studentId, attendanceRecord.status]));
@@ -572,12 +581,12 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
           {{ filteredStudentListRef.length }} {{ filteredStudentListRef.length === 1 ? "student" : "students" }}
         </span>
         <UBadge
-          v-for="attendanceStatus in attendanceStatusOptionList"
-          :key="attendanceStatus"
+          v-for="summaryBadge in attendanceSummaryBadgeListRef"
+          :key="summaryBadge.status"
           variant="subtle"
-          :color="attendanceStatusColorMap[attendanceStatus]"
-          :icon="`i-lucide-${attendanceStatusIconMap[attendanceStatus]}`"
-          :label="String(attendanceSummaryRef[attendanceStatus])"
+          :color="summaryBadge.color"
+          :icon="summaryBadge.icon"
+          :label="summaryBadge.label"
         />
         <UBadge
           variant="subtle"
