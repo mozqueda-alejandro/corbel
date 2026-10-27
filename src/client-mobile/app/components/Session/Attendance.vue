@@ -67,6 +67,12 @@ const isSessionPanelOpenRef = useLocalStorage("attendance-session-panel-open", t
 const formattedSessionDateRef = computed(() =>
   sessionDetailsStateRef.date.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric" }));
 
+const lastModifiedTextRef = computed(() => {
+  if (!props.session.lastModifiedAt) return "";
+  const modifiedAt = new Date(props.session.lastModifiedAt).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  return `Modified ${modifiedAt}`;
+});
+
 function getSessionDetails(session: Session): SessionDetails {
   return {
     name: session.name,
@@ -423,12 +429,15 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
               {{ formattedSessionDateRef }}
             </p>
           </div>
-          <UBadge
-            variant="subtle"
-            :color="sessionStatusColorMap[session.status]"
-            :icon="sessionStatusIconMap[session.status]"
-            :label="session.status"
-          />
+          <div
+            v-if="lastModifiedTextRef"
+            class="shrink-0 text-right text-xs text-muted"
+          >
+            <p>{{ lastModifiedTextRef }}</p>
+            <p v-if="session.lastModifiedBy">
+              by {{ session.lastModifiedBy }}
+            </p>
+          </div>
           <UIcon
             name="i-lucide-chevron-down"
             class="size-5 shrink-0 text-muted transition-transform duration-200"

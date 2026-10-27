@@ -7,6 +7,7 @@ import {
   SessionStatusEnum,
   type SessionTestRecord
 } from "~/schemas/session.schema";
+import type { TestVariant } from "~/schemas/test-variant.schema";
 import { defaultUserSettings, type UserSettings } from "~/schemas/user.schema";
 import { saveFile, saveJsonFile } from "~/utils/saveFile";
 
@@ -15,24 +16,34 @@ export function useSessionRepository() {
 
   const { data: sessionListRef, error: sessionListErrorRef } = useLiveQuery(() => database.sessionTable.toArray());
 
+  // The one place a session is written to the table, so every save records when and by whom it was made.
+  // Transactions that reach it must include userTable in their scope.
+  async function putStampedSession(session: Session) {
+    const currentUser = await database.userTable.toCollection().first();
+    const validatedSession = sessionSchema.parse({
+      ...session,
+      lastModifiedAt: new Date(),
+      lastModifiedBy: currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : undefined
+    });
+    await database.sessionTable.put(validatedSession);
+    return validatedSession;
+  }
+
   // Only for creating sessions; changes to existing sessions go through saveSessionEdit or transitionSession.
   async function saveSession(sessionData: Session) {
-    const validatedSession = sessionSchema.parse(sessionData);
-    await database.sessionTable.put(validatedSession);
+    await putStampedSession(sessionData);
   }
 
   // Reads the stored session inside a transaction so status rules are checked against the latest data.
   async function updateStoredSession(sessionId: string, updateFn: (storedSession: Session) => Session) {
-    return database.transaction("rw", database.sessionTable, database.photoTable, async () => {
+    return database.transaction("rw", database.sessionTable, database.photoTable, database.userTable, async () => {
       const storedSession = await database.sessionTable.get(sessionId);
       if (!storedSession) throw new Error("Session not found.");
 
       const updatedSession = updateFn(storedSession);
       if (updatedSession === storedSession) return storedSession;
 
-      const validatedSession = sessionSchema.parse(updatedSession);
-      await database.sessionTable.put(validatedSession);
-      return validatedSession;
+      return putStampedSession(updatedSession);
     });
   }
 
@@ -48,7 +59,7 @@ export function useSessionRepository() {
   // consecutive edits never overwrite each other with a stale copy of the other students' tests.
   // The first score on a test copies its definition into the session; later scores reuse that copy.
   async function saveSessionTestRecord(sessionId: string, testRecord: SessionTestRecord) {
-    return database.transaction("rw", [database.sessionTable, database.photoTable, database.testVariantTable], async () => {
+    return database.transaction("rw", [database.sessionTable, database.photoTable, database.testVariantTable, database.userTable], async () => {
       const liveTestVariant = await database.testVariantTable.get(testRecord.testVariantId);
       return updateStoredSession(sessionId, (session) => {
         const isCopied = session.testVariants?.some(testVariant => testVariant.id === testRecord.testVariantId);
@@ -79,7 +90,7 @@ export function useSessionRepository() {
       return { data, type: blob.type || "image/jpeg" };
     }));
 
-    return database.transaction("rw", database.sessionTable, database.photoTable, async () => {
+    return database.transaction("rw", database.sessionTable, database.photoTable, database.userTable, async () => {
       const storedSession = await database.sessionTable.get(sessionId);
       if (!storedSession) throw new Error("Session not found.");
 
@@ -109,7 +120,7 @@ export function useSessionRepository() {
   }
 
   async function deleteSessionPhoto(sessionId: string, photoId: string) {
-    await database.transaction("rw", database.sessionTable, database.photoTable, async () => {
+    await database.transaction("rw", database.sessionTable, database.photoTable, database.userTable, async () => {
       await updateStoredSession(sessionId, session => applySessionEdit({
         ...session,
         photos: session.photos.filter(photo => photo.id !== photoId)
@@ -119,11 +130,25 @@ export function useSessionRepository() {
   }
 
   async function transitionSession(sessionId: string, transition: SessionTransitionEnum) {
-    return database.transaction("rw", database.sessionTable, database.photoTable, database.studentTable, async () => {
+    return database.transaction("rw", database.sessionTable, database.photoTable, database.studentTable, database.userTable, async () => {
       // Completing freezes the roster, so it needs the students as they are right now.
       const studentList = transition === SessionTransitionEnum.Complete ? await database.studentTable.toArray() : [];
       return updateStoredSession(sessionId, storedSession =>
         applySessionTransition(storedSession, transition, new Date(), studentList));
+    });
+  }
+
+  // Called when tests are edited. Sessions that can still change take on the new version of any test they hold a
+  // copy of; completed and archived sessions keep theirs. Call it in the transaction that saves the tests.
+  async function syncTestVariantList(testVariantList: TestVariant[]) {
+    const testVariantById = new Map(testVariantList.map(testVariant => [testVariant.id, testVariant]));
+    await database.transaction("rw", database.sessionTable, database.photoTable, database.userTable, async () => {
+      const sessionList = await database.sessionTable
+        .filter(session => !isSessionLocked(session) && !!session.testVariants?.some(copy => testVariantById.has(copy.id)))
+        .toArray();
+      for (const session of sessionList) {
+        await updateStoredSession(session.id, storedSession => applyTestVariantUpdate(storedSession, testVariantById));
+      }
     });
   }
 
@@ -183,6 +208,7 @@ export function useSessionRepository() {
     saveSessionEdit,
     saveSessionTestRecord,
     saveSessionDailyRecord,
+    syncTestVariantList,
     addSessionPhotoList,
     updateSessionPhotoTagList,
     deleteSessionPhoto,

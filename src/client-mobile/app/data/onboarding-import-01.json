@@ -905,7 +905,7 @@
       "dailies": [
         {
           "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Great teamwork with the group",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -933,7 +933,7 @@
         },
         {
           "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Review story pole use",
           "skills": [
@@ -965,7 +965,7 @@
         },
         {
           "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Good job, needs improvement here",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -989,7 +989,7 @@
         },
         {
           "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -1049,7 +1049,7 @@
         },
         {
           "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Great teamwork with the group",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -1109,7 +1109,7 @@
         },
         {
           "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -1133,7 +1133,7 @@
         },
         {
           "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Great teamwork with the group",
           "recommendation": "Review story pole use",
           "skills": [
@@ -1153,7 +1153,7 @@
         },
         {
           "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -1181,7 +1181,7 @@
         },
         {
           "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -1241,7 +1241,7 @@
         },
         {
           "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Clean work area, well organized",
           "recommendation": "Work on head joints",
           "skills": [
@@ -1261,7 +1261,7 @@
         },
         {
           "studentId": "3110a48e-d9b6-4d79-b2c9-2270b6a054c7",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -1321,7 +1321,7 @@
         },
         {
           "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Joints were consistent, keep it up",
           "recommendation": "Work on head joints",
           "skills": [
@@ -1349,7 +1349,7 @@
         },
         {
           "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -1409,7 +1409,7 @@
         },
         {
           "studentId": "f2f9386f-d413-406e-9917-d45ad2d6a49c",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Clean work area, well organized",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -1433,7 +1433,7 @@
         },
         {
           "studentId": "c3c28f6b-f087-40e8-9f49-235ee5575427",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Excellent speed without losing quality",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -1493,7 +1493,7 @@
         },
         {
           "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -1521,7 +1521,7 @@
         },
         {
           "studentId": "f106df1f-0649-4692-ae10-e6335e0d92c2",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Good job, needs improvement here",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -2290,7 +2290,7 @@
       "dailies": [
         {
           "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Good job, needs improvement here",
           "recommendation": "Review story pole use",
           "skills": [
@@ -2350,7 +2350,7 @@
         },
         {
           "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Needs reminders about PPE",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -2410,7 +2410,7 @@
         },
         {
           "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Clean work area, well organized",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -2438,7 +2438,7 @@
         },
         {
           "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Needs reminders about PPE",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -2470,7 +2470,7 @@
         },
         {
           "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Needs reminders about PPE",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -2530,7 +2530,7 @@
         },
         {
           "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Solid start, watch your spacing",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -2590,7 +2590,7 @@
         },
         {
           "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Showed real improvement from last time",
           "recommendation": "Review story pole use",
           "skills": [
@@ -2614,7 +2614,7 @@
         },
         {
           "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -2634,7 +2634,7 @@
         },
         {
           "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Rushed the last course, slow down",
           "recommendation": "Keep practicing bonding patterns",
           "skills": [
@@ -2662,7 +2662,7 @@
         },
         {
           "studentId": "b9729362-4bec-41b9-9231-03eefc0ee50f",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -2682,7 +2682,7 @@
         },
         {
           "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Great teamwork with the group",
           "recommendation": "Check plumb after every course",
           "skills": [
@@ -2702,7 +2702,7 @@
         },
         {
           "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Joints were consistent, keep it up",
           "recommendation": "Keep practicing bonding patterns",
           "skills": [
@@ -2722,7 +2722,7 @@
         },
         {
           "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -2742,7 +2742,7 @@
         },
         {
           "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Showed real improvement from last time",
           "recommendation": "Keep practicing bonding patterns",
           "skills": [
@@ -2770,7 +2770,7 @@
         },
         {
           "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Work on head joints",
           "skills": [
@@ -2802,7 +2802,7 @@
         },
         {
           "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Showed real improvement from last time",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -2862,7 +2862,7 @@
         },
         {
           "studentId": "92c42aa4-12a0-4b20-9725-e48daf10b709",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -3473,7 +3473,7 @@
       "dailies": [
         {
           "studentId": "d82cc817-10c4-4cad-aca3-904b1a0de0ab",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Showed real improvement from last time",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -3493,7 +3493,7 @@
         },
         {
           "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Showed real improvement from last time",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -3517,7 +3517,7 @@
         },
         {
           "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Needs reminders about PPE",
           "recommendation": "Work on head joints",
           "skills": [
@@ -3577,7 +3577,7 @@
         },
         {
           "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Work on head joints",
           "skills": [
@@ -3601,7 +3601,7 @@
         },
         {
           "studentId": "396a4e7c-ad59-4316-ac37-ecdf23a38e9f",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Needs reminders about PPE",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -3625,7 +3625,7 @@
         },
         {
           "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -3657,7 +3657,7 @@
         },
         {
           "studentId": "6b30e2fe-b00a-472f-a5ef-e848d6d6c24f",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Check plumb after every course",
           "skills": [
@@ -3717,7 +3717,7 @@
         },
         {
           "studentId": "fc9cf06b-78c0-4143-91fe-0fa2edc1bd1e",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Great teamwork with the group",
           "recommendation": "Review story pole use",
           "skills": [
@@ -3777,7 +3777,7 @@
         },
         {
           "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Rushed the last course, slow down",
           "skills": [
             {
@@ -3796,7 +3796,7 @@
         },
         {
           "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Work on head joints",
           "skills": [
@@ -3828,7 +3828,7 @@
         },
         {
           "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -3888,7 +3888,7 @@
         },
         {
           "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Rushed the last course, slow down",
           "recommendation": "Work on head joints",
           "skills": [
@@ -3916,7 +3916,7 @@
         },
         {
           "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Solid start, watch your spacing",
           "recommendation": "Keep practicing bonding patterns",
           "skills": [
@@ -3976,7 +3976,7 @@
         },
         {
           "studentId": "c2697a0b-75ee-4abc-8b7d-750e96883765",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Needs reminders about PPE",
           "recommendation": "Review story pole use",
           "skills": [
@@ -3996,7 +3996,7 @@
         },
         {
           "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Rushed the last course, slow down",
           "recommendation": "Review story pole use",
           "skills": [
@@ -4016,7 +4016,7 @@
         },
         {
           "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Excellent speed without losing quality",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -4044,7 +4044,7 @@
         },
         {
           "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Clean work area, well organized",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -4068,7 +4068,7 @@
         },
         {
           "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Clean work area, well organized",
           "recommendation": "Work on head joints",
           "skills": [
@@ -4560,7 +4560,7 @@
       "dailies": [
         {
           "studentId": "e49bdfbb-eb05-474f-a595-5507f208af03",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -4592,7 +4592,7 @@
         },
         {
           "studentId": "b6121ce2-9e47-4a76-9f75-41ee6a3bd629",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Solid start, watch your spacing",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -4624,7 +4624,7 @@
         },
         {
           "studentId": "04ca9f15-12db-440e-964d-6637d7516e90",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Solid start, watch your spacing",
           "recommendation": "Review story pole use",
           "skills": [
@@ -4684,7 +4684,7 @@
         },
         {
           "studentId": "8e5469a4-d2e3-4cb9-92fa-c4f4ba09a177",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Excellent speed without losing quality",
           "skills": [
             {
@@ -4711,7 +4711,7 @@
         },
         {
           "studentId": "73aaf599-336f-4c14-a101-3820999a51fd",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Excellent speed without losing quality",
           "skills": [
             {
@@ -4730,7 +4730,7 @@
         },
         {
           "studentId": "c18bfe41-6ad5-48d8-a59b-25945353dcec",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Rushed the last course, slow down",
           "recommendation": "Check plumb after every course",
           "skills": [
@@ -4758,7 +4758,7 @@
         },
         {
           "studentId": "975e2b39-edc5-47de-8d37-65617854c084",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -4818,7 +4818,7 @@
         },
         {
           "studentId": "6542244f-e452-4b9d-badc-4dbc7541cfb8",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Great teamwork with the group",
           "recommendation": "Keep doing what you're doing",
           "skills": [
@@ -4878,7 +4878,7 @@
         },
         {
           "studentId": "fc7106e1-a4c8-40cb-8bcb-2395c0fe3db3",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Practice leveling sequence",
           "skills": [
@@ -4910,7 +4910,7 @@
         },
         {
           "studentId": "c4022fab-e6d7-4a59-ad20-63da067b3dc5",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Check plumb after every course",
           "skills": [
@@ -4934,7 +4934,7 @@
         },
         {
           "studentId": "d344330f-e920-4fac-9c14-8272327444e4",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Tooling was sloppy, revisit joint timing",
           "skills": [
             {
@@ -4965,7 +4965,7 @@
         },
         {
           "studentId": "bac0ed2a-75f8-42e4-9529-d875802a8e8a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Great teamwork with the group",
           "recommendation": "Spread mortar in shorter runs",
           "skills": [
@@ -4993,7 +4993,7 @@
         },
         {
           "studentId": "2509270e-c0f9-4d53-95ce-fe9fcc86f1bb",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Tooling was sloppy, revisit joint timing",
           "recommendation": "Work on head joints",
           "skills": [
@@ -5025,7 +5025,7 @@
         },
         {
           "studentId": "8b156764-afa5-4289-8a0c-2dffb0e0e79a",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Struggled with plumb on the corners",
           "recommendation": "Slow down on layout",
           "skills": [
@@ -5057,7 +5057,7 @@
         },
         {
           "studentId": "978021f7-bc07-4ade-8949-19b41160db92",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Solid start, watch your spacing",
           "skills": [
             {
@@ -5088,7 +5088,7 @@
         },
         {
           "studentId": "5ef4c0ca-4664-40fc-8c88-b3e8db00c258",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Strong grasp of the layout sequence",
           "recommendation": "Work on head joints",
           "skills": [
@@ -5112,7 +5112,7 @@
         },
         {
           "studentId": "76faf6ff-587c-438c-9268-a07d81081429",
-          "activityId": "a68e8cfb-0e7c-40b3-858e-b75985d26353",
+          "activity": "Block Layouts Bonding and coursing",
           "comments": "Good job, needs improvement here",
           "recommendation": "Work on head joints",
           "skills": [
@@ -5132,7 +5132,7 @@
         },
         {
           "studentId": "b7222a55-d0a2-4cb3-8708-6cd0a4b9ed14",
-          "activityId": "7e3fe079-fbb4-49b3-bbc6-023059361e3b",
+          "activity": "Bonding & Elevations",
           "comments": "Solid start, watch your spacing",
           "recommendation": "Slow down on layout",
           "skills": [

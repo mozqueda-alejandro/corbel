@@ -28,14 +28,14 @@ const { saveSessionDailyRecord } = useSessionRepository();
 // Like Tests there is no Save button: every edit is written straight to the session. A student has one
 // daily record per session; the activity is a field on it.
 const studentIdRef = ref<string>();
-const formStateRef = reactive<{ activityId?: string, comments: string, recommendation: string, skills: DailySkillScore[] }>(
-  { activityId: undefined, comments: "", recommendation: "", skills: [] }
+const formStateRef = reactive<{ activity?: string, comments: string, recommendation: string, skills: DailySkillScore[] }>(
+  { activity: undefined, comments: "", recommendation: "", skills: [] }
 );
 
 // A student without a record starts with the previous student's activity, since a class usually does one at a time.
 function loadRecord(studentId: string | undefined) {
   const storedRecord = props.session.dailies.find(record => record.studentId === studentId);
-  formStateRef.activityId = storedRecord?.activityId ?? formStateRef.activityId;
+  formStateRef.activity = storedRecord?.activity ?? formStateRef.activity;
   formStateRef.comments = storedRecord?.comments ?? "";
   formStateRef.recommendation = storedRecord?.recommendation ?? "";
   formStateRef.skills = storedRecord ? storedRecord.skills.map(skillScore => ({ ...skillScore })) : [];
@@ -48,7 +48,7 @@ watch(studentIdRef, (studentId) => {
 watch(() => props.session.id, () => {
   flushSave();
   studentIdRef.value = undefined;
-  formStateRef.activityId = undefined;
+  formStateRef.activity = undefined;
   loadRecord(undefined);
 });
 //endregion
@@ -67,7 +67,7 @@ function scheduleSave() {
     sessionId: props.session.id,
     record: {
       studentId,
-      activityId: formStateRef.activityId,
+      activity: formStateRef.activity,
       comments: formStateRef.comments.trim() || undefined,
       recommendation: formStateRef.recommendation.trim() || undefined,
       skills: formStateRef.skills.map(skillScore => ({ ...skillScore }))
@@ -133,10 +133,10 @@ const scoreSummaryRef = computed(() => {
 //region Progress
 // A daily has an activity, a recommendation and one score per daily skill to fill in; it is completed once
 // all of them are, and a student with no record hasn't started. Comments are optional.
-function getDailyProgress(record: Pick<SessionDailyRecord, "activityId" | "recommendation" | "skills">) {
+function getDailyProgress(record: Pick<SessionDailyRecord, "activity" | "recommendation" | "skills">) {
   const skillIdList = (dailySkillListRef.value ?? []).map(dailySkill => dailySkill.id);
   const scoredSkillIdSet = new Set(record.skills.map(skillScore => skillScore.skillId));
-  const filledFieldList = [record.activityId, record.recommendation];
+  const filledFieldList = [record.activity, record.recommendation];
   return {
     done: filledFieldList.filter(Boolean).length + skillIdList.filter(skillId => scoredSkillIdSet.has(skillId)).length,
     total: filledFieldList.length + skillIdList.length
@@ -155,8 +155,33 @@ const progressByStudentIdRef = computed(() => {
   return progressByStudentId;
 });
 
-const activityItemListRef = computed(() =>
-  (activityTypeListRef.value ?? []).map(activityType => ({ label: activityType.name, value: activityType.id })));
+// The last row opens the add dialog instead of picking a value, so its value is one no activity name can have.
+const ADD_ACTIVITY_VALUE = "\0add-activity";
+
+const activityItemListRef = computed(() => [
+  ...(activityTypeListRef.value ?? [])
+    .map(activityType => activityType.name)
+    .sort((nameA, nameB) => nameA.localeCompare(nameB)),
+  { type: "separator" as const },
+  { label: "Add Activity", value: ADD_ACTIVITY_VALUE, icon: "i-lucide-plus" }
+]);
+
+const isActivityModalOpenRef = ref(false);
+
+function handleActivitySelected(activity: string | undefined) {
+  if (activity === ADD_ACTIVITY_VALUE) {
+    isActivityModalOpenRef.value = true;
+    return;
+  }
+  formStateRef.activity = activity;
+  scheduleSave();
+}
+
+// Assigns the new activity to the daily that was being edited.
+function handleActivityCreated(activity: string) {
+  formStateRef.activity = activity;
+  scheduleSave();
+}
 //endregion
 </script>
 
@@ -176,13 +201,13 @@ const activityItemListRef = computed(() =>
         </UFormField>
         <UFormField label="Activity">
           <USelect
-            v-model="formStateRef.activityId"
+            :model-value="formStateRef.activity"
             :items="activityItemListRef"
             placeholder="Select activity"
             icon="i-lucide-hammer"
             :disabled="readonly || !studentIdRef"
             class="w-full"
-            @update:model-value="scheduleSave"
+            @update:model-value="handleActivitySelected"
           />
         </UFormField>
         <UFormField
@@ -257,5 +282,10 @@ const activityItemListRef = computed(() =>
         </div>
       </UFormField>
     </div>
+
+    <ActivityCreateModal
+      v-model:open="isActivityModalOpenRef"
+      @created="handleActivityCreated"
+    />
   </div>
 </template>

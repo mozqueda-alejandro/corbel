@@ -1,6 +1,7 @@
 // ~/schemas/session.schema.ts
 import { z } from "zod";
 
+import { activityNameSchema } from "./activity-type.schema";
 import { sessionStudentSchema } from "./student.schema";
 import { testVariantSchema } from "./test-variant.schema";
 import { createBoundedStringSchema, getSessionDateBounds } from "./utils.ts";
@@ -45,7 +46,8 @@ export type TestSkillScore = z.infer<typeof testSkillScoreSchema>;
 // out from its content (activity, recommendation and every daily skill present; comments are optional), not stored.
 export const sessionDailyRecordSchema = z.object({
   studentId: z.uuid(),
-  activityId: z.uuid().optional(),
+  // The activity's name, kept on the record so it reads correctly whatever happens to the activity list.
+  activity: activityNameSchema.optional(),
   comments: createBoundedStringSchema(0, 200).optional(),
   recommendation: createBoundedStringSchema(0, 200).optional(),
   skills: z.array(dailySkillScoreSchema)
@@ -81,6 +83,10 @@ export const sessionSchema = z.object({
   status: sessionStatusSchema,
   date: z.coerce.date(),
   createdAt: z.coerce.date(),
+  // Stamped by the session repository on every save, so it is never set by callers.
+  // The name is a snapshot of the user's name at the time, so history still reads correctly if they rename.
+  lastModifiedAt: z.coerce.date().optional(),
+  lastModifiedBy: z.string().optional(),
   exportedAt: z.coerce.date().optional(),
   completedAt: z.coerce.date().optional(),
   archivedAt: z.coerce.date().optional(),
@@ -89,9 +95,9 @@ export const sessionSchema = z.object({
   // Set the first time the session is completed and never changed after, not even by reverting to draft.
   // Undefined means the session has never been completed and follows the live student list.
   studentRoster: z.array(sessionStudentSchema).optional(),
-  // Copy of each test this session has scored, made when its first score is saved and never changed after.
-  // Every student scored on a test uses this same copy, so a later edit, re-import or delete of the test
-  // can't alter scores already entered.
+  // Copy of each test this session has scored, made when its first score is saved.
+  // Every student scored on a test uses this same copy. Editing a test updates the copy while the session can
+  // still change; once it is completed or archived the copy is frozen, and deleting the test never removes it.
   testVariants: z.array(testVariantSchema).optional(),
   attendance: z.array(attendanceRecordSchema),
   dailies: z.array(sessionDailyRecordSchema),

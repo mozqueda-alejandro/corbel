@@ -1,5 +1,6 @@
 import { type Session, SessionStatusEnum } from "~/schemas/session.schema";
 import { type SessionStudent, type Student, StudentStatusEnum } from "~/schemas/student.schema";
+import type { TestVariant } from "~/schemas/test-variant.schema";
 import { AutoArchiveUnitEnum, type UserSettings } from "~/schemas/user.schema";
 
 export enum SessionTransitionEnum {
@@ -87,6 +88,35 @@ export function applySessionTransition(session: Session, transition: SessionTran
 export function applySessionEdit(session: Session): Session {
   if (isSessionLocked(session)) throw new Error(`Session is ${session.status.toLowerCase()} and can't be edited.`);
   return session.status === SessionStatusEnum.Exported ? { ...session, status: SessionStatusEnum.Drafting } : session;
+}
+
+// Brings the session's copies of edited tests up to date, so its scores follow the new version. Scores for
+// skills the test no longer has are dropped and the rest are held to the skill's new maximum.
+// Returns the same session when no copy differs.
+export function applyTestVariantUpdate(session: Session, testVariantById: Map<string, TestVariant>): Session {
+  const copyList = session.testVariants ?? [];
+  const changedIdSet = new Set(copyList
+    .filter((copy) => {
+      const updatedTestVariant = testVariantById.get(copy.id);
+      return updatedTestVariant && JSON.stringify(updatedTestVariant) !== JSON.stringify(copy);
+    })
+    .map(copy => copy.id));
+  if (changedIdSet.size === 0) return session;
+
+  return applySessionEdit({
+    ...session,
+    testVariants: copyList.map(copy => (changedIdSet.has(copy.id) ? testVariantById.get(copy.id)! : copy)),
+    tests: session.tests.map((testRecord) => {
+      if (!changedIdSet.has(testRecord.testVariantId)) return testRecord;
+      const skillById = new Map(testVariantById.get(testRecord.testVariantId)!.skills.map(skill => [skill.id, skill]));
+      return {
+        ...testRecord,
+        skills: testRecord.skills
+          .filter(skillScore => skillById.has(skillScore.skillId))
+          .map(skillScore => ({ ...skillScore, score: Math.min(skillScore.score, skillById.get(skillScore.skillId)!.maxScore) }))
+      };
+    })
+  });
 }
 
 export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "dailies" | "tests" | "photos">;

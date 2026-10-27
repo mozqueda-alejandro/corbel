@@ -96,7 +96,7 @@ async function handleExport() {
 // #endregion
 
 // #region Import
-type MatchAction = "overwrite" | "skip";
+type MatchAction = "overwrite" | "replace" | "skip";
 
 const importFileInputRef = useTemplateRef("importFileInputRef");
 const isImportingRef = ref(false);
@@ -106,16 +106,17 @@ const matchActionByRowRef = ref<Record<number, MatchAction>>({});
 
 const matchActionItemList = [
   { label: "Skip", value: "skip" },
-  { label: "Overwrite", value: "overwrite" }
+  { label: "Overwrite", value: "overwrite" },
+  { label: "Replace", value: "replace" }
 ];
 
 const newEntryListRef = computed(() => importEntryListRef.value.filter(entry => entry.kind === "new"));
 const matchEntryListRef = computed(() => importEntryListRef.value.filter(entry => entry.kind === "match"));
 const rejectedEntryListRef = computed(() => importEntryListRef.value.filter(entry => entry.kind === "rejected"));
 
-const overwriteCountRef = computed(() =>
-  matchEntryListRef.value.filter(entry => matchActionByRowRef.value[entry.rowNumber] === "overwrite").length);
-const importCountRef = computed(() => newEntryListRef.value.length + overwriteCountRef.value);
+const updateCountRef = computed(() =>
+  matchEntryListRef.value.filter(entry => matchActionByRowRef.value[entry.rowNumber] !== "skip").length);
+const importCountRef = computed(() => newEntryListRef.value.length + updateCountRef.value);
 
 // CSV saved by Excel in a Windows locale isn't UTF-8; fall back so accents don't turn into replacement characters.
 async function readFileText(file: File) {
@@ -125,7 +126,10 @@ async function readFileText(file: File) {
 }
 
 async function applyImport(entryList: StudentImportEntry[], skippedCount: number) {
-  const studentList = entryList.flatMap(entry => (entry.kind === "rejected" ? [] : [entry.student]));
+  const studentList = entryList.flatMap((entry) => {
+    if (entry.kind === "rejected") return [];
+    return [entry.kind === "match" && matchActionByRowRef.value[entry.rowNumber] === "replace" ? entry.replacementStudent : entry.student];
+  });
   const updatedCount = entryList.filter(entry => entry.kind === "match").length;
 
   try {
@@ -184,8 +188,8 @@ function setAllMatchActions(action: MatchAction) {
 
 async function handleConfirmImport() {
   const entryList = importEntryListRef.value.filter(entry =>
-    entry.kind === "new" || (entry.kind === "match" && matchActionByRowRef.value[entry.rowNumber] === "overwrite"));
-  const skippedCount = matchEntryListRef.value.length - overwriteCountRef.value;
+    entry.kind === "new" || (entry.kind === "match" && matchActionByRowRef.value[entry.rowNumber] !== "skip"));
+  const skippedCount = matchEntryListRef.value.length - updateCountRef.value;
 
   isImportModalOpenRef.value = false;
   await applyImport(entryList, skippedCount);
@@ -387,7 +391,7 @@ const columnList: TableColumn<Student>[] = [
               variant="naked"
               icon="i-lucide-users-round"
               title="No students yet"
-              description="Import your roster from a CSV file, or add students one at a time."
+              description="Import your roster from a CSV file (an ID column isn't needed), or add students one at a time."
               :actions="[
                 { label: 'Import CSV', icon: 'i-lucide-upload', onClick: () => importFileInputRef?.click() },
                 { label: 'Add student', icon: 'i-lucide-user-round-plus', color: 'neutral', variant: 'outline', onClick: openNewStudentModal }
@@ -501,6 +505,14 @@ const columnList: TableColumn<Student>[] = [
                 size="xs"
                 @click="setAllMatchActions('overwrite')"
               />
+              <UButton
+                type="button"
+                label="Replace all"
+                color="neutral"
+                variant="ghost"
+                size="xs"
+                @click="setAllMatchActions('replace')"
+              />
             </div>
             <ul class="max-h-64 divide-y divide-muted overflow-y-auto rounded-md border border-muted">
               <li
@@ -524,9 +536,6 @@ const columnList: TableColumn<Student>[] = [
                 />
               </li>
             </ul>
-            <p class="mt-2 text-xs text-muted">
-              Overwriting replaces a student's details with the file's. Blank cells in the file keep the current value.
-            </p>
           </section>
 
           <section v-if="rejectedEntryListRef.length > 0">
@@ -553,6 +562,27 @@ const columnList: TableColumn<Student>[] = [
               </li>
             </ul>
           </section>
+
+          <ul class="space-y-1.5 border-t border-muted pt-3 text-xs text-muted">
+            <li v-if="newEntryListRef.length > 0">
+              <span class="font-medium text-default">New</span>
+              students get an ID generated for them, so the file doesn't need an ID column.
+            </li>
+            <template v-if="matchEntryListRef.length > 0">
+              <li>
+                <span class="font-medium text-default">Skip</span>
+                leaves the student as they are.
+              </li>
+              <li>
+                <span class="font-medium text-default">Overwrite</span>
+                updates the student with the file's details. Blank cells keep the current value.
+              </li>
+              <li>
+                <span class="font-medium text-default">Replace</span>
+                discards the old details, so blank cells are cleared and status and year reset to Active and 0. Session history is kept.
+              </li>
+            </template>
+          </ul>
         </div>
       </template>
       <template #footer>

@@ -1,8 +1,12 @@
 import { z } from "zod";
 
+import { createBoundedStringSchema } from "./utils.ts";
+
+export const activityNameSchema = createBoundedStringSchema(2, 60);
+
 export const activityTypeSchema = z.object({
   id: z.uuid(),
-  name: z.string().min(1)
+  name: activityNameSchema
 });
 
 export type ActivityType = z.infer<typeof activityTypeSchema>;

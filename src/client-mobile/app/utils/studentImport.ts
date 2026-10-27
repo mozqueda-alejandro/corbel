@@ -21,7 +21,7 @@ export type ParsedStudentRow = { rowNumber: number, fields: ParsedStudentFields,
 
 export type StudentImportEntry
   = | { kind: "new", rowNumber: number, label: string, student: Student }
-    | { kind: "match", rowNumber: number, label: string, matchedBy: string, existingStudent: Student, student: Student }
+    | { kind: "match", rowNumber: number, label: string, matchedBy: string, existingStudent: Student, student: Student, replacementStudent: Student }
     | { kind: "rejected", rowNumber: number, label: string, issueList: string[] };
 //endregion
 
@@ -247,6 +247,7 @@ function findExistingStudent(fields: ParsedStudentFields, existingStudentList: S
 }
 
 // Decides what each parsed row becomes: a new student, an update to an existing one, or a rejection.
+// A match carries both outcomes: `student` merges the file into the old record, `replacementStudent` discards it.
 // Existing students are matched by ID, then email, phone and finally full name. Nothing is saved here.
 export function planStudentImport(rowList: ParsedStudentRow[], existingStudentList: Student[]): StudentImportEntry[] {
   // Who holds each email and phone, updated as rows are accepted so duplicates inside the file are caught.
@@ -264,9 +265,10 @@ export function planStudentImport(rowList: ParsedStudentRow[], existingStudentLi
 
     // Blank cells keep the existing value, so a sparse file can't wipe out contact details.
     const providedFields = Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined));
+    const newStudentDefaults = { firstName: "", lastName: "", status: StudentStatusEnum.Active, year: 0 };
     const candidate = existingStudent
       ? { ...existingStudent, ...providedFields, id: existingStudent.id }
-      : { firstName: "", lastName: "", status: StudentStatusEnum.Active, year: 0, ...providedFields, id: fields.id ?? crypto.randomUUID() };
+      : { ...newStudentDefaults, ...providedFields, id: fields.id ?? crypto.randomUUID() };
 
     const candidateResult = studentSchema.safeParse(candidate);
     if (!candidateResult.success) {
@@ -288,9 +290,23 @@ export function planStudentImport(rowList: ParsedStudentRow[], existingStudentLi
     if (student.email) ownerByEmail.set(student.email.toLowerCase(), student);
     if (student.phoneNumber) ownerByPhone.set(student.phoneNumber, student);
 
-    return match
-      ? { kind: "match", rowNumber, label: getFullName(student), matchedBy: match.matchedBy, existingStudent: match.existingStudent, student }
-      : { kind: "new", rowNumber, label: getFullName(student), student };
+    if (!match) return { kind: "new", rowNumber, label: getFullName(student), student };
+
+    // Replacing starts from a blank student, so nothing from the old record survives except the ID that
+    // sessions and attendance refer to.
+    const replacementResult = studentSchema.safeParse({ ...newStudentDefaults, ...providedFields, id: match.existingStudent.id });
+    if (!replacementResult.success) {
+      return { kind: "rejected", rowNumber, label, issueList: replacementResult.error.issues.map(issue => issue.message) };
+    }
+    return {
+      kind: "match",
+      rowNumber,
+      label: getFullName(student),
+      matchedBy: match.matchedBy,
+      existingStudent: match.existingStudent,
+      student,
+      replacementStudent: replacementResult.data
+    };
   });
 }
 //endregion
