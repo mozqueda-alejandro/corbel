@@ -7,7 +7,7 @@ import {
   type SessionDailyRecord
 } from "~/schemas/session.schema";
 
-const TEXT_MAX_LENGTH = 200;
+const TEXT_MAX_LENGTH = 300;
 const SAVE_DELAY_MS = 400;
 
 //region Props and Composables
@@ -24,13 +24,36 @@ const { dailySkillListRef } = useDailySkillRepository();
 const { saveSessionDailyRecord } = useSessionRepository();
 //endregion
 
+//region Textarea resize
+// The native resize grip doesn't show on iPad, so a drag handle under each textarea sets the height instead.
+const textareaHeightMap = reactive<{ comments?: string, recommendation?: string }>({});
+
+function startResize(event: PointerEvent, field: "comments" | "recommendation") {
+  const handleElement = event.currentTarget as HTMLElement;
+  const textareaElement = handleElement.parentElement?.querySelector("textarea");
+  if (!textareaElement) return;
+  const startY = event.clientY;
+  const startHeight = textareaElement.offsetHeight;
+  handleElement.setPointerCapture(event.pointerId);
+  const handleMove = (moveEvent: PointerEvent) => {
+    textareaHeightMap[field] = `${Math.max(80, startHeight + moveEvent.clientY - startY)}px`;
+  };
+  const handleEnd = () => {
+    handleElement.removeEventListener("pointermove", handleMove);
+    handleElement.removeEventListener("pointerup", handleEnd);
+    handleElement.removeEventListener("pointercancel", handleEnd);
+  };
+  handleElement.addEventListener("pointermove", handleMove);
+  handleElement.addEventListener("pointerup", handleEnd);
+  handleElement.addEventListener("pointercancel", handleEnd);
+}
+//endregion
+
 //region Record
 // Like Tests there is no Save button: every edit is written straight to the session. A student has one
 // daily record per session; the activity is a field on it.
 const studentIdRef = ref<string>();
-const formStateRef = reactive<{ activity?: string, comments: string, recommendation: string, skills: DailySkillScore[] }>(
-  { activity: undefined, comments: "", recommendation: "", skills: [] }
-);
+const formStateRef = reactive<{ activity?: string, comments: string, recommendation: string, markedCompleted: boolean, skills: DailySkillScore[] }>({ activity: undefined, comments: "", recommendation: "", markedCompleted: false, skills: [] });
 
 // A student without a record starts with the previous student's activity, since a class usually does one at a time.
 function loadRecord(studentId: string | undefined) {
@@ -38,6 +61,7 @@ function loadRecord(studentId: string | undefined) {
   formStateRef.activity = storedRecord?.activity ?? formStateRef.activity;
   formStateRef.comments = storedRecord?.comments ?? "";
   formStateRef.recommendation = storedRecord?.recommendation ?? "";
+  formStateRef.markedCompleted = storedRecord?.markedCompleted ?? false;
   formStateRef.skills = storedRecord ? storedRecord.skills.map(skillScore => ({ ...skillScore })) : [];
 }
 
@@ -70,6 +94,7 @@ function scheduleSave() {
       activity: formStateRef.activity,
       comments: formStateRef.comments.trim() || undefined,
       recommendation: formStateRef.recommendation.trim() || undefined,
+      markedCompleted: formStateRef.markedCompleted || undefined,
       skills: formStateRef.skills.map(skillScore => ({ ...skillScore }))
     }
   };
@@ -132,19 +157,21 @@ const scoreSummaryRef = computed(() => {
 
 //region Progress
 // A daily has an activity, a recommendation and one score per daily skill to fill in; it is completed once
-// all of them are, and a student with no record hasn't started. Comments are optional.
-function getDailyProgress(record: Pick<SessionDailyRecord, "activity" | "recommendation" | "skills">) {
+// all of them are, or when the instructor marks it completed by hand. A student with no record hasn't started.
+// Comments are optional.
+function getDailyProgress(record: Pick<SessionDailyRecord, "activity" | "recommendation" | "skills" | "markedCompleted">) {
   const skillIdList = (dailySkillListRef.value ?? []).map(dailySkill => dailySkill.id);
   const scoredSkillIdSet = new Set(record.skills.map(skillScore => skillScore.skillId));
   const filledFieldList = [record.activity, record.recommendation];
   return {
     done: filledFieldList.filter(Boolean).length + skillIdList.filter(skillId => scoredSkillIdSet.has(skillId)).length,
-    total: filledFieldList.length + skillIdList.length
+    total: filledFieldList.length + skillIdList.length,
+    completed: !!record.markedCompleted
   };
 }
 
 const progressByStudentIdRef = computed(() => {
-  const progressByStudentId: Record<string, { done: number, total: number }> = {};
+  const progressByStudentId: Record<string, { done: number, total: number, completed: boolean }> = {};
   for (const record of props.session.dailies) {
     // The open student's form takes precedence so the bar updates as they type, before the save lands.
     const isOpenStudent = record.studentId === studentIdRef.value;
@@ -154,6 +181,11 @@ const progressByStudentIdRef = computed(() => {
   }
   return progressByStudentId;
 });
+
+function toggleMarkedCompleted() {
+  formStateRef.markedCompleted = !formStateRef.markedCompleted;
+  scheduleSave();
+}
 
 // The last row opens the add dialog instead of picking a value, so its value is one no activity name can have.
 const ADD_ACTIVITY_VALUE = "\0add-activity";
@@ -167,10 +199,13 @@ const activityItemListRef = computed(() => [
 ]);
 
 const isActivityModalOpenRef = ref(false);
+// Remounting the select drops the "Add Activity" row's selected look, which the select keeps internally.
+const activitySelectKeyRef = ref(0);
 
 function handleActivitySelected(activity: string | undefined) {
   if (activity === ADD_ACTIVITY_VALUE) {
     isActivityModalOpenRef.value = true;
+    activitySelectKeyRef.value++;
     return;
   }
   formStateRef.activity = activity;
@@ -201,10 +236,10 @@ function handleActivityCreated(activity: string) {
         </UFormField>
         <UFormField label="Activity">
           <USelect
+            :key="activitySelectKeyRef"
             :model-value="formStateRef.activity"
             :items="activityItemListRef"
             placeholder="Select activity"
-            icon="i-lucide-hammer"
             :disabled="readonly || !studentIdRef"
             class="w-full"
             @update:model-value="handleActivitySelected"
@@ -219,9 +254,17 @@ function handleActivityCreated(activity: string) {
             :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly || !studentIdRef"
+            :style="{ height: textareaHeightMap.comments }"
             class="w-full"
             @update:model-value="scheduleSave"
           />
+          <div
+            class="hidden h-6 w-full cursor-row-resize touch-none items-center justify-center [@media(pointer:coarse)]:flex"
+            aria-label="Drag to resize"
+            @pointerdown="startResize($event, 'comments')"
+          >
+            <div class="h-1 w-10 rounded-full bg-accented" />
+          </div>
         </UFormField>
         <UFormField
           label="Recommendations"
@@ -232,9 +275,17 @@ function handleActivityCreated(activity: string) {
             :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly || !studentIdRef"
+            :style="{ height: textareaHeightMap.recommendation }"
             class="w-full"
             @update:model-value="scheduleSave"
           />
+          <div
+            class="hidden h-6 w-full cursor-row-resize touch-none items-center justify-center [@media(pointer:coarse)]:flex"
+            aria-label="Drag to resize"
+            @pointerdown="startResize($event, 'recommendation')"
+          >
+            <div class="h-1 w-10 rounded-full bg-accented" />
+          </div>
         </UFormField>
         <StudentPhotoStrip
           :session="session"
@@ -243,44 +294,55 @@ function handleActivityCreated(activity: string) {
         />
       </div>
 
-      <UFormField label="Skills">
-        <div class="overflow-hidden rounded-md border border-muted">
-          <p
-            v-if="(dailySkillListRef ?? []).length === 0"
-            class="px-4 py-6 text-center text-sm text-muted"
-          >
-            No daily skills yet.
-          </p>
-          <InputNumberScrub
-            v-for="dailySkill in dailySkillListRef"
-            :key="dailySkill.id"
-            :model-value="getSkillScore(dailySkill.id)"
-            :label="dailySkill.name"
-            :min="DAILY_SKILL_SCORE_MIN"
-            :max="DAILY_SKILL_SCORE_MAX"
-            :disabled="readonly || !studentIdRef"
-            size="sm"
-            class="border-t border-muted first:border-t-0"
-            @update:model-value="setSkillScore(dailySkill.id, $event)"
-          />
-          <div
-            v-if="scoreSummaryRef.totalCount > 0"
-            class="flex items-center justify-between gap-3 border-t border-muted bg-elevated/50 px-4 py-3"
-          >
-            <span class="text-sm text-muted">
-              {{ scoreSummaryRef.filledCount }}/{{ scoreSummaryRef.totalCount }} scored
-            </span>
-            <div class="text-right">
-              <p class="text-lg font-semibold leading-tight">
-                {{ scoreSummaryRef.averageText }}
-              </p>
-              <p class="text-xs text-muted">
-                {{ scoreSummaryRef.percentText }}
-              </p>
+      <div class="flex flex-col gap-3">
+        <UFormField label="Skills">
+          <div class="overflow-hidden rounded-md border border-muted">
+            <p
+              v-if="(dailySkillListRef ?? []).length === 0"
+              class="px-4 py-6 text-center text-sm text-muted"
+            >
+              No daily skills yet.
+            </p>
+            <InputNumberScrub
+              v-for="dailySkill in dailySkillListRef"
+              :key="dailySkill.id"
+              :model-value="getSkillScore(dailySkill.id)"
+              :label="dailySkill.name"
+              :min="DAILY_SKILL_SCORE_MIN"
+              :max="DAILY_SKILL_SCORE_MAX"
+              :disabled="readonly || !studentIdRef"
+              size="sm"
+              class="border-t border-muted first:border-t-0"
+              @update:model-value="setSkillScore(dailySkill.id, $event)"
+            />
+            <div
+              v-if="scoreSummaryRef.totalCount > 0"
+              class="flex items-center justify-between gap-3 border-t border-muted bg-elevated/50 px-4 py-3"
+            >
+              <span class="text-sm text-muted">
+                {{ scoreSummaryRef.filledCount }}/{{ scoreSummaryRef.totalCount }} scored
+              </span>
+              <div class="text-right">
+                <p class="text-lg font-semibold leading-tight">
+                  {{ scoreSummaryRef.averageText }}
+                </p>
+                <p class="text-xs text-muted">
+                  {{ scoreSummaryRef.percentText }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </UFormField>
+        </UFormField>
+        <UButton
+          :label="formStateRef.markedCompleted ? 'Marked completed – tap to undo' : 'Mark as completed'"
+          :icon="formStateRef.markedCompleted ? 'i-lucide-circle-check' : 'i-lucide-check'"
+          :color="formStateRef.markedCompleted ? 'success' : 'neutral'"
+          :variant="formStateRef.markedCompleted ? 'soft' : 'outline'"
+          :disabled="readonly || !studentIdRef"
+          block
+          @click="toggleMarkedCompleted"
+        />
+      </div>
     </div>
 
     <ActivityCreateModal

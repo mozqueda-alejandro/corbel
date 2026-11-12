@@ -190,7 +190,6 @@ const scoreSummaryRef = computed(() => {
           :model-value="recordStateRef.testVariantId"
           :items="testItemListRef"
           placeholder="Select test"
-          icon="i-lucide-clipboard-list"
           :disabled="readonly || !studentIdRef || testItemListRef.length === 0"
           class="w-full"
           @update:model-value="handleTestChange"

@@ -3,7 +3,8 @@ import type { SelectMenuItem } from "@nuxt/ui";
 
 import type { SessionStudent } from "~/schemas/student.schema";
 
-type Progress = { done: number, total: number };
+// completed is set when the student was marked done by hand with fields still empty.
+type Progress = { done: number, total: number, completed?: boolean };
 
 // Students missing from progressByStudentId haven't started; the rest are in progress or, once every
 // part is done, completed.
@@ -18,7 +19,7 @@ function getProgress(item: unknown) {
 }
 
 function isComplete(progress: Progress) {
-  return progress.done >= progress.total;
+  return !!progress.completed || progress.done >= progress.total;
 }
 
 // The check (or the ratio, on unselected rows) is taken out of the row's flow and the bar keeps room for
@@ -32,7 +33,7 @@ const studentIdRef = defineModel<string | undefined>();
 
 const groupList = [
   { label: "Not started", isMatch: (progress?: Progress) => !progress },
-  { label: "In progress", isMatch: (progress?: Progress) => !!progress && progress.done < progress.total },
+  { label: "In progress", isMatch: (progress?: Progress) => !!progress && !isComplete(progress) },
   { label: "Completed", isMatch: (progress?: Progress) => !!progress && isComplete(progress) }
 ];
 
@@ -63,7 +64,6 @@ const itemListRef = computed(() => {
     v-model="studentIdRef"
     :items="itemListRef"
     value-key="id"
-    icon="i-lucide-user-round"
     placeholder="Select student"
     :search-input="false"
     :disabled="disabled"

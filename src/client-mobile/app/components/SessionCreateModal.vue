@@ -66,6 +66,7 @@ async function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
     overview: "Placas 2",
     createdAt: new Date(Date.now()),
     attendance: [],
+    mudDuty: [],
     dailies: [],
     tests: [],
     photos: []

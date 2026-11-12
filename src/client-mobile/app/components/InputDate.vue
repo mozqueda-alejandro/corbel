@@ -80,6 +80,7 @@ defineExpose({
         <template #content>
           <UCalendar
             v-model="calendarValueRef"
+            color="neutral"
             :min-value="minValue"
             :max-value="maxValue"
             class="p-2"

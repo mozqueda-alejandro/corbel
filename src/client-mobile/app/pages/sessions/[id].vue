@@ -155,7 +155,6 @@ onMounted(() => {
         <UBadge
           variant="subtle"
           :color="sessionStatusColorMap[sessionRef.status]"
-          :icon="sessionStatusIconMap[sessionRef.status]"
           :label="sessionRef.status"
         />
         <span class="min-w-0 truncate text-sm text-muted">

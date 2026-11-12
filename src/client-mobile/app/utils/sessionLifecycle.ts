@@ -119,7 +119,7 @@ export function applyTestVariantUpdate(session: Session, testVariantById: Map<st
   });
 }
 
-export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "dailies" | "tests" | "photos">;
+export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "mudDuty" | "dailies" | "tests" | "photos">;
 
 export function pickSessionContent(session: SessionContent): SessionContent {
   return {
@@ -129,6 +129,7 @@ export function pickSessionContent(session: SessionContent): SessionContent {
     studentRoster: session.studentRoster,
     testVariants: session.testVariants,
     attendance: session.attendance,
+    mudDuty: session.mudDuty,
     dailies: session.dailies,
     tests: session.tests,
     photos: session.photos

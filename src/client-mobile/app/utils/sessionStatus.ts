@@ -6,10 +6,3 @@ export const sessionStatusColorMap: Record<SessionStatusEnum, "success" | "error
   [SessionStatusEnum.Completed]: "neutral",
   [SessionStatusEnum.Archived]: "info"
 };
-
-export const sessionStatusIconMap: Record<SessionStatusEnum, string> = {
-  [SessionStatusEnum.Exported]: "i-lucide-upload",
-  [SessionStatusEnum.Drafting]: "i-lucide-pencil-line",
-  [SessionStatusEnum.Completed]: "i-lucide-lock",
-  [SessionStatusEnum.Archived]: "i-lucide-archive"
-};

@@ -51,8 +51,8 @@ const visibleSessionListRef = computed(() =>
   sessionViewRef.value === SessionViewEnum.Archived ? archivedSessionListRef.value : activeSessionListRef.value);
 
 const viewTabItemList = computed<TabsItem[]>(() => [
-  { label: "Active", value: SessionViewEnum.Active, icon: "i-lucide-calendar", badge: { label: String(activeSessionListRef.value.length), color: "neutral", variant: "subtle" } },
-  { label: "Archived", value: SessionViewEnum.Archived, icon: "i-lucide-archive", badge: { label: String(archivedSessionListRef.value.length), color: "neutral", variant: "subtle" } }
+  { label: "Active", value: SessionViewEnum.Active, badge: { label: String(activeSessionListRef.value.length), color: "neutral", variant: "subtle" } },
+  { label: "Archived", value: SessionViewEnum.Archived, badge: { label: String(archivedSessionListRef.value.length), color: "neutral", variant: "subtle" } }
 ]);
 
 const searchQueryRef = ref("");
@@ -225,8 +225,7 @@ const columns = computed<TableColumn<Session>[]>(() => [
       return h(UBadge, {
         class: "capitalize",
         variant: "subtle",
-        color: sessionStatusColorMap[statusValue] || "neutral",
-        icon: sessionStatusIconMap[statusValue]
+        color: sessionStatusColorMap[statusValue] || "neutral"
       }, () => statusValue);
     }
   },

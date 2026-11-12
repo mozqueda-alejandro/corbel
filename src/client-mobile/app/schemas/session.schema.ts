@@ -43,13 +43,15 @@ export const testSkillScoreSchema = z.object({
 export type TestSkillScore = z.infer<typeof testSkillScoreSchema>;
 
 // Saved as it is filled in, so any field may still be missing. Whether it counts as completed is worked
-// out from its content (activity, recommendation and every daily skill present; comments are optional), not stored.
+// out from its content (activity, recommendation and every daily skill present; comments are optional), not stored,
+// unless the instructor marked it completed by hand (markedCompleted) with some fields still empty.
 export const sessionDailyRecordSchema = z.object({
   studentId: z.uuid(),
   // The activity's name, kept on the record so it reads correctly whatever happens to the activity list.
   activity: activityNameSchema.optional(),
-  comments: createBoundedStringSchema(0, 200).optional(),
-  recommendation: createBoundedStringSchema(0, 200).optional(),
+  comments: createBoundedStringSchema(0, 300).optional(),
+  recommendation: createBoundedStringSchema(0, 300).optional(),
+  markedCompleted: z.boolean().optional(),
   skills: z.array(dailySkillScoreSchema)
 });
 export type SessionDailyRecord = z.infer<typeof sessionDailyRecordSchema>;
@@ -61,6 +63,7 @@ export const sessionTestRecordSchema = z.object({
 });
 export type SessionTestRecord = z.infer<typeof sessionTestRecordSchema>;
 
+export const MAX_MUD_DUTY_STUDENTS = 3;
 export const MAX_PHOTOS_PER_STUDENT = 10;
 export const MAX_TAGS_PER_PHOTO = 10;
 
@@ -79,7 +82,7 @@ export type SessionPhoto = z.infer<typeof sessionPhotoSchema>;
 export const sessionSchema = z.object({
   id: z.uuid(),
   name: createBoundedStringSchema(2, 50),
-  overview: createBoundedStringSchema(0, 200).optional(),
+  overview: createBoundedStringSchema(0, 300).optional(),
   status: sessionStatusSchema,
   date: z.coerce.date(),
   createdAt: z.coerce.date(),
@@ -100,6 +103,9 @@ export const sessionSchema = z.object({
   // still change; once it is completed or archived the copy is frozen, and deleting the test never removes it.
   testVariants: z.array(testVariantSchema).optional(),
   attendance: z.array(attendanceRecordSchema),
+  // Students on mud duty; only students who attended can be on it.
+  mudDuty: z.array(z.uuid()).max(MAX_MUD_DUTY_STUDENTS)
+    .default([]),
   dailies: z.array(sessionDailyRecordSchema),
   tests: z.array(sessionTestRecordSchema),
   // Refined on the field rather than the object so sessionSchema can still be picked from.

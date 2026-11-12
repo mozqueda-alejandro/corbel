@@ -39,6 +39,11 @@ function handleResetSettings() {
 }
 // #endregion
 
+// #region Clear data
+const { clearUserAndClassData } = useDBTest();
+const isClearDialogOpenRef = ref(false);
+// #endregion
+
 // #region Feedback
 // Awaiting the warm-up lets the very first preview play instead of only loading the sound.
 async function previewHaptic() {
@@ -54,119 +59,170 @@ async function previewSound() {
 </script>
 
 <template>
-  <div class="flex flex-col w-full max-w-2xl mx-auto px-4 py-8 sm:px-6 sm:py-10 gap-6">
-    <h2>Settings</h2>
+  <div class="absolute inset-0 overflow-y-auto">
+    <div class="flex flex-col w-full max-w-2xl mx-auto px-4 py-8 sm:px-6 sm:py-10 gap-6">
+      <h2>Settings</h2>
 
-    <UForm
-      :schema="userSettingsSchema"
-      :state="settingsFormStateRef"
-      class="border border-muted rounded-md divide-y divide-muted"
-      @submit="handleSaveSettings"
-    >
-      <div class="px-4 py-3.5">
-        <h3 class="font-medium">
-          Sessions
-        </h3>
+      <UForm
+        :schema="userSettingsSchema"
+        :state="settingsFormStateRef"
+        class="border border-muted rounded-md divide-y divide-muted"
+        @submit="handleSaveSettings"
+      >
+        <div class="px-4 py-3.5">
+          <h3 class="font-medium">
+            Sessions
+          </h3>
+        </div>
+
+        <div class="space-y-4 px-4 py-4">
+          <UFormField
+            name="autoArchive.enabled"
+            label="Auto-archive completed sessions"
+            description="Archived sessions are hidden from the main list. You can still view and unarchive them."
+            :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0' }"
+          >
+            <USwitch v-model="settingsFormStateRef.autoArchive.enabled" />
+          </UFormField>
+
+          <UFormField
+            name="autoArchive.amount"
+            label="Archive after"
+            description="Measured from when the session was marked completed (or last unarchived)."
+          >
+            <div class="flex gap-2">
+              <UInputNumber
+                v-model="settingsFormStateRef.autoArchive.amount"
+                :min="1"
+                :max="999"
+                :disabled="!settingsFormStateRef.autoArchive.enabled"
+                class="w-32"
+              />
+              <USelect
+                v-model="settingsFormStateRef.autoArchive.unit"
+                :items="autoArchiveUnitOptionList"
+                :disabled="!settingsFormStateRef.autoArchive.enabled"
+                class="w-32"
+              />
+            </div>
+          </UFormField>
+
+          <UAlert
+            v-if="hasUnsavedChangesRef && dueSessionCountRef > 0"
+            color="warning"
+            variant="subtle"
+            icon="i-lucide-archive"
+            :title="`${dueSessionCountRef} completed ${dueSessionCountRef === 1 ? 'session' : 'sessions'} will be archived when you save.`"
+          />
+        </div>
+
+        <div class="px-4 py-3.5">
+          <h3 class="font-medium">
+            Sliders
+          </h3>
+        </div>
+
+        <div class="space-y-4 px-4 py-4">
+          <UFormField
+            name="feedback.haptics"
+            label="Vibration"
+            description="A small tap each time a score changes while sliding. Not available on every device."
+            :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
+          >
+            <UButton
+              type="button"
+              label="Try"
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              @click="previewHaptic"
+            />
+            <USwitch v-model="settingsFormStateRef.feedback.haptics" />
+          </UFormField>
+
+          <UFormField
+            name="feedback.sound"
+            label="Sound"
+            description="A soft tick each time a score changes while sliding. Silent if the device is muted."
+            :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
+          >
+            <UButton
+              type="button"
+              label="Try"
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              @click="previewSound"
+            />
+            <USwitch v-model="settingsFormStateRef.feedback.sound" />
+          </UFormField>
+        </div>
+
+        <div class="flex justify-end gap-2 px-4 py-3">
+          <UButton
+            label="Reset"
+            color="neutral"
+            variant="ghost"
+            :disabled="!hasUnsavedChangesRef"
+            @click="handleResetSettings"
+          />
+          <UButton
+            type="submit"
+            label="Save"
+            loading-auto
+            :disabled="!hasUnsavedChangesRef"
+          />
+        </div>
+      </UForm>
+
+      <div class="border border-muted rounded-md divide-y divide-muted">
+        <div class="px-4 py-3.5">
+          <h3 class="font-medium">
+            Data
+          </h3>
+        </div>
+
+        <div class="flex items-start justify-between gap-4 px-4 py-4">
+          <div class="text-sm">
+            <p class="font-medium">
+              Clear all data
+            </p>
+            <p class="text-muted">
+              Permanently deletes all sessions, students, classes, notes, tests and photos on this device.
+            </p>
+          </div>
+          <UButton
+            label="Clear data"
+            icon="i-lucide-trash-2"
+            color="error"
+            variant="soft"
+            @click="isClearDialogOpenRef = true"
+          />
+        </div>
       </div>
 
-      <div class="space-y-4 px-4 py-4">
-        <UFormField
-          name="autoArchive.enabled"
-          label="Auto-archive completed sessions"
-          description="Archived sessions are hidden from the main list. You can still view and unarchive them."
-          :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0' }"
-        >
-          <USwitch v-model="settingsFormStateRef.autoArchive.enabled" />
-        </UFormField>
-
-        <UFormField
-          name="autoArchive.amount"
-          label="Archive after"
-          description="Measured from when the session was marked completed (or last unarchived)."
-        >
-          <div class="flex gap-2">
-            <UInputNumber
-              v-model="settingsFormStateRef.autoArchive.amount"
-              :min="1"
-              :max="999"
-              :disabled="!settingsFormStateRef.autoArchive.enabled"
-              class="w-32"
+      <UModal
+        v-model:open="isClearDialogOpenRef"
+        title="Clear all data?"
+        description="This permanently deletes all sessions, students, classes, notes, tests and photos. This can't be undone."
+      >
+        <template #footer>
+          <div class="flex justify-end gap-2 w-full">
+            <UButton
+              label="Cancel"
+              color="neutral"
+              variant="ghost"
+              @click="isClearDialogOpenRef = false"
             />
-            <USelect
-              v-model="settingsFormStateRef.autoArchive.unit"
-              :items="autoArchiveUnitOptionList"
-              :disabled="!settingsFormStateRef.autoArchive.enabled"
-              class="w-32"
+            <UButton
+              label="Delete everything"
+              color="error"
+              loading-auto
+              @click="clearUserAndClassData"
             />
           </div>
-        </UFormField>
-
-        <UAlert
-          v-if="hasUnsavedChangesRef && dueSessionCountRef > 0"
-          color="warning"
-          variant="subtle"
-          icon="i-lucide-archive"
-          :title="`${dueSessionCountRef} completed ${dueSessionCountRef === 1 ? 'session' : 'sessions'} will be archived when you save.`"
-        />
-      </div>
-
-      <div class="px-4 py-3.5">
-        <h3 class="font-medium">
-          Sliders
-        </h3>
-      </div>
-
-      <div class="space-y-4 px-4 py-4">
-        <UFormField
-          name="feedback.haptics"
-          label="Vibration"
-          description="A small tap each time a score changes while sliding. Not available on every device."
-          :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
-        >
-          <UButton
-            type="button"
-            label="Try"
-            color="neutral"
-            variant="ghost"
-            size="xs"
-            @click="previewHaptic"
-          />
-          <USwitch v-model="settingsFormStateRef.feedback.haptics" />
-        </UFormField>
-
-        <UFormField
-          name="feedback.sound"
-          label="Sound"
-          description="A soft tick each time a score changes while sliding. Silent if the device is muted."
-          :ui="{ root: 'flex items-start justify-between gap-4', container: 'mt-0 flex items-center gap-3' }"
-        >
-          <UButton
-            type="button"
-            label="Try"
-            color="neutral"
-            variant="ghost"
-            size="xs"
-            @click="previewSound"
-          />
-          <USwitch v-model="settingsFormStateRef.feedback.sound" />
-        </UFormField>
-      </div>
-
-      <div class="flex justify-end gap-2 px-4 py-3">
-        <UButton
-          label="Reset"
-          color="neutral"
-          variant="ghost"
-          :disabled="!hasUnsavedChangesRef"
-          @click="handleResetSettings"
-        />
-        <UButton
-          type="submit"
-          label="Save"
-          loading-auto
-          :disabled="!hasUnsavedChangesRef"
-        />
-      </div>
-    </UForm>
+        </template>
+      </UModal>
+    </div>
   </div>
 </template>

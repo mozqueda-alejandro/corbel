@@ -5,7 +5,7 @@ import { useDebounceFn, useLocalStorage } from "@vueuse/core";
 import { z } from "zod";
 
 import type { Session } from "~/schemas/session.schema";
-import { AttendanceStatusEnum, sessionSchema } from "~/schemas/session.schema";
+import { AttendanceStatusEnum, MAX_MUD_DUTY_STUDENTS, sessionSchema } from "~/schemas/session.schema";
 import { type SessionStudent, type Student, StudentStatusEnum } from "~/schemas/student.schema";
 
 //region Types and Constants
@@ -121,10 +121,10 @@ function getSessionListForDay(day: DateValue): Session[] {
   return sessionListByDayKeyRef.value.get(toDayKey(day.year, day.month, day.day)) ?? [];
 }
 
+// The chip shows the status of the first session on that day.
 function getDayChipColor(day: DateValue) {
-  const sessionListForDay = getSessionListForDay(day);
-  if (sessionListForDay.some(sessionItem => sessionItem.id === props.session.id)) return "primary";
-  return sessionListForDay[0] ? sessionStatusColorMap[sessionListForDay[0].status] : "neutral";
+  const firstSession = getSessionListForDay(day)[0];
+  return firstSession ? sessionStatusColorMap[firstSession.status] : "neutral";
 }
 //endregion
 
@@ -183,6 +183,7 @@ function setAttendanceStatus(studentId: string, status: AttendanceStatusEnum) {
     attendanceByStudentIdRef.value.set(studentId, status);
   }
   attendanceByStudentIdRef.value = new Map(attendanceByStudentIdRef.value);
+  removeAbsentFromMudDuty();
   persistSession();
 }
 
@@ -193,6 +194,36 @@ function markAllPresent() {
     updatedAttendanceMap.set(studentItem.id, AttendanceStatusEnum.Present);
   }
   attendanceByStudentIdRef.value = updatedAttendanceMap;
+  persistSession();
+}
+//endregion
+
+//region Mud Duty
+const mudDutyStudentIdListRef = ref<string[]>([...props.session.mudDuty]);
+
+// Anyone not marked present or tardy can't be on mud duty.
+const attendingStudentListRef = computed(() => (sessionStudentListRef.value ?? []).filter((studentItem) => {
+  const status = getAttendanceStatus(studentItem.id);
+  return status === AttendanceStatusEnum.Present || status === AttendanceStatusEnum.Tardy;
+}));
+
+// Once three are chosen the rest are disabled, so a fourth can't be picked.
+const mudDutyItemListRef = computed(() => attendingStudentListRef.value
+  .map(studentItem => ({
+    id: studentItem.id,
+    label: getStudentFullName(studentItem),
+    disabled: mudDutyStudentIdListRef.value.length >= MAX_MUD_DUTY_STUDENTS && !mudDutyStudentIdListRef.value.includes(studentItem.id)
+  }))
+  .sort((itemA, itemB) => itemA.label.localeCompare(itemB.label)));
+
+function removeAbsentFromMudDuty() {
+  const attendingIdSet = new Set(attendingStudentListRef.value.map(studentItem => studentItem.id));
+  const remainingIdList = mudDutyStudentIdListRef.value.filter(studentId => attendingIdSet.has(studentId));
+  if (remainingIdList.length !== mudDutyStudentIdListRef.value.length) mudDutyStudentIdListRef.value = remainingIdList;
+}
+
+function handleMudDutyChange(studentIdList: string[]) {
+  mudDutyStudentIdListRef.value = studentIdList.slice(0, MAX_MUD_DUTY_STUDENTS);
   persistSession();
 }
 //endregion
@@ -209,7 +240,8 @@ async function saveSessionDetails() {
   try {
     await saveSessionEdit(props.session.id, {
       ...detailsResult.data,
-      attendance: Array.from(attendanceByStudentIdRef.value.entries()).map(([studentId, status]) => ({ studentId, status }))
+      attendance: Array.from(attendanceByStudentIdRef.value.entries()).map(([studentId, status]) => ({ studentId, status })),
+      mudDuty: mudDutyStudentIdListRef.value
     });
   } catch (saveError) {
     console.error("Session save failed:", saveError);
@@ -228,6 +260,7 @@ watch(sessionDetailsStateRef, () => persistSession(), { deep: true });
 
 watch(() => props.session.id, () => {
   attendanceByStudentIdRef.value = getAttendanceMap(props.session);
+  mudDutyStudentIdListRef.value = [...props.session.mudDuty];
   Object.assign(sessionDetailsStateRef, getSessionDetails(props.session));
 });
 
@@ -452,6 +485,7 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
             <UCalendar
               v-model="calendarValueRef"
               size="sm"
+              color="neutral"
               :min-value="minCalendarDate"
               :max-value="maxCalendarDate"
             >
@@ -477,30 +511,34 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
             :disabled="readonly"
             class="space-y-3"
           >
-            <UFormField
-              label="Name"
-              name="name"
-            >
-              <UInput
-                v-model="sessionDetailsStateRef.name"
-                class="w-full"
-              />
-            </UFormField>
-            <UFormField
-              label="Date"
-              name="date"
-            >
-              <InputDate
-                v-model="sessionDetailsStateRef.date"
-                :min-value="minCalendarDate"
-                :max-value="maxCalendarDate"
-                :disabled="readonly"
-                popover-side="bottom"
-                popover-align="end"
-                :popover-side-offset="8"
-                class="w-full"
-              />
-            </UFormField>
+            <div class="flex items-start gap-3">
+              <UFormField
+                label="Name"
+                name="name"
+                class="min-w-0 flex-1"
+              >
+                <UInput
+                  v-model="sessionDetailsStateRef.name"
+                  class="w-full"
+                />
+              </UFormField>
+              <UFormField
+                label="Date"
+                name="date"
+                class="shrink-0"
+              >
+                <InputDate
+                  v-model="sessionDetailsStateRef.date"
+                  :min-value="minCalendarDate"
+                  :max-value="maxCalendarDate"
+                  :disabled="readonly"
+                  popover-side="bottom"
+                  popover-align="end"
+                  :popover-side-offset="8"
+                  class="w-auto"
+                />
+              </UFormField>
+            </div>
             <UFormField
               label="Overview"
               name="overview"
@@ -513,6 +551,23 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
                 autoresize
                 placeholder="What's this session about?"
                 class="w-full"
+              />
+            </UFormField>
+            <UFormField
+              label="Mud Duty"
+              name="mudDuty"
+              :hint="`${mudDutyStudentIdListRef.length}/${MAX_MUD_DUTY_STUDENTS}`"
+            >
+              <USelectMenu
+                :model-value="mudDutyStudentIdListRef"
+                :items="mudDutyItemListRef"
+                value-key="id"
+                multiple
+                :search-input="false"
+                :disabled="readonly"
+                placeholder="Select up to 3 students"
+                class="w-full"
+                @update:model-value="handleMudDutyChange"
               />
             </UFormField>
           </UForm>

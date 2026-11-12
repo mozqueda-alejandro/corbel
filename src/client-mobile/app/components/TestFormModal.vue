@@ -29,6 +29,8 @@ const formStateRef = reactive<TestFormState>(createFormState());
 const isNameTouchedRef = ref(false);
 // The name reads as plain text until the pen is clicked; a new test starts with it open.
 const isEditingNameRef = ref(false);
+// In delete mode each skill shows a button that removes it straight away.
+const isDeleteModeRef = ref(false);
 const nameInputRef = useTemplateRef("nameInputRef");
 
 function startEditingName() {
@@ -59,6 +61,7 @@ watch(isOpenRef, (isOpen) => {
   if (!isOpen) return;
   Object.assign(formStateRef, createFormState());
   isNameTouchedRef.value = false;
+  isDeleteModeRef.value = false;
   if (props.test) isEditingNameRef.value = false;
   else startEditingName();
 });
@@ -143,7 +146,7 @@ async function handleSave() {
 <template>
   <UModal
     v-model:open="isOpenRef"
-    :ui="{ content: 'sm:max-w-4xl h-[80dvh]', body: '[scrollbar-gutter:stable]' }"
+    :ui="{ content: 'sm:max-w-4xl h-[80dvh]', body: '[scrollbar-gutter:stable]', wrapper: 'min-w-0 flex-1 pe-10', title: 'w-full' }"
   >
     <template #title>
       <UInput
@@ -161,7 +164,7 @@ async function handleSave() {
       />
       <div
         v-else
-        class="flex items-center gap-1"
+        class="flex h-8 items-center gap-1"
       >
         <span
           class="min-w-0 truncate"
@@ -227,8 +230,23 @@ async function handleSave() {
               <div
                 v-for="skill in skillColumn.skillList"
                 :key="skill.id"
-                class="space-y-2 rounded-md border border-muted p-2"
+                class="relative space-y-2 rounded-md border border-muted p-2"
               >
+                <Transition name="delete-button">
+                  <UButton
+                    v-if="isDeleteModeRef"
+                    type="button"
+                    icon="i-lucide-x"
+                    color="neutral"
+                    variant="outline"
+                    size="xs"
+                    square
+                    :ui="{ base: 'p-1', leadingIcon: 'size-3.5' }"
+                    aria-label="Delete skill"
+                    class="absolute -left-2 -top-2 z-10 rounded-full bg-default"
+                    @click="removeSkill(skill.id)"
+                  />
+                </Transition>
                 <div class="flex items-start gap-2">
                   <UFormField
                     :name="getSkillFieldName(skill.id, 'name')"
@@ -259,32 +277,17 @@ async function handleSave() {
                     />
                   </UFormField>
                 </div>
-                <div class="flex items-start gap-1">
-                  <UFormField
-                    :name="getSkillFieldName(skill.id, 'criteria')"
-                    class="min-w-0 flex-1"
-                  >
-                    <UTextarea
-                      v-model="skill.criteria"
-                      placeholder="Criteria"
-                      aria-label="Criteria"
-                      :rows="1"
-                      autoresize
-                      size="sm"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UButton
-                    type="button"
-                    icon="i-lucide-x"
-                    color="neutral"
-                    variant="ghost"
-                    size="xs"
-                    aria-label="Remove skill"
-                    class="shrink-0"
-                    @click="removeSkill(skill.id)"
+                <UFormField :name="getSkillFieldName(skill.id, 'criteria')">
+                  <UTextarea
+                    v-model="skill.criteria"
+                    placeholder="Criteria"
+                    aria-label="Criteria"
+                    :rows="1"
+                    autoresize
+                    size="sm"
+                    class="w-full"
                   />
-                </div>
+                </UFormField>
               </div>
             </TransitionGroup>
           </section>
@@ -294,6 +297,14 @@ async function handleSave() {
 
     <template #footer>
       <div class="flex w-full justify-end gap-2">
+        <UButton
+          type="button"
+          :label="isDeleteModeRef ? 'Done' : 'Delete skills'"
+          color="neutral"
+          variant="link"
+          class="me-auto"
+          @click="isDeleteModeRef = !isDeleteModeRef"
+        />
         <UButton
           type="button"
           label="Cancel"
@@ -332,7 +343,21 @@ async function handleSave() {
   width: 100%;
 }
 
+/* The delete buttons fade and grow in when delete mode is switched on. */
+.delete-button-enter-active,
+.delete-button-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.delete-button-enter-from,
+.delete-button-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .delete-button-enter-active,
+  .delete-button-leave-active,
   .skill-enter-active,
   .skill-leave-active,
   .skill-move {

@@ -2,12 +2,9 @@
 import type { DropdownMenuItem, NavigationMenuItem } from "@nuxt/ui";
 import { useColorMode } from "@vueuse/core";
 
-import { useDBTest } from "~/composables/useDBTest.ts";
-
 const colorMode = useColorMode();
 const route = useRoute();
 const { classListRef, saveClass } = useClassRepository();
-const { clearUserAndClassData } = useDBTest();
 const { currentUserRef } = useUserRepository();
 const { sessionListRef } = useSessionRepository();
 useAutoArchive();
@@ -164,13 +161,6 @@ defineShortcuts(extractShortcuts(classesItems.value));
           @click="open = !open"
         />
         <div class="flex items-center gap-6">
-          <UButton
-            label="Test Clear"
-            icon="i-lucide-trash-2"
-            color="error"
-            variant="soft"
-            @click="clearUserAndClassData"
-          />
           <AppLogo class="h-4 mr-2 w-auto" />
         </div>
       </div>
