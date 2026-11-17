@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SelectItem } from "@nuxt/ui";
 
+import { builtInTestSubcategoryList } from "~/data/built-in-test-subcategories";
 import { type Session, SPECIAL_SKILL_MAX_SCORE, type SpecialSkill, type TestSkillScore, WRITTEN_TEST_NAME } from "~/schemas/session.schema";
 import { TestSkillCategoryEnum } from "~/schemas/test-skill.schema";
 
@@ -35,6 +36,8 @@ function showSaveError(title: string, saveError: unknown) {
 type RecordState = {
   // WRITTEN_TEST_ID for the Written Test, otherwise the id of a test.
   testVariantId?: string
+  // The subcategory the student is scored under; unset for the Written Test, which has none.
+  subcategoryId?: string
   skills: TestSkillScore[]
   // One entry per special skill of the selected test, filled in as the student is scored.
   specialSkillList: SpecialSkill[]
@@ -48,6 +51,7 @@ function createEmptySpecialSkill(): SpecialSkill {
 const studentIdRef = ref<string>();
 const recordStateRef = reactive<RecordState>({
   testVariantId: undefined,
+  subcategoryId: undefined,
   skills: [],
   specialSkillList: [],
   writtenScore: undefined
@@ -60,6 +64,7 @@ function loadRecord(studentId: string | undefined) {
   const storedRecord = props.session.tests.find(testRecord => testRecord.studentId === studentId);
 
   recordStateRef.testVariantId = storedWrittenRecord ? WRITTEN_TEST_ID : storedRecord?.testVariantId;
+  recordStateRef.subcategoryId = storedRecord?.subcategoryId;
   recordStateRef.writtenScore = storedWrittenRecord?.score;
   recordStateRef.skills = storedRecord ? storedRecord.skills.map(skillScore => ({ ...skillScore })) : [];
   recordStateRef.specialSkillList = storedRecord ? storedRecord.specialSkillList.map(specialSkill => ({ ...specialSkill })) : [];
@@ -88,6 +93,7 @@ async function persistRecord() {
     await saveSessionTestRecord(props.session.id, {
       studentId,
       testVariantId,
+      subcategoryId: recordStateRef.subcategoryId,
       skills: recordStateRef.skills.filter(skillScore => testSkillIdSet.has(skillScore.skillId)).map(skillScore => ({ ...skillScore })),
       specialSkillList: recordStateRef.specialSkillList.slice(0, specialSkillCount).map(specialSkill => ({ ...specialSkill }))
     });
@@ -127,12 +133,31 @@ const progressByStudentIdRef = computed(() => {
 //endregion
 
 //region Test Selection
+// The select lists subcategories, grouped by category; each one scores the skills of its category's test.
+// The Written Test has no subcategories, so it is a single entry.
 const testItemListRef = computed<SelectItem[]>(() => {
-  const skillTestItemList: SelectItem[] = (sessionTestVariantListRef.value ?? []).map(testVariant => ({ label: testVariant.name, value: testVariant.id }));
-  const writtenTestItem: SelectItem = { label: WRITTEN_TEST_NAME, value: WRITTEN_TEST_ID };
+  const testVariantIdSet = new Set((sessionTestVariantListRef.value ?? []).map(testVariant => testVariant.id));
+  const subcategoryListByCategory = new Map<string, typeof builtInTestSubcategoryList>();
+  for (const subcategory of builtInTestSubcategoryList) {
+    if (!testVariantIdSet.has(subcategory.testVariantId)) continue;
+    subcategoryListByCategory.set(subcategory.category, [...(subcategoryListByCategory.get(subcategory.category) ?? []), subcategory]);
+  }
+
+  const itemList: SelectItem[] = [];
+  for (const [category, subcategoryList] of subcategoryListByCategory) {
+    if (itemList.length > 0) itemList.push({ type: "separator" });
+    itemList.push({ type: "label", label: category }, ...subcategoryList
+      .map(subcategory => ({ label: subcategory.name, value: subcategory.id }))
+      .sort((itemA, itemB) => itemA.label.localeCompare(itemB.label)));
+  }
   // The Written Test is a different kind of test, so it sits apart from the others.
-  return skillTestItemList.length > 0 ? [...skillTestItemList, { type: "separator" }, writtenTestItem] : [writtenTestItem];
+  if (itemList.length > 0) itemList.push({ type: "separator" });
+  itemList.push({ label: WRITTEN_TEST_NAME, value: WRITTEN_TEST_ID });
+  return itemList;
 });
+
+// What the select shows: the subcategory, or the Written Test.
+const selectedItemValueRef = computed(() => (isWrittenTestRef.value ? WRITTEN_TEST_ID : recordStateRef.subcategoryId));
 
 const selectedTestVariantRef = computed(() =>
   sessionTestVariantListRef.value?.find(testVariant => testVariant.id === recordStateRef.testVariantId));
@@ -143,37 +168,54 @@ const hasEnteredScoresRef = computed(() =>
   || recordStateRef.specialSkillList.some(specialSkill => !!specialSkill.name || !!specialSkill.criteria || specialSkill.score !== undefined));
 
 const isChangeConfirmOpenRef = ref(false);
-const pendingTestVariantIdRef = ref<string>();
+const pendingItemValueRef = ref<string>();
 
-function applyTestVariant(testVariantId: string) {
-  recordStateRef.testVariantId = testVariantId;
-  recordStateRef.skills = [];
-  recordStateRef.specialSkillList = [];
-  recordStateRef.writtenScore = undefined;
+// The test a select entry scores, and the subcategory it stands for.
+function resolveItemValue(itemValue: string): { testVariantId: string, subcategoryId?: string } | undefined {
+  if (itemValue === WRITTEN_TEST_ID) return { testVariantId: WRITTEN_TEST_ID };
+  const subcategory = builtInTestSubcategoryList.find(subcategoryItem => subcategoryItem.id === itemValue);
+  return subcategory && { testVariantId: subcategory.testVariantId, subcategoryId: subcategory.id };
+}
+
+function applyItemValue(itemValue: string) {
+  const selection = resolveItemValue(itemValue);
+  if (!selection) return;
+
+  // Another subcategory of the same test scores the same skills, so what has been entered stays.
+  if (selection.testVariantId !== recordStateRef.testVariantId) {
+    recordStateRef.skills = [];
+    recordStateRef.specialSkillList = [];
+    recordStateRef.writtenScore = undefined;
+  }
+  recordStateRef.testVariantId = selection.testVariantId;
+  recordStateRef.subcategoryId = selection.subcategoryId;
   persistRecord();
 }
 
-// The select is driven by the stored value, so a cancelled change leaves it showing the current test.
-function handleTestChange(testVariantId: string | undefined) {
-  if (!testVariantId || testVariantId === recordStateRef.testVariantId) return;
+// The select is driven by the stored value, so a cancelled change leaves it showing the current entry.
+function handleTestChange(itemValue: unknown) {
+  if (typeof itemValue !== "string" || itemValue === selectedItemValueRef.value) return;
 
-  if (hasEnteredScoresRef.value) {
-    pendingTestVariantIdRef.value = testVariantId;
+  const selection = resolveItemValue(itemValue);
+  if (!selection) return;
+
+  if (selection.testVariantId !== recordStateRef.testVariantId && hasEnteredScoresRef.value) {
+    pendingItemValueRef.value = itemValue;
     isChangeConfirmOpenRef.value = true;
     return;
   }
-  applyTestVariant(testVariantId);
+  applyItemValue(itemValue);
 }
 
 function handleConfirmChange() {
-  const testVariantId = pendingTestVariantIdRef.value;
-  pendingTestVariantIdRef.value = undefined;
+  const itemValue = pendingItemValueRef.value;
+  pendingItemValueRef.value = undefined;
   isChangeConfirmOpenRef.value = false;
-  if (testVariantId) applyTestVariant(testVariantId);
+  if (itemValue) applyItemValue(itemValue);
 }
 
 function handleCancelChange() {
-  pendingTestVariantIdRef.value = undefined;
+  pendingItemValueRef.value = undefined;
   isChangeConfirmOpenRef.value = false;
 }
 //endregion
@@ -302,7 +344,7 @@ async function setWrittenDescription(description: string) {
         required
       >
         <USelect
-          :model-value="recordStateRef.testVariantId"
+          :model-value="selectedItemValueRef"
           :items="testItemListRef"
           placeholder="Select test"
           :disabled="readonly || !studentIdRef"

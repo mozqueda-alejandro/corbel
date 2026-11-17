@@ -72,6 +72,8 @@ export type SpecialSkill = z.infer<typeof specialSkillSchema>;
 export const sessionTestRecordSchema = z.object({
   studentId: z.uuid(),
   testVariantId: z.uuid(),
+  // The built-in subcategory the student was scored under; it decides which test's skills are shown.
+  subcategoryId: z.uuid().optional(),
   skills: z.array(testSkillScoreSchema),
   // One entry per special skill the test has, in order; fewer entries mean the rest haven't been filled in.
   specialSkillList: z.array(specialSkillSchema).default([])
