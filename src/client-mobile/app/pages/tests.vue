@@ -2,6 +2,7 @@
 import type { DropdownMenuItem, TableColumn } from "@nuxt/ui";
 import { h, resolveComponent } from "vue";
 
+import { SPECIAL_SKILL_MAX_SCORE } from "~/schemas/session.schema";
 import type { TestVariant } from "~/schemas/test-variant.schema";
 
 const UButton = resolveComponent("UButton");
@@ -217,11 +218,12 @@ const columnList: TableColumn<TestVariant>[] = [
     cell: ({ row }) => h("span", { class: "font-medium text-highlighted" }, row.original.name)
   }, {
     id: "skills",
-    accessorFn: test => test.skills.length,
+    // Special skills count as skills too, each worth SPECIAL_SKILL_MAX_SCORE points.
+    accessorFn: test => test.skills.length + test.specialSkillCount,
     header: ({ column }) => renderSortableHeader(column, "Skills")
   }, {
     id: "points",
-    accessorFn: test => test.skills.reduce((pointSum, skill) => pointSum + skill.maxScore, 0),
+    accessorFn: test => test.skills.reduce((pointSum, skill) => pointSum + skill.maxScore, 0) + test.specialSkillCount * SPECIAL_SKILL_MAX_SCORE,
     header: ({ column }) => renderSortableHeader(column, "Points")
   }, {
     id: "actions",

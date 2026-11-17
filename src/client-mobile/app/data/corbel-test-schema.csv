@@ -1,0 +1,41 @@
+TestId,SkillId,Description,MaxScore,Criteria
+1,1,Wall Plumb,15,Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.
+1,2,Level,10,Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.
+1,3,Story Height,5,Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 1 point.
+1,4,Wall Length,10,End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/16” deviation.
+1,5,Voids,10,Deduct 1 pt for every void in mortar joints.
+1,6,Time,10,Full score if completed in time limit. Deduct 1 pt per minute over.
+1,7,Brick/Block Technique,10,"Deduct 1 pt per instance: relayed blocks, exposed sashes, smearing, over-tapping, redundant leveling."
+1,8,Safety Practices,10,"Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls."
+1,9,Overall Appearance,10,"Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks."
+1,10,???,10,???
+2,1,Distance,15,Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.
+2,2,Mortar net,10,"Loose and at the botom, ridges up. Deduct 5 points if set incorrect,"
+2,3,Ties,5,Failed if any tie is not in place.
+2,4,Weep Holes,10,"Failed if not weep holes, deduct 2 points for each weep hole protruding from brick."
+2,5,Flashing,10,"Failed if omitted. Deduct 2 points for every 1/4"" incosistency from face of brick."
+2,6,Termination bar,10,Failed if omitted. Deduct 2 point for everyscrew omitted.
+2,7,Installation planning,10,"Deduct 1 pt per instance: relayed flashing, or weep holes."
+2,8,Safety Practices,10,"Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls."
+2,9,Overall Appearance,10,"Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks."
+2,10,???,10,???
+3,1,Position,15,Tolerance: 1/8” in from center Deduct 1 pt per 1/16” deviation.
+3,2,Elevation,10,Tolerance: 1/8” in from Height. Deduct 1 pt per 1/16” deviation.
+3,3,Space for dry pack,5,Tolerance: 1/8” in. Deduct 1 pt per 1/16” deviation.
+3,4,Pocket Size,10,Tolerance ½” form top of plate.  Deduct 1 pt per 1/4” deviation.
+3,5,Legs around rebar,10,Deduct 2 pts for every failed instance.
+3,6,Space for grout,10,Deduct 2 pts per rebar constriction obstructing flow of grout.
+3,7,Plate is movable,10,Deduct 2 pts per failed instance.
+3,8,Safety Practices,10,"Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., dry cutting), breaking down walls."
+3,9,Laps,10,Deduct 1 pt per: insufficient lap
+3,10,Holes covered                                         ,10,Deduct 5 points for every instance
+4,1,Overall bonding,20,"If unsuccessful, the entire assessment is failed."
+4,2,Overall Level,10,Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.
+4,3,Story Height,10,"Corners, Cj, Openings, steps (Deduct 1 point for each missed item)"
+4,4,Wall Length,10,End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/8” deviation.
+4,5,Especial bonding,10,"Corners, Cj, Openings, Cuts for steps (Deduct 1 point for each missed item)"
+4,6,Time,10,Full score if completed in time limit. Deduct 1 pt per minute over.
+4,7,Lay out Technique,10,Deduct 1 pt per instance: Extra marks or half erased.
+4,8,Safety Practices,10,"Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls."
+4,9,Overall Appearance,10,"Deduct 1 pt per: marks not clearly visible, missing marks, falling tape."
+,,,,

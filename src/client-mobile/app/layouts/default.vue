@@ -49,11 +49,6 @@ function getItems(): NavigationMenuItem[] {
   }];
 }
 
-function getFooterItems(): NavigationMenuItem[] {
-  return [{
-  }];
-}
-
 const userItems = computed<DropdownMenuItem[][]>(() => ([[{
   label: "Profile",
   icon: "i-lucide-user",
@@ -125,11 +120,6 @@ defineShortcuts(extractShortcuts(classesItems.value));
 
       <template #footer>
         <div class="flex flex-col gap-2 w-full">
-          <UNavigationMenu
-            :items="getFooterItems()"
-            orientation="vertical"
-            classes="mt-auto"
-          />
           <USeparator />
           <UDropdownMenu
             :items="userItems"

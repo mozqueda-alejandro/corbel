@@ -46,6 +46,7 @@ export function buildSessionRoster(session: Session, studentList: Student[]): Se
     ...session.attendance.map(record => record.studentId),
     ...session.dailies.map(record => record.studentId),
     ...session.tests.map(record => record.studentId),
+    ...session.writtenTests.map(record => record.studentId),
     ...session.photos.map(photo => photo.studentId)
   ]);
   return studentList
@@ -91,7 +92,7 @@ export function applySessionEdit(session: Session): Session {
 }
 
 // Brings the session's copies of edited tests up to date, so its scores follow the new version. Scores for
-// skills the test no longer has are dropped and the rest are held to the skill's new maximum.
+// skills (and special skills) the test no longer has are dropped and the rest are held to the skill's new maximum.
 // Returns the same session when no copy differs.
 export function applyTestVariantUpdate(session: Session, testVariantById: Map<string, TestVariant>): Session {
   const copyList = session.testVariants ?? [];
@@ -108,9 +109,11 @@ export function applyTestVariantUpdate(session: Session, testVariantById: Map<st
     testVariants: copyList.map(copy => (changedIdSet.has(copy.id) ? testVariantById.get(copy.id)! : copy)),
     tests: session.tests.map((testRecord) => {
       if (!changedIdSet.has(testRecord.testVariantId)) return testRecord;
-      const skillById = new Map(testVariantById.get(testRecord.testVariantId)!.skills.map(skill => [skill.id, skill]));
+      const updatedTestVariant = testVariantById.get(testRecord.testVariantId)!;
+      const skillById = new Map(updatedTestVariant.skills.map(skill => [skill.id, skill]));
       return {
         ...testRecord,
+        specialSkillList: testRecord.specialSkillList.slice(0, updatedTestVariant.specialSkillCount),
         skills: testRecord.skills
           .filter(skillScore => skillById.has(skillScore.skillId))
           .map(skillScore => ({ ...skillScore, score: Math.min(skillScore.score, skillById.get(skillScore.skillId)!.maxScore) }))
@@ -119,7 +122,7 @@ export function applyTestVariantUpdate(session: Session, testVariantById: Map<st
   });
 }
 
-export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "mudDuty" | "dailies" | "tests" | "photos">;
+export type SessionContent = Pick<Session, "name" | "overview" | "date" | "studentRoster" | "testVariants" | "attendance" | "mudDuty" | "dailies" | "tests" | "writtenTests" | "writtenTestDescription" | "photos">;
 
 export function pickSessionContent(session: SessionContent): SessionContent {
   return {
@@ -132,6 +135,8 @@ export function pickSessionContent(session: SessionContent): SessionContent {
     mudDuty: session.mudDuty,
     dailies: session.dailies,
     tests: session.tests,
+    writtenTests: session.writtenTests,
+    writtenTestDescription: session.writtenTestDescription,
     photos: session.photos
   };
 }

@@ -72,6 +72,7 @@ export function planTestImport(fileText: string, existingTestList: TestVariant[]
     const test: TestVariant = {
       id: existingTest?.id ?? parsedTest.id ?? crypto.randomUUID(),
       name: parsedTest.name,
+      specialSkillCount: parsedTest.specialSkillCount,
       skills: parsedTest.skills.map(skill => ({
         ...skill,
         id: skill.id ?? existingSkillIdByName.get(skill.name.toLowerCase()) ?? crypto.randomUUID()

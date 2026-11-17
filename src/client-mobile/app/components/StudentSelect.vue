@@ -70,6 +70,9 @@ const itemListRef = computed(() => {
     :ui="menuUi"
     class="w-full"
   >
+    <template #empty>
+      No students present
+    </template>
     <template #item-trailing="{ item }">
       <template v-if="getProgress(item)">
         <UProgress

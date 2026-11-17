@@ -1,0 +1,289 @@
+[
+  {
+    "id": "cbb5424a-3765-405c-ac11-580af58a60ea",
+    "name": "Wall Build Practical",
+    "specialSkillCount": 1,
+    "skills": [
+      {
+        "id": "674f31ae-aeb9-4caf-b20e-52771ba954ba",
+        "name": "Wall Plumb",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.",
+        "maxScore": 15
+      },
+      {
+        "id": "fed8a20f-eae1-40d1-a9e0-9c565ef1ab64",
+        "name": "Level",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.",
+        "maxScore": 10
+      },
+      {
+        "id": "66808961-2af4-4206-a7d8-45959ea4597b",
+        "name": "Story Height",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 1 point.",
+        "maxScore": 5
+      },
+      {
+        "id": "171b9e8a-5ffa-4998-8a42-cda5b00b5a25",
+        "name": "Wall Length",
+        "category": "Objective",
+        "criteria": "End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/16” deviation.",
+        "maxScore": 10
+      },
+      {
+        "id": "02a5b1a6-baab-4439-85cc-d16bad52ce3a",
+        "name": "Voids",
+        "category": "Objective",
+        "criteria": "Deduct 1 pt for every void in mortar joints.",
+        "maxScore": 10
+      },
+      {
+        "id": "e9be8d64-1e67-4130-b9e5-891239581be5",
+        "name": "Time",
+        "category": "Objective",
+        "criteria": "Full score if completed in time limit. Deduct 1 pt per minute over.",
+        "maxScore": 10
+      },
+      {
+        "id": "6ecfa34d-8d65-490e-b578-37150bbf1df9",
+        "name": "Brick/Block Technique",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per instance: relayed blocks, exposed sashes, smearing, over-tapping, redundant leveling.",
+        "maxScore": 10
+      },
+      {
+        "id": "2aa2257a-c124-420d-be0f-dfb87d4fdae0",
+        "name": "Safety Practices",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls.",
+        "maxScore": 10
+      },
+      {
+        "id": "43aadae4-55f8-4a12-8987-55dd375a3dda",
+        "name": "Overall Appearance",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks.",
+        "maxScore": 10
+      }
+    ]
+  },
+  {
+    "id": "116d86a1-f026-4fa2-8ef0-22d3237b40f3",
+    "name": "Flashing Practical",
+    "specialSkillCount": 1,
+    "skills": [
+      {
+        "id": "28fda48a-fa6f-475c-898e-58b1c492f9a4",
+        "name": "Distance",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 3 points.",
+        "maxScore": 15
+      },
+      {
+        "id": "3158fcdf-2deb-464e-8824-435f3b0998c7",
+        "name": "Mortar Net",
+        "category": "Objective",
+        "criteria": "Loose and at the bottom, ridges up. Deduct 5 points if set incorrectly.",
+        "maxScore": 10
+      },
+      {
+        "id": "99f9afca-bafc-40aa-b79b-0f487a7d19ac",
+        "name": "Ties",
+        "category": "Objective",
+        "criteria": "Failed if any tie is not in place.",
+        "maxScore": 5
+      },
+      {
+        "id": "80a7b6f8-86e3-400c-bae5-e6bf50756413",
+        "name": "Weep Holes",
+        "category": "Objective",
+        "criteria": "Failed if no weep holes, deduct 2 points for each weep hole protruding from brick.",
+        "maxScore": 10
+      },
+      {
+        "id": "6f73a643-157e-4983-96fe-a41ec7f48c19",
+        "name": "Flashing",
+        "category": "Objective",
+        "criteria": "Failed if omitted. Deduct 2 points for every 1/4\" inconsistency from face of brick.",
+        "maxScore": 10
+      },
+      {
+        "id": "f2e48ae8-7d50-479d-b5fa-74a8b4435bb2",
+        "name": "Termination Bar",
+        "category": "Objective",
+        "criteria": "Failed if omitted. Deduct 2 point for every screw omitted.",
+        "maxScore": 10
+      },
+      {
+        "id": "04dfffe7-31f5-4b27-8247-26f0deadeb2e",
+        "name": "Installation Planning",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per instance: relayed flashing, or weep holes.",
+        "maxScore": 10
+      },
+      {
+        "id": "a837c9fc-1f66-40f2-8ba3-095151317a2e",
+        "name": "Safety Practices",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls.",
+        "maxScore": 10
+      },
+      {
+        "id": "d98a68d0-7561-436d-94f5-9716a949c6fe",
+        "name": "Overall Appearance",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per: undersized/oversized joints, sloppy tooling, broken/protruding blocks.",
+        "maxScore": 10
+      }
+    ]
+  },
+  {
+    "id": "c59a5625-6dd4-4871-8094-ab8a54779a28",
+    "name": "Plate Setting Practical",
+    "specialSkillCount": 1,
+    "skills": [
+      {
+        "id": "1fc7f62c-b5de-4f91-ac0b-a1a14205f2b6",
+        "name": "Position",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in from center Deduct 1 pt per 1/16” deviation.",
+        "maxScore": 15
+      },
+      {
+        "id": "47073272-39eb-4f70-9dc6-2933e082c87a",
+        "name": "Elevation",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in from Height. Deduct 1 pt per 1/16” deviation.",
+        "maxScore": 10
+      },
+      {
+        "id": "9cd545ac-a15a-42db-8ead-2ece94b302d4",
+        "name": "Space for Dry Pack",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in. Deduct 1 pt per 1/16” deviation.",
+        "maxScore": 5
+      },
+      {
+        "id": "9785a3dd-f4d5-4006-8427-c0b96a4e7e6f",
+        "name": "Pocket Size",
+        "category": "Objective",
+        "criteria": "Tolerance ½” from top of plate.  Deduct 1 pt per 1/4” deviation.",
+        "maxScore": 10
+      },
+      {
+        "id": "aeee0abc-6a6f-46c7-a380-4fc5643b525d",
+        "name": "Legs Around Rebar",
+        "category": "Objective",
+        "criteria": "Deduct 2 pts for every failed instance.",
+        "maxScore": 10
+      },
+      {
+        "id": "891d85b3-0a9c-4540-9632-5c6c935f70e7",
+        "name": "Space for Grout",
+        "category": "Objective",
+        "criteria": "Deduct 2 pts per rebar constriction obstructing flow of grout.",
+        "maxScore": 10
+      },
+      {
+        "id": "f7bce314-546a-43ab-a00a-47600c34d035",
+        "name": "Plate Is Movable",
+        "category": "Objective",
+        "criteria": "Deduct 2 pts per failed instance.",
+        "maxScore": 10
+      },
+      {
+        "id": "a9a1f22f-d86f-4082-b133-d7fa7e57cc4c",
+        "name": "Safety Practices",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., dry cutting), breaking down walls.",
+        "maxScore": 10
+      },
+      {
+        "id": "391111da-ca38-48b7-8c26-5b247a8776c2",
+        "name": "Laps",
+        "category": "Objective",
+        "criteria": "Deduct 1 pt per: insufficient lap",
+        "maxScore": 10
+      },
+      {
+        "id": "2b0c4802-4cea-44ba-a263-9c4ac96800f2",
+        "name": "Holes covered",
+        "category": "Objective",
+        "criteria": "Deduct 5 points for every instance",
+        "maxScore": 10
+      }
+    ]
+  },
+  {
+    "id": "4134dc4b-9586-4281-b351-3aec1b8f8666",
+    "name": "Layout Practical",
+    "specialSkillCount": 1,
+    "skills": [
+      {
+        "id": "ee32f817-d4b4-4a5c-8982-cec27707c7ad",
+        "name": "Overall Bonding",
+        "category": "Subjective",
+        "criteria": "If unsuccessful, the entire assessment is failed.",
+        "maxScore": 20
+      },
+      {
+        "id": "816dbf2e-0001-4e1c-ac8d-7963c331bc51",
+        "name": "Overall Level",
+        "category": "Objective",
+        "criteria": "Tolerance: 1/8” in 4 ft. Deduct 1 pt per 1/16” deviation. Measure at 2 points.",
+        "maxScore": 10
+      },
+      {
+        "id": "00b5e9b1-3798-4949-9c6d-7d2a7023eeb3",
+        "name": "Story Height",
+        "category": "Objective",
+        "criteria": "Corners, Cj, Openings, steps (Deduct 1 point for each missed item)",
+        "maxScore": 10
+      },
+      {
+        "id": "f8722748-a983-42f1-a42d-9a71a01e162a",
+        "name": "Wall Length",
+        "category": "Objective",
+        "criteria": "End-to-end walls: within 3/8”; Adjacent walls: exact. Deduct 1 pt per 1/8” deviation.",
+        "maxScore": 10
+      },
+      {
+        "id": "08dcc0a9-2f25-4d07-9c7e-c2086986e270",
+        "name": "Special Bonding",
+        "category": "Subjective",
+        "criteria": "Corners, Cj, Openings, Cuts for steps (Deduct 1 point for each missed item)",
+        "maxScore": 10
+      },
+      {
+        "id": "18e9b0d1-b45b-47ff-91ec-a789a2ee7de3",
+        "name": "Time",
+        "category": "Objective",
+        "criteria": "Full score if completed in time limit. Deduct 1 pt per minute over.",
+        "maxScore": 10
+      },
+      {
+        "id": "a948cbbf-d0d3-4cab-817d-cda81d7a0bd5",
+        "name": "Layout Technique",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per instance: Extra marks or half erased.",
+        "maxScore": 10
+      },
+      {
+        "id": "54e082bd-6d38-46a6-bb79-878d5221d9d8",
+        "name": "Safety Practices",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per issue: no PPE, unsafe behavior (e.g., jumping walls), breaking down walls.",
+        "maxScore": 10
+      },
+      {
+        "id": "aeec4fb2-d017-45a5-9deb-93b3bee5dfc4",
+        "name": "Overall Appearance",
+        "category": "Subjective",
+        "criteria": "Deduct 1 pt per: marks not clearly visible, missing marks, falling tape.",
+        "maxScore": 10
+      }
+    ]
+  }
+]

@@ -5,7 +5,8 @@ import {
   type SessionDailyRecord,
   sessionSchema,
   SessionStatusEnum,
-  type SessionTestRecord
+  type SessionTestRecord,
+  type SessionWrittenTestRecord
 } from "~/schemas/session.schema";
 import type { TestVariant } from "~/schemas/test-variant.schema";
 import { defaultUserSettings, type UserSettings } from "~/schemas/user.schema";
@@ -66,10 +67,20 @@ export function useSessionRepository() {
         return applySessionEdit({
           ...session,
           testVariants: isCopied || !liveTestVariant ? session.testVariants : [...(session.testVariants ?? []), liveTestVariant],
-          tests: [...session.tests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId), testRecord]
+          tests: [...session.tests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId), testRecord],
+          writtenTests: session.writtenTests.filter(existingRecord => existingRecord.studentId !== testRecord.studentId)
         });
       });
     });
+  }
+
+  // Replaces the student's Written Test record, dropping any other test record they had.
+  async function saveSessionWrittenTestRecord(sessionId: string, writtenTestRecord: SessionWrittenTestRecord) {
+    return updateStoredSession(sessionId, session => applySessionEdit({
+      ...session,
+      tests: session.tests.filter(existingRecord => existingRecord.studentId !== writtenTestRecord.studentId),
+      writtenTests: [...session.writtenTests.filter(existingRecord => existingRecord.studentId !== writtenTestRecord.studentId), writtenTestRecord]
+    }));
   }
 
   // Replaces the student's daily record. Like saveSessionTestRecord it reads the stored session inside the
@@ -207,6 +218,7 @@ export function useSessionRepository() {
     saveSession,
     saveSessionEdit,
     saveSessionTestRecord,
+    saveSessionWrittenTestRecord,
     saveSessionDailyRecord,
     syncTestVariantList,
     addSessionPhotoList,

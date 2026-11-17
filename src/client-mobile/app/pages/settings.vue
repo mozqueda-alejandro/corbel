@@ -39,6 +39,22 @@ function handleResetSettings() {
 }
 // #endregion
 
+// #region Export profile
+const { createProfileExport } = useProfile();
+
+async function handleExportProfile() {
+  try {
+    const profile = await createProfileExport();
+    if (!profile) return;
+    const isSaved = await saveJsonFile(`corbel-profile-${new Date().toISOString().slice(0, 10)}.json`, profile);
+    if (isSaved) toast.add({ title: "Profile exported", color: "success", icon: "i-lucide-download" });
+  } catch (exportError) {
+    console.error("Profile export failed:", exportError);
+    toast.add({ title: "Couldn't export profile", color: "error", icon: "i-lucide-circle-x" });
+  }
+}
+// #endregion
+
 // #region Clear data
 const { clearUserAndClassData } = useDBTest();
 const isClearDialogOpenRef = ref(false);
@@ -180,6 +196,25 @@ async function previewSound() {
           <h3 class="font-medium">
             Data
           </h3>
+        </div>
+
+        <div class="flex items-start justify-between gap-4 px-4 py-4">
+          <div class="text-sm">
+            <p class="font-medium">
+              Export profile
+            </p>
+            <p class="text-muted">
+              Saves your name, classes, tests, daily skills and activities to a file. You can import it when setting up the app on another device.
+            </p>
+          </div>
+          <UButton
+            label="Export"
+            icon="i-lucide-download"
+            color="neutral"
+            variant="outline"
+            loading-auto
+            @click="handleExportProfile"
+          />
         </div>
 
         <div class="flex items-start justify-between gap-4 px-4 py-4">

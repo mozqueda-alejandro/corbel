@@ -69,6 +69,7 @@ async function onSubmit(event: FormSubmitEvent<SessionCreateModal>) {
     mudDuty: [],
     dailies: [],
     tests: [],
+    writtenTests: [],
     photos: []
   };
   emit("submit", newSession);

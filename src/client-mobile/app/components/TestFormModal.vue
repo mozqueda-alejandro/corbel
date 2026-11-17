@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { FormError } from "@nuxt/ui";
 
+import { SPECIAL_SKILL_MAX_SCORE } from "~/schemas/session.schema";
 import { TestSkillCategoryEnum } from "~/schemas/test-skill.schema";
-import { type TestVariant, testVariantSchema } from "~/schemas/test-variant.schema";
+import { MAX_SPECIAL_SKILLS, type TestVariant, testVariantSchema } from "~/schemas/test-variant.schema";
 
 type SkillFormState = {
   id: string
@@ -12,7 +13,7 @@ type SkillFormState = {
   maxScore: number | undefined
 };
 
-type TestFormState = { name: string, skills: SkillFormState[] };
+type TestFormState = { name: string, skills: SkillFormState[], specialSkillCount: number };
 
 // Creates a test when `test` is omitted, otherwise edits it.
 const props = defineProps<{
@@ -29,9 +30,18 @@ const formStateRef = reactive<TestFormState>(createFormState());
 const isNameTouchedRef = ref(false);
 // The name reads as plain text until the pen is clicked; a new test starts with it open.
 const isEditingNameRef = ref(false);
-// In delete mode each skill shows a button that removes it straight away.
-const isDeleteModeRef = ref(false);
 const nameInputRef = useTemplateRef("nameInputRef");
+
+// The skill whose popup is open. Its fields edit the form state directly, so the popup has no buttons;
+// the changes are saved along with the test.
+const editingSkillIdRef = ref<string>();
+const isSkillModalOpenRef = computed({
+  get: () => !!editingSkillIdRef.value,
+  set: (isOpen) => {
+    if (!isOpen) editingSkillIdRef.value = undefined;
+  }
+});
+const editingSkillRef = computed(() => formStateRef.skills.find(skill => skill.id === editingSkillIdRef.value));
 
 function startEditingName() {
   isEditingNameRef.value = true;
@@ -52,7 +62,8 @@ function createFormState(): TestFormState {
   const { test } = props;
   return {
     name: test?.name ?? "",
-    skills: test ? test.skills.map(skill => ({ ...skill })) : [createSkillState(TestSkillCategoryEnum.Objective)]
+    skills: test ? test.skills.map(skill => ({ ...skill })) : [createSkillState(TestSkillCategoryEnum.Objective)],
+    specialSkillCount: test?.specialSkillCount ?? 1
   };
 }
 
@@ -61,36 +72,49 @@ watch(isOpenRef, (isOpen) => {
   if (!isOpen) return;
   Object.assign(formStateRef, createFormState());
   isNameTouchedRef.value = false;
-  isDeleteModeRef.value = false;
+  editingSkillIdRef.value = undefined;
   if (props.test) isEditingNameRef.value = false;
   else startEditingName();
 });
 
-// Objective skills fill the left column and subjective ones the right.
-const skillColumnListRef = computed(() =>
-  Object.values(TestSkillCategoryEnum).map(category => ({
-    category,
-    skillList: formStateRef.skills.filter(skill => skill.category === category)
-  })));
+// Skills grouped under their category, in the enum's order, with the points available per group.
+const skillGroupListRef = computed(() =>
+  Object.values(TestSkillCategoryEnum).map((category) => {
+    const skillList = formStateRef.skills.filter(skill => skill.category === category);
+    return {
+      category,
+      label: `${category} Evaluation`,
+      skillList,
+      maxScore: skillList.reduce((maxSum, skill) => maxSum + (skill.maxScore ?? 0), 0)
+    };
+  }));
 
-// The newest skill goes to the top of its column.
+// The new skill goes to the end of its group and opens its popup so it can be filled in straight away.
 function addSkill(category: TestSkillCategoryEnum) {
-  formStateRef.skills.unshift(createSkillState(category));
+  const skill = createSkillState(category);
+  formStateRef.skills.push(skill);
+  editingSkillIdRef.value = skill.id;
 }
 
 function removeSkill(skillId: string) {
+  editingSkillIdRef.value = undefined;
   formStateRef.skills = formStateRef.skills.filter(skill => skill.id !== skillId);
 }
 
-// Errors are keyed by position in the full skill list.
-function getSkillFieldName(skillId: string, field: keyof SkillFormState) {
-  return `skills.${formStateRef.skills.findIndex(skill => skill.id === skillId)}.${field}`;
+// Special skills carry no details here; their name and criteria are written in for each student when scoring.
+function addSpecialSkill() {
+  formStateRef.specialSkillCount = Math.min(formStateRef.specialSkillCount + 1, MAX_SPECIAL_SKILLS);
+}
+
+function removeSpecialSkill() {
+  formStateRef.specialSkillCount = Math.max(formStateRef.specialSkillCount - 1, 0);
 }
 
 function buildTest() {
   return {
     id: props.test?.id ?? crypto.randomUUID(),
     name: formStateRef.name.trim(),
+    specialSkillCount: formStateRef.specialSkillCount,
     skills: formStateRef.skills.map(skill => ({
       id: skill.id,
       name: skill.name.trim(),
@@ -114,10 +138,25 @@ function validateForm(): FormError[] {
   return errorList;
 }
 
+// Errors are keyed by position in the full skill list.
+const skillErrorListByIdRef = computed(() => {
+  const skillErrorListById = new Map<string, FormError[]>();
+  for (const formError of validateForm()) {
+    const [scope, skillIndex] = (formError.name ?? "").split(".");
+    const skill = scope === "skills" ? formStateRef.skills[Number(skillIndex)] : undefined;
+    if (skill) skillErrorListById.set(skill.id, [...(skillErrorListById.get(skill.id) ?? []), formError]);
+  }
+  return skillErrorListById;
+});
+
+function getSkillFieldError(skillId: string, field: keyof SkillFormState) {
+  return skillErrorListByIdRef.value.get(skillId)?.find(formError => formError.name?.endsWith(`.${field}`))?.message;
+}
+
 const nameErrorRef = computed(() =>
   isNameTouchedRef.value ? validateForm().find(formError => formError.name === "name")?.message : undefined);
 
-// Skill errors show on their own fields; a test with no skills has no field to show it on.
+// Skill errors show on their own rows; a test with no skills has no row to show it on.
 const skillsErrorRef = computed(() =>
   formStateRef.skills.length === 0 ? "A test needs at least one skill." : undefined);
 
@@ -146,7 +185,7 @@ async function handleSave() {
 <template>
   <UModal
     v-model:open="isOpenRef"
-    :ui="{ content: 'sm:max-w-4xl h-[80dvh]', body: '[scrollbar-gutter:stable]', wrapper: 'min-w-0 flex-1 pe-10', title: 'w-full' }"
+    :ui="{ content: 'sm:max-w-2xl h-[80dvh]', body: '[scrollbar-gutter:stable]', wrapper: 'min-w-0 flex-1 pe-10', title: 'w-full' }"
   >
     <template #title>
       <UInput
@@ -200,17 +239,18 @@ async function handleSave() {
         @submit="handleSave"
         @error="isNameTouchedRef = true"
       >
-        <div class="grid gap-4 md:grid-cols-2">
-          <section
-            v-for="skillColumn in skillColumnListRef"
-            :key="skillColumn.category"
-            class="min-w-0 space-y-2"
+        <div class="overflow-hidden rounded-md border border-muted">
+          <template
+            v-for="skillGroup in skillGroupListRef"
+            :key="skillGroup.category"
           >
-            <div class="flex items-center justify-between gap-2">
-              <h4 class="text-sm font-medium">
-                {{ skillColumn.category }}
-                <span class="font-normal text-muted">({{ skillColumn.skillList.length }})</span>
-              </h4>
+            <div class="flex items-center gap-3 border-t border-muted bg-elevated/50 px-4 py-2 first:border-t-0">
+              <h3 class="text-sm font-semibold">
+                {{ skillGroup.label }}
+              </h3>
+              <span class="me-auto text-sm text-muted">
+                {{ skillGroup.maxScore }} pts
+              </span>
               <UButton
                 type="button"
                 label="Add skill"
@@ -218,93 +258,105 @@ async function handleSave() {
                 color="neutral"
                 variant="outline"
                 size="xs"
-                @click="addSkill(skillColumn.category)"
+                @click="addSkill(skillGroup.category)"
               />
             </div>
-
-            <TransitionGroup
-              name="skill"
-              tag="div"
-              class="relative space-y-2"
+            <div
+              v-for="skill in skillGroup.skillList"
+              :key="skill.id"
+              class="flex items-center gap-2 border-t border-muted py-1.5 pl-2 pr-4"
             >
-              <div
-                v-for="skill in skillColumn.skillList"
-                :key="skill.id"
-                class="relative space-y-2 rounded-md border border-muted p-2"
-              >
-                <Transition name="delete-button">
-                  <UButton
-                    v-if="isDeleteModeRef"
-                    type="button"
-                    icon="i-lucide-x"
-                    color="neutral"
-                    variant="outline"
-                    size="xs"
-                    square
-                    :ui="{ base: 'p-1', leadingIcon: 'size-3.5' }"
-                    aria-label="Delete skill"
-                    class="absolute -left-2 -top-2 z-10 rounded-full bg-default"
-                    @click="removeSkill(skill.id)"
-                  />
-                </Transition>
-                <div class="flex items-start gap-2">
-                  <UFormField
-                    :name="getSkillFieldName(skill.id, 'name')"
-                    class="min-w-0 flex-1"
-                  >
-                    <UInput
-                      v-model="skill.name"
-                      placeholder="Skill name"
-                      aria-label="Skill name"
-                      size="sm"
-                      class="w-full"
-                    />
-                  </UFormField>
-                  <UFormField
-                    :name="getSkillFieldName(skill.id, 'maxScore')"
-                    class="w-16 shrink-0"
-                  >
-                    <UInputNumber
-                      v-model="skill.maxScore"
-                      :min="0"
-                      :increment="false"
-                      :decrement="false"
-                      placeholder="Max"
-                      aria-label="Max score"
-                      size="sm"
-                      :ui="{ base: 'text-center' }"
-                      class="w-full"
-                    />
-                  </UFormField>
-                </div>
-                <UFormField :name="getSkillFieldName(skill.id, 'criteria')">
-                  <UTextarea
-                    v-model="skill.criteria"
-                    placeholder="Criteria"
-                    aria-label="Criteria"
-                    :rows="1"
-                    autoresize
-                    size="sm"
-                    class="w-full"
-                  />
-                </UFormField>
+              <UButton
+                type="button"
+                icon="i-lucide-pencil"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                :aria-label="`Edit ${skill.name || 'skill'}`"
+                @click="editingSkillIdRef = skill.id"
+              />
+              <div class="min-w-0 flex-1">
+                <span
+                  class="block truncate font-medium"
+                  :class="{ 'text-muted': !skill.name.trim(), 'text-error': skillErrorListByIdRef.has(skill.id) }"
+                >
+                  {{ skill.name.trim() || "Untitled skill" }}
+                </span>
+                <span
+                  v-if="skill.criteria"
+                  class="block text-xs text-muted"
+                >
+                  {{ skill.criteria }}
+                </span>
               </div>
-            </TransitionGroup>
-          </section>
+              <span class="shrink-0 text-sm text-muted">
+                {{ skill.maxScore ?? "?" }} pts
+              </span>
+            </div>
+            <p
+              v-if="skillGroup.skillList.length === 0"
+              class="border-t border-muted px-4 py-3 text-sm text-muted"
+            >
+              No {{ skillGroup.category.toLowerCase() }} skills.
+            </p>
+          </template>
+
+          <div class="flex items-center gap-3 border-t border-muted bg-elevated/50 px-4 py-2">
+            <h3 class="text-sm font-semibold">
+              Special Skills
+            </h3>
+            <span class="me-auto text-sm text-muted">
+              {{ formStateRef.specialSkillCount * SPECIAL_SKILL_MAX_SCORE }} pts
+            </span>
+            <UButton
+              type="button"
+              label="Add skill"
+              icon="i-lucide-plus"
+              color="neutral"
+              variant="outline"
+              size="xs"
+              :disabled="formStateRef.specialSkillCount >= MAX_SPECIAL_SKILLS"
+              @click="addSpecialSkill"
+            />
+          </div>
+          <div
+            v-for="specialSkillIndex in formStateRef.specialSkillCount"
+            :key="specialSkillIndex"
+            class="flex items-center gap-2 border-t border-muted py-1.5 pl-2 pr-4"
+          >
+            <UButton
+              v-if="specialSkillIndex === formStateRef.specialSkillCount"
+              type="button"
+              icon="i-lucide-trash-2"
+              color="neutral"
+              variant="ghost"
+              size="sm"
+              aria-label="Remove special skill"
+              @click="removeSpecialSkill"
+            />
+            <span
+              v-else
+              class="size-8 shrink-0"
+            />
+            <span class="min-w-0 flex-1 truncate font-medium">
+              Special Skill
+            </span>
+            <span class="shrink-0 text-sm text-muted">
+              {{ SPECIAL_SKILL_MAX_SCORE }} pts
+            </span>
+          </div>
+          <p
+            v-if="formStateRef.specialSkillCount === 0"
+            class="border-t border-muted px-4 py-3 text-sm text-muted"
+          >
+            No special skills.
+          </p>
         </div>
       </UForm>
     </template>
 
     <template #footer>
       <div class="flex w-full justify-end gap-2">
-        <UButton
-          type="button"
-          :label="isDeleteModeRef ? 'Done' : 'Delete skills'"
-          color="neutral"
-          variant="link"
-          class="me-auto"
-          @click="isDeleteModeRef = !isDeleteModeRef"
-        />
         <UButton
           type="button"
           label="Cancel"
@@ -321,47 +373,66 @@ async function handleSave() {
       </div>
     </template>
   </UModal>
+
+  <!-- Edits go straight into the form and are saved with the test, so the popup has no confirm or cancel buttons. -->
+  <UModal
+    v-model:open="isSkillModalOpenRef"
+    title="Edit skill"
+  >
+    <template #body>
+      <div
+        v-if="editingSkillRef"
+        class="space-y-3"
+      >
+        <UFormField
+          label="Name"
+          :error="getSkillFieldError(editingSkillRef.id, 'name')"
+        >
+          <UInput
+            v-model="editingSkillRef.name"
+            placeholder="Skill name"
+            aria-label="Skill name"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Criteria"
+          :error="getSkillFieldError(editingSkillRef.id, 'criteria')"
+        >
+          <UTextarea
+            v-model="editingSkillRef.criteria"
+            placeholder="Criteria"
+            aria-label="Criteria"
+            :rows="3"
+            autoresize
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          label="Max score"
+          :error="getSkillFieldError(editingSkillRef.id, 'maxScore')"
+        >
+          <UInputNumber
+            v-model="editingSkillRef.maxScore"
+            :min="0"
+            :increment="false"
+            :decrement="false"
+            placeholder="Max"
+            aria-label="Max score"
+            :ui="{ base: 'text-center' }"
+            class="w-28"
+          />
+        </UFormField>
+        <UButton
+          type="button"
+          label="Delete skill"
+          icon="i-lucide-trash-2"
+          color="error"
+          variant="link"
+          class="px-0"
+          @click="removeSkill(editingSkillRef.id)"
+        />
+      </div>
+    </template>
+  </UModal>
 </template>
-
-<style scoped>
-/* A new skill fades in at the top while the ones below slide down to make room. */
-.skill-enter-active,
-.skill-leave-active,
-.skill-move {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.skill-enter-from,
-.skill-leave-to {
-  opacity: 0;
-  transform: translateY(-0.5rem);
-}
-
-/* Taken out of the flow so the skills below close up smoothly. */
-.skill-leave-active {
-  position: absolute;
-  width: 100%;
-}
-
-/* The delete buttons fade and grow in when delete mode is switched on. */
-.delete-button-enter-active,
-.delete-button-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.delete-button-enter-from,
-.delete-button-leave-to {
-  opacity: 0;
-  transform: scale(0.5);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .delete-button-enter-active,
-  .delete-button-leave-active,
-  .skill-enter-active,
-  .skill-leave-active,
-  .skill-move {
-    transition: none;
-  }
-}
-</style>

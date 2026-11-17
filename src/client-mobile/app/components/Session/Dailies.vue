@@ -9,6 +9,9 @@ import {
 
 const TEXT_MAX_LENGTH = 300;
 const SAVE_DELAY_MS = 400;
+// Height limits in px for the Comments and Recommendations textareas, whether resized by the native grip or the drag bar.
+const TEXTAREA_MIN_HEIGHT = 96;
+const TEXTAREA_MAX_HEIGHT = 400;
 
 //region Props and Composables
 // readonly is set for completed and archived sessions.
@@ -36,7 +39,7 @@ function startResize(event: PointerEvent, field: "comments" | "recommendation") 
   const startHeight = textareaElement.offsetHeight;
   handleElement.setPointerCapture(event.pointerId);
   const handleMove = (moveEvent: PointerEvent) => {
-    textareaHeightMap[field] = `${Math.max(80, startHeight + moveEvent.clientY - startY)}px`;
+    textareaHeightMap[field] = `${Math.min(TEXTAREA_MAX_HEIGHT, Math.max(TEXTAREA_MIN_HEIGHT, startHeight + moveEvent.clientY - startY))}px`;
   };
   const handleEnd = () => {
     handleElement.removeEventListener("pointermove", handleMove);
@@ -254,7 +257,7 @@ function handleActivityCreated(activity: string) {
             :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly || !studentIdRef"
-            :style="{ height: textareaHeightMap.comments }"
+            :style="{ height: textareaHeightMap.comments, minHeight: `${TEXTAREA_MIN_HEIGHT}px`, maxHeight: `${TEXTAREA_MAX_HEIGHT}px` }"
             class="w-full"
             @update:model-value="scheduleSave"
           />
@@ -275,7 +278,7 @@ function handleActivityCreated(activity: string) {
             :rows="6"
             :maxlength="TEXT_MAX_LENGTH"
             :disabled="readonly || !studentIdRef"
-            :style="{ height: textareaHeightMap.recommendation }"
+            :style="{ height: textareaHeightMap.recommendation, minHeight: `${TEXTAREA_MIN_HEIGHT}px`, maxHeight: `${TEXTAREA_MAX_HEIGHT}px` }"
             class="w-full"
             @update:model-value="scheduleSave"
           />

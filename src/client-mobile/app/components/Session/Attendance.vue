@@ -56,7 +56,7 @@ const toast = useToast();
 const { studentListRef } = useStudentRepository();
 const { sessionStudentListRef, isRosterFrozenRef } = useSessionStudentList(() => props.session);
 const { sessionListRef, saveSessionEdit } = useSessionRepository();
-const { importOnboardingDataFromJson } = useOnboardingImport();
+const { importStudentsFromJson } = useStudentImport();
 const { minCalendarDate, maxCalendarDate } = getSessionDateBounds();
 //endregion
 
@@ -282,7 +282,7 @@ async function handleImportFileSelected(fileInputEvent: Event) {
   if (!selectedFile) return;
 
   isImportingRef.value = true;
-  const { issueList } = await importOnboardingDataFromJson(selectedFile);
+  const { issueList } = await importStudentsFromJson(selectedFile);
   isImportingRef.value = false;
   fileInput.value = "";
 
@@ -388,7 +388,7 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
             key: statusOption,
             label: statusOption,
             size: "sm",
-            class: "w-24 justify-center",
+            class: ["w-24 justify-center", currentStatus !== statusOption && "text-muted"],
             color: currentStatus === statusOption ? attendanceStatusColorMap[statusOption] : "neutral",
             icon: `i-lucide-${attendanceStatusIconMap[statusOption]}`,
             variant: currentStatus === statusOption ? "solid" : "soft",
@@ -499,9 +499,6 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
                 </UChip>
               </template>
             </UCalendar>
-            <p class="text-xs text-muted">
-              Tap a marked day to open that session.
-            </p>
           </div>
 
           <UForm
@@ -509,7 +506,7 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
             :state="sessionDetailsStateRef"
             :validate-on="['input', 'change', 'blur']"
             :disabled="readonly"
-            class="space-y-3"
+            class="flex flex-col gap-3"
           >
             <div class="flex items-start gap-3">
               <UFormField
@@ -542,15 +539,16 @@ const tableColumnList: TableColumn<SessionStudent>[] = [
             <UFormField
               label="Overview"
               name="overview"
-              :hint="`${sessionDetailsStateRef.overview?.length ?? 0}/200`"
+              :hint="`${sessionDetailsStateRef.overview?.length ?? 0}/400`"
+              class="flex min-h-24 flex-1 flex-col"
+              :ui="{ container: 'flex-1' }"
             >
               <UTextarea
                 v-model="sessionDetailsStateRef.overview"
                 :rows="2"
-                :maxlength="200"
-                autoresize
+                :maxlength="400"
                 placeholder="What's this session about?"
-                class="w-full"
+                :ui="{ root: 'h-full w-full', base: 'h-full resize-none' }"
               />
             </UFormField>
             <UFormField

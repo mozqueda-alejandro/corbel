@@ -56,12 +56,40 @@ export const sessionDailyRecordSchema = z.object({
 });
 export type SessionDailyRecord = z.infer<typeof sessionDailyRecordSchema>;
 
+export const SPECIAL_SKILL_MAX_SCORE = 10;
+
+// A skill with no category whose name and criteria are written in by the evaluator for one student's attempt,
+// so they live on that student's record rather than on the test.
+export const specialSkillSchema = z.object({
+  name: z.string().max(50),
+  criteria: z.string().max(300),
+  score: z.number().int().min(0)
+    .max(SPECIAL_SKILL_MAX_SCORE)
+    .optional()
+});
+export type SpecialSkill = z.infer<typeof specialSkillSchema>;
+
 export const sessionTestRecordSchema = z.object({
   studentId: z.uuid(),
   testVariantId: z.uuid(),
-  skills: z.array(testSkillScoreSchema)
+  skills: z.array(testSkillScoreSchema),
+  // One entry per special skill the test has, in order; fewer entries mean the rest haven't been filled in.
+  specialSkillList: z.array(specialSkillSchema).default([])
 });
 export type SessionTestRecord = z.infer<typeof sessionTestRecordSchema>;
+
+// The Written Test is built in rather than imported, so it has no test definition: just a score per student.
+export const WRITTEN_TEST_NAME = "Written Test";
+export const WRITTEN_TEST_SCORE_MAX = 100;
+
+export const sessionWrittenTestRecordSchema = z.object({
+  studentId: z.uuid(),
+  // Undefined until a score is typed in; the record still marks the student as taking the Written Test.
+  score: z.number().int().min(0)
+    .max(WRITTEN_TEST_SCORE_MAX)
+    .optional()
+});
+export type SessionWrittenTestRecord = z.infer<typeof sessionWrittenTestRecordSchema>;
 
 export const MAX_MUD_DUTY_STUDENTS = 3;
 export const MAX_PHOTOS_PER_STUDENT = 10;
@@ -82,7 +110,7 @@ export type SessionPhoto = z.infer<typeof sessionPhotoSchema>;
 export const sessionSchema = z.object({
   id: z.uuid(),
   name: createBoundedStringSchema(2, 50),
-  overview: createBoundedStringSchema(0, 300).optional(),
+  overview: createBoundedStringSchema(0, 400).optional(),
   status: sessionStatusSchema,
   date: z.coerce.date(),
   createdAt: z.coerce.date(),
@@ -108,6 +136,10 @@ export const sessionSchema = z.object({
     .default([]),
   dailies: z.array(sessionDailyRecordSchema),
   tests: z.array(sessionTestRecordSchema),
+  // A student has either a test record or a written test record, never both.
+  writtenTests: z.array(sessionWrittenTestRecordSchema).default([]),
+  // Shared by every student who takes the Written Test in this session.
+  writtenTestDescription: createBoundedStringSchema(0, 300).optional(),
   // Refined on the field rather than the object so sessionSchema can still be picked from.
   photos: z.array(sessionPhotoSchema)
     .default([])
